@@ -64,6 +64,8 @@ export default function BookNowPage() {
     },
   })
 
+  const today = typeof window !== "undefined" ? new Date() : new Date(Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), new Date().getUTCDate()));
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     console.log(values)
@@ -286,7 +288,7 @@ export default function BookNowPage() {
                             mode="single"
                             selected={field.value}
                             onSelect={field.onChange}
-                            disabled={(date) => date < new Date()}
+                            disabled={(date) => date < today}
                             initialFocus
                           />
                         </PopoverContent>
