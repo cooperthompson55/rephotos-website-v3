@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Canadian-inspired color scheme: subtle red accent, professional, clean neutrals, deep blue accent */
+    --background: 36 33% 97%; /* #F8F5F0 */
+    --foreground: 220 20% 18%; /* deep blue-gray for text */
+
+    --card: 0 0% 98%;
+    --card-foreground: 220 20% 18%;
+
+    --popover: 0 0% 98%;
+    --popover-foreground: 220 20% 18%;
+
+    --primary: 220 25% 20%; /* deep blue, professional */
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 220 85% 35%; /* professional navy blue */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 5% 95%;
+    --muted-foreground: 220 5% 45%;
+
+    --accent: 217 33% 48%; /* blue accent for highlights */
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 5% 90%;
+    --input: 220 5% 90%;
+    --ring: 220 25% 20%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 220 25% 15%;
+    --foreground: 0 0% 98%;
+
+    --card: 220 25% 15%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 25% 15%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 220 25% 15%;
+
+    --secondary: 220 85% 35%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 5% 25%;
+    --muted-foreground: 220 5% 65%;
+
+    --accent: 217 33% 48%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 5% 30%;
+    --input: 220 5% 30%;
+    --ring: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+  p,
+  a,
+  button,
+  span,
+  div {
+    @apply font-sans;
+  }
+
+  /* Add Mazzard H Semi Bold font */
+  @font-face {
+    font-family: "Mazzard H";
+    src: url("/fonts/MazzardH-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  .font-mazzard {
+    font-family: "Mazzard H", sans-serif;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .container-wide {
+    @apply container mx-auto max-w-7xl px-4 md:px-6;
+  }
+
+  .btn-primary {
+    @apply bg-secondary text-white hover:bg-secondary/90 rounded-md px-4 py-2;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-primary border border-primary hover:bg-muted rounded-md px-4 py-2;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-serif font-light mb-6;
+  }
+
+  .section-subtitle {
+    @apply text-sm uppercase tracking-wider text-muted-foreground mb-2;
+  }
+
+  .service-card {
+    @apply bg-white border border-border rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg;
+  }
+
+  .grid-gallery {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .step-card {
+    @apply flex flex-col items-center text-center p-6 bg-white rounded-lg border border-border;
+  }
+}
+
+.font-serif {
+  font-family: var(--font-spectral);
+}
+
+.font-sans {
+  font-family: var(--font-plus-jakarta-sans);
+}
+
+/* Custom utility classes */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-secondary to-accent;
+}
+
+.overlay-dark {
+  @apply bg-black bg-opacity-40;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
