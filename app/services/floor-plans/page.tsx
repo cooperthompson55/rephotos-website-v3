@@ -4,46 +4,46 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Home, Ruler, Layers, Download, Zap, Users, CheckCircle, Star, ArrowRight, Play } from "lucide-react"
+import { CTASection } from "@/components/home/CTASection"
 
 export default function FloorPlansPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary via-primary/90 to-secondary text-white py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] opacity-10"></div>
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="flex items-center space-x-2 text-white/80 mb-6">
-            <Link href="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <span>/</span>
-            <Link href="/services" className="hover:text-white transition-colors">
-              Services
-            </Link>
-            <span>/</span>
+      <section className="relative min-h-[420px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/header-texture.svg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/70" />
+        </div>
+        <div className="container mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10 flex flex-col justify-center h-full">
+          {/* Extra spacing above breadcrumb */}
+          <div className="mb-0" style={{ minHeight: '48px' }} />
+          {/* Breadcrumb */}
+          <nav className="mb-4 text-sm text-white/80 flex items-center gap-1">
+            <Link href="/" className="hover:underline">Home</Link>
+            <span className="mx-1">/</span>
+            <Link href="/services" className="hover:underline">Services</Link>
+            <span className="mx-1">/</span>
             <span className="text-white">Floor Plans</span>
+          </nav>
+          {/* Badge */}
+          <div className="mb-4">
+            <span className="inline-block bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-full px-5 py-2 tracking-wide">FLOOR PLANS</span>
           </div>
-
-          <div className="max-w-4xl">
-            <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">Professional Floor Plans</h1>
-            <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
-              Detailed 2D architectural drawings and stunning 3D house models that help buyers visualize space and
-              understand property layout with precision.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link href="/contact">Get Floor Plans</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-white text-primary hover:bg-white hover:text-primary"
-              >
-                <Link href="/pricing">View Pricing</Link>
-              </Button>
-            </div>
-          </div>
+          {/* Headline */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-4 text-white max-w-4xl leading-tight text-left">
+            Help Buyers Visualize With Floor Plans
+          </h1>
+          {/* Supporting Paragraph */}
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-4 text-left">
+            Accurate and attractive floor plans to help buyers understand the space and layout of your property.
+          </p>
         </div>
       </section>
 
@@ -688,34 +688,7 @@ export default function FloorPlansPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative bg-gradient-to-br from-primary via-primary/90 to-secondary text-white py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] opacity-10"></div>
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">Ready to Showcase Your Property Layout?</h2>
-            <p className="text-xl mb-8 text-white/90 leading-relaxed">
-              Professional floor plans help buyers understand space and increase engagement with your listings. Get
-              started today.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link href="/contact">
-                  Get Floor Plans
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-primary"
-              >
-                <Link href="/pricing">View All Pricing</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </div>
   )
 }

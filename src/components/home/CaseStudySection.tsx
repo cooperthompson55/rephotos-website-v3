@@ -9,11 +9,10 @@ export function CaseStudySection() {
           <div className="rounded-xl overflow-hidden shadow-xl flex flex-col md:flex-row">
             {/* Left content side */}
             <div className="bg-[#1e3a47] text-white p-8 md:p-12 flex flex-col justify-center md:w-1/2">
-              <div className="text-[#f3a952] uppercase tracking-wider text-sm font-medium mb-4">Case Study</div>
-              <h3 className="text-3xl md:text-4xl font-serif font-light mb-6">The art of the Eichler</h3>
+              <div className="text-[#f3a952] uppercase tracking-wider text-sm font-medium mb-4">Behind the Scenes</div>
+              <h3 className="text-3xl md:text-4xl font-serif font-light mb-6">The Art of the Sale</h3>
               <p className="text-gray-300 mb-8">
-                For over a decade, RePhotos has partnered with Eichler expert and owner Thomas Westfall to craft
-                beautiful visual stories for the Bay Area's storied, coveted mid-century modern icons.
+                At RePhotos, we believe great visuals are more than just photos — they're tools that drive action. Every image, video, and tour is crafted to spark emotion, build trust, and move buyers closer to making an offer. That's the art of the sale.
               </p>
               <div>
                 <Link
@@ -29,8 +28,8 @@ export function CaseStudySection() {
             <div className="md:w-1/2 relative">
               <div className="h-full">
                 <Image
-                  src="https://ext.same-assets.com/2308376233/3346176737.jpeg"
-                  alt="The art of the Eichler"
+                  src="/images/home/backyard_2.jpg"
+                  alt="The Art of the Sale"
                   fill
                   className="object-cover"
                 />

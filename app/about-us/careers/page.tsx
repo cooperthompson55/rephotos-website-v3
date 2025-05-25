@@ -21,6 +21,7 @@ import {
   GraduationCap,
 } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 const jobListings = [
   {
@@ -165,30 +166,28 @@ export default function CareersPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage:
-              "url('/placeholder.svg?height=800&width=1200&query=professional photography studio with cameras and lighting equipment')",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70" />
-
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <Badge className="mb-4 bg-white/20 text-white border-white/30">
-              <MapPin className="w-4 h-4 mr-2" />
-              Milton, Ontario
-            </Badge>
-            <h1 className="text-5xl md:text-6xl font-bold font-spectral mb-6">Join Our Team</h1>
-            <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto">
-              Build your career with Southern Ontario's leading real estate photography company. We're looking for
-              passionate professionals to help us capture amazing properties.
+      <section className="relative min-h-[320px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/header-texture.svg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-90" />
+        </div>
+        <div className="container relative z-10 pt-36 pb-16 md:pt-44 md:pb-24 flex flex-col items-center justify-center h-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-2xl mx-auto text-center text-white"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Join Our Team</h1>
+            <p className="text-lg md:text-xl mb-2">
+              Build your career with Southern Ontario's leading real estate photography company. We're looking for passionate professionals to help us capture amazing properties.
             </p>
-            <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-              <Link href="#openings">View Open Positions</Link>
-            </Button>
           </motion.div>
         </div>
       </section>
@@ -429,7 +428,7 @@ export default function CareersPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-white text-white hover:bg-white hover:text-primary"
+                className="border-white text-black hover:bg-white hover:text-primary"
               >
                 <Link href="/contact">Contact Us</Link>
               </Button>

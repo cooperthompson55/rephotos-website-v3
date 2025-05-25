@@ -3,54 +3,46 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Camera, Video, MapPin, Shield, Clock, CheckCircle, Star, Eye } from "lucide-react"
+import { CTASection } from "@/components/home/CTASection"
 
 export default function AerialPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary via-secondary to-accent py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <Image
-          src="/images/waves-pattern.svg"
-          alt=""
-          width={1200}
-          height={800}
-          className="absolute inset-0 w-full h-full object-cover opacity-10"
-        />
-        <div className="container-wide relative z-10">
-          <div className="flex items-center gap-2 text-white/80 text-sm mb-6">
-            <Link href="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <span>/</span>
-            <Link href="/services" className="hover:text-white transition-colors">
-              Services
-            </Link>
-            <span>/</span>
+      <section className="relative min-h-[420px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/header-texture.svg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/70" />
+        </div>
+        <div className="container mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10 flex flex-col justify-center h-full">
+          {/* Extra spacing above breadcrumb */}
+          <div className="mb-0" style={{ minHeight: '48px' }} />
+          {/* Breadcrumb */}
+          <nav className="mb-4 text-sm text-white/80 flex items-center gap-1">
+            <Link href="/" className="hover:underline">Home</Link>
+            <span className="mx-1">/</span>
+            <Link href="/services" className="hover:underline">Services</Link>
+            <span className="mx-1">/</span>
             <span className="text-white">Aerial Photos & Video</span>
+          </nav>
+          {/* Badge */}
+          <div className="mb-4">
+            <span className="inline-block bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-full px-5 py-2 tracking-wide">AERIAL PHOTOS & VIDEO</span>
           </div>
-
-          <div className="max-w-4xl">
-            <h1 className="text-5xl md:text-7xl font-serif font-light text-white mb-6">Aerial Photos & Video</h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
-              Capture stunning bird's-eye perspectives that showcase properties like never before. Our FAA-certified
-              drone pilots deliver breathtaking aerial photography and videography that elevates your listings above the
-              competition.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
-                <Link href="/contact">Book Aerial Shoot</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-white text-primary hover:bg-white hover:text-primary"
-              >
-                <Link href="/portfolio">View Portfolio</Link>
-              </Button>
-            </div>
-          </div>
+          {/* Headline */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-4 text-white max-w-4xl leading-tight text-left">
+            Elevate Your Listings With Aerial Views
+          </h1>
+          {/* Supporting Paragraph */}
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-4 text-left">
+            Stunning aerial perspectives that showcase property exteriors, neighborhoods, and amenities from above.
+          </p>
         </div>
       </section>
 
@@ -585,38 +577,7 @@ export default function AerialPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-16 md:py-24 bg-gradient-to-br from-primary via-secondary to-accent overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <Image
-          src="/images/waves-pattern.svg"
-          alt=""
-          width={1200}
-          height={800}
-          className="absolute inset-0 w-full h-full object-cover opacity-10"
-        />
-        <div className="container-wide relative z-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-serif font-light text-white mb-6">
-            Ready to Elevate Your Listings?
-          </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
-            Give your properties the aerial advantage they deserve. Our professional drone photography and videography
-            services will showcase your listings from breathtaking new perspectives.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
-              <Link href="/contact">Book Aerial Shoot</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-white text-primary hover:bg-white hover:text-primary"
-            >
-              <Link href="/portfolio">View Portfolio</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </div>
   )
 }

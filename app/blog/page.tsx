@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Search, ArrowRight, Calendar, User, Tag, ChevronRight, ChevronLeft } from "lucide-react"
+import Image from "next/image"
+import { CTASection } from "@/components/home/CTASection"
 
 // Sample blog post data
 const blogPosts = [
@@ -142,30 +144,28 @@ export default function BlogPage() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary to-primary/80 py-20 md:py-28">
-        <div className="absolute inset-0 bg-black/40 z-0"></div>
-        <div className="container relative z-10">
+      <section className="relative min-h-[320px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/header-texture.svg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-90" />
+        </div>
+        <div className="container relative z-10 pt-36 pb-16 md:pt-44 md:pb-24 flex flex-col items-center justify-center h-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="max-w-3xl mx-auto text-center text-white"
+            className="max-w-2xl mx-auto text-center text-white"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4">RePhotos Blog</h1>
-            <p className="text-lg md:text-xl mb-8">
+            <p className="text-lg md:text-xl mb-2">
               Expert insights, tips, and trends in real estate photography and property marketing
             </p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
-                Photography Tips
-              </span>
-              <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
-                Marketing Strategies
-              </span>
-              <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
-                Industry Trends
-              </span>
-            </div>
           </motion.div>
         </div>
       </section>
@@ -422,30 +422,7 @@ export default function BlogPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-primary to-primary/80 text-white">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Elevate Your Property Marketing?</h2>
-            <p className="text-lg md:text-xl mb-8">
-              Contact us today to discuss how our professional photography services can help showcase your properties in
-              the best light.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <a href="/contact-us">Get in Touch</a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-primary"
-              >
-                <a href="/services">Explore Services</a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </div>
   )
 }

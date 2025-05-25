@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { CTASection } from "@/src/components/home/CTASection"
+import { CTASection } from "@/components/home/CTASection"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -27,40 +27,26 @@ export default function OurStoryPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-white py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-black/20" />
-        <div className="absolute inset-0">
+      <section className="relative min-h-[320px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1200&query=Milton Ontario cityscape with beautiful homes and real estate"
-            alt="Milton, Ontario"
+            src="/images/header-texture.svg"
+            alt=""
             fill
-            className="object-cover opacity-30"
+            className="object-cover"
+            priority
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-90" />
         </div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div className="container relative z-10 pt-36 pb-16 md:pt-44 md:pb-24 flex flex-col items-center justify-center h-full">
           <motion.div
-            className="max-w-4xl"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-2xl mx-auto text-center text-white"
           >
-            <div className="flex flex-wrap gap-3 mb-6">
-              <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
-                <MapPin className="w-4 h-4 mr-2" />
-                Milton, ON
-              </Badge>
-              <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
-                🍁 Canadian Owned
-              </Badge>
-              <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
-                <Users className="w-4 h-4 mr-2" />
-                Small Business
-              </Badge>
-            </div>
-
-            <h1 className="text-5xl md:text-7xl font-serif font-light mb-6 leading-tight">Our Story</h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed max-w-3xl">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Story</h1>
+            <p className="text-lg md:text-xl mb-2">
               From a passion project in Milton to Southern Ontario's trusted real estate photography partner
             </p>
           </motion.div>

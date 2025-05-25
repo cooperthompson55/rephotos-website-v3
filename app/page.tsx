@@ -43,33 +43,33 @@ export default function Home() {
               <div className="relative grid grid-cols-12 grid-rows-6 gap-3 h-[500px]">
                 <div className="col-span-5 row-span-3 rounded-lg overflow-hidden shadow-md">
                   <img
-                    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"
+                    src="/images/home/1.jpg"
                     alt="Modern kitchen interior"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="col-span-7 row-span-3 rounded-lg overflow-hidden shadow-md">
                   <img
-                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
-                    alt="Luxury living room"
+                    src="/images/home/4.jpg"
+                    alt="Cozy interior space"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="col-span-8 row-span-3 rounded-lg overflow-hidden shadow-md relative">
                   <img
-                    src="https://images.unsplash.com/photo-1600607687644-aac4c3eac7f5"
+                    src="/images/home/3.jpg"
                     alt="Modern Woodland Estate"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-3 text-white">
-                    <p className="font-medium">Modern Woodland Estate</p>
+                    <p className="font-medium">Cooper Thompson</p>
                     <p className="text-xs opacity-80">REAL ESTATE PHOTOGRAPHY © 2025</p>
                   </div>
                 </div>
                 <div className="col-span-4 row-span-3 rounded-lg overflow-hidden shadow-md">
                   <img
-                    src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea"
-                    alt="Cozy interior space"
+                    src="/images/home/2.jpg"
+                    alt="Luxury living room"
                     className="w-full h-full object-cover"
                   />
                 </div>

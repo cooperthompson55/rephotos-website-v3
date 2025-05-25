@@ -4,54 +4,46 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Eye, Clock, Globe, Smartphone, Ruler, Home, CheckCircle, ArrowRight, Play, Users, Star } from "lucide-react"
+import { CTASection } from "@/components/home/CTASection"
 
 export default function VirtualToursPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary via-primary/90 to-secondary overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <Image src="/images/waves-pattern.svg" alt="" fill className="object-cover" />
+      <section className="relative min-h-[420px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/header-texture.svg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/70" />
         </div>
-
-        <div className="relative container mx-auto px-4 md:px-6 py-32 md:py-40">
+        <div className="container mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10 flex flex-col justify-center h-full">
+          {/* Extra spacing above breadcrumb */}
+          <div className="mb-0" style={{ minHeight: '48px' }} />
           {/* Breadcrumb */}
-          <div className="flex items-center space-x-2 text-white/80 mb-6">
-            <Link href="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <span>/</span>
-            <Link href="/services" className="hover:text-white transition-colors">
-              Services
-            </Link>
-            <span>/</span>
-            <span className="text-white">Virtual Tours</span>
+          <nav className="mb-4 text-sm text-white/80 flex items-center gap-1">
+            <Link href="/" className="hover:underline">Home</Link>
+            <span className="mx-1">/</span>
+            <Link href="/services" className="hover:underline">Services</Link>
+            <span className="mx-1">/</span>
+            <span className="text-white">3D Virtual Tours</span>
+          </nav>
+          {/* Badge */}
+          <div className="mb-4">
+            <span className="inline-block bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-full px-5 py-2 tracking-wide">3D VIRTUAL TOURS</span>
           </div>
-
-          <div className="max-w-4xl">
-            <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">3D Virtual Tours</h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
-              Immersive 3D experiences that let buyers explore properties from anywhere, anytime. Our Matterport
-              technology creates stunning virtual walkthroughs that increase engagement and accelerate sales.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link href="/contact">
-                  Get Virtual Tour Quote
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-white text-primary hover:bg-white hover:text-primary"
-              >
-                <Link href="/portfolio">View Sample Tours</Link>
-              </Button>
-            </div>
-          </div>
+          {/* Headline */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-4 text-white max-w-4xl leading-tight text-left">
+            Immerse Buyers With 3D Virtual Tours
+          </h1>
+          {/* Supporting Paragraph */}
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-4 text-left">
+            Professional 3D virtual tours for every property type and budget. Let buyers explore every detail online.
+          </p>
         </div>
       </section>
 
@@ -551,38 +543,7 @@ export default function VirtualToursPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-16 md:py-24 bg-gradient-to-br from-primary via-primary/90 to-secondary overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <Image src="/images/waves-pattern.svg" alt="" fill className="object-cover" />
-        </div>
-
-        <div className="relative container mx-auto px-4 md:px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-6">
-            Ready to Create Your Virtual Tour?
-          </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Give your listings the competitive edge with immersive 3D virtual tours that engage buyers and accelerate
-            sales.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-              <Link href="/contact">
-                Schedule Virtual Tour
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-white text-white hover:bg-white hover:text-primary"
-            >
-              <Link href="tel:+1234567890">Call (123) 456-7890</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </div>
   )
 }

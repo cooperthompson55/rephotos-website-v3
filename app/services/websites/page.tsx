@@ -25,6 +25,7 @@ import {
   Sparkles,
   Palette,
 } from "lucide-react"
+import { CTASection } from "@/components/home/CTASection"
 
 export default function WebsitesPage() {
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([])
@@ -105,88 +106,40 @@ export default function WebsitesPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#2d4654] to-[#1a2b35] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] opacity-10" />
-        <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
-          <div className="max-w-6xl mx-auto pt-8">
-            <div className="flex items-center gap-2 text-sm mb-6 text-gray-300">
-              <Link href="/" className="hover:text-white transition-colors">
-                Home
-              </Link>
-              <ChevronRight className="h-4 w-4" />
-              <Link href="/services" className="hover:text-white transition-colors">
-                Services
-              </Link>
-              <ChevronRight className="h-4 w-4" />
-              <span>Property Websites</span>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Custom Property Websites That Sell</h1>
-                <p className="text-xl text-gray-200 mb-8">
-                  Stand out from the competition with stunning, mobile-optimized property websites featuring virtual
-                  tours, interactive floor plans, and lead generation tools.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button asChild size="lg" className="bg-white text-[#2d4654] hover:bg-gray-100">
-                    <Link href="/pricing">
-                      Get Started <ArrowRight className="ml-2 h-5 w-5" />
-                    </Link>
-                  </Button>
-                  <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                    <Link href="#demo">
-                      View Demo <Sparkles className="ml-2 h-5 w-5" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-
-              {/* Interactive Website Preview */}
-              <div className="relative">
-                <div className="bg-white rounded-lg shadow-2xl p-4 transform hover:scale-105 transition-transform duration-300">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="flex gap-1.5">
-                      <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                      <div className="w-3 h-3 rounded-full bg-green-500" />
-                    </div>
-                    <div className="flex-1 bg-gray-100 rounded px-3 py-1 text-xs text-gray-600">
-                      123-main-street.rephotos.com
-                    </div>
-                  </div>
-                  <div
-                    className={`aspect-[16/10] rounded ${themes[activeTheme as keyof typeof themes]} p-6 transition-all duration-500`}
-                  >
-                    <div className="bg-white/90 backdrop-blur rounded-lg p-4 shadow-lg">
-                      <div className="h-3 bg-gray-300 rounded w-3/4 mb-2 animate-pulse" />
-                      <div className="h-2 bg-gray-200 rounded w-1/2 mb-4 animate-pulse" />
-                      <div className="grid grid-cols-3 gap-2">
-                        {[1, 2, 3].map((i) => (
-                          <div key={i} className="aspect-square bg-gray-200 rounded animate-pulse" />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Theme Selector */}
-                <div className="flex justify-center gap-2 mt-4">
-                  {Object.keys(themes).map((theme) => (
-                    <button
-                      key={theme}
-                      onClick={() => setActiveTheme(theme)}
-                      className={`px-3 py-1 rounded-full text-sm capitalize transition-all ${
-                        activeTheme === theme ? "bg-white text-[#2d4654]" : "bg-white/20 text-white hover:bg-white/30"
-                      }`}
-                    >
-                      {theme}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+      <section className="relative min-h-[420px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/header-texture.svg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/70" />
+        </div>
+        <div className="container mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10 flex flex-col justify-center h-full">
+          {/* Extra spacing above breadcrumb */}
+          <div className="mb-0" style={{ minHeight: '48px' }} />
+          {/* Breadcrumb */}
+          <nav className="mb-4 text-sm text-white/80 flex items-center gap-1">
+            <Link href="/" className="hover:underline">Home</Link>
+            <span className="mx-1">/</span>
+            <Link href="/services" className="hover:underline">Services</Link>
+            <span className="mx-1">/</span>
+            <span className="text-white">Property Websites</span>
+          </nav>
+          {/* Badge */}
+          <div className="mb-4">
+            <span className="inline-block bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-full px-5 py-2 tracking-wide">PROPERTY WEBSITES</span>
           </div>
+          {/* Headline */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-4 text-white max-w-4xl leading-tight text-left">
+            Make Your Listings Stand Out Online
+          </h1>
+          {/* Supporting Paragraph */}
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-4 text-left">
+            Custom property websites that help your listings stand out and capture more leads.
+          </p>
         </div>
       </section>
 
@@ -569,31 +522,7 @@ export default function WebsitesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-[#2d4654] to-[#1a2b35] text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] opacity-10" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-serif mb-6">
-              Ready to Showcase Your Properties Like Never Before?
-            </h2>
-            <p className="text-xl text-gray-200 mb-8">
-              Join hundreds of real estate professionals who are closing deals faster with custom property websites.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-[#2d4654] hover:bg-gray-100">
-                <Link href="/pricing">
-                  Start Your Website <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                <Link href="/contact">
-                  Schedule Consultation <Calendar className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </div>
   )
 }

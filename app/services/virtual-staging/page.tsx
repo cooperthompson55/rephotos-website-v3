@@ -27,6 +27,7 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react"
+import { CTASection } from "@/components/home/CTASection"
 
 export default function VirtualStagingPage() {
   const [beforeAfterPosition, setBeforeAfterPosition] = useState(50)
@@ -85,50 +86,40 @@ export default function VirtualStagingPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-16 sm:pt-18 md:pt-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80 z-0"></div>
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] bg-repeat opacity-10 z-0"></div>
-
-        <div className="container mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10">
-          <div className="max-w-4xl">
-            {/* Breadcrumb */}
-            <nav className="flex items-center space-x-2 text-white/80 mb-6">
-              <Link href="/" className="hover:text-white">
-                Home
-              </Link>
-              <span>/</span>
-              <Link href="/services" className="hover:text-white">
-                Services
-              </Link>
-              <span>/</span>
-              <span className="text-white">Virtual Staging</span>
-            </nav>
-
-            <div className="inline-block bg-white/10 backdrop-blur-sm px-4 py-1 rounded-full mb-4">
-              <h6 className="text-sm uppercase tracking-wider text-white font-medium">Virtual Staging</h6>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-serif font-light mb-6 text-white">
-              Transform Empty Spaces Into Dream Homes
-            </h1>
-            <p className="text-xl text-white/90 mb-8 max-w-3xl">
-              Professional virtual staging that sells properties faster at a fraction of traditional staging costs.
-              Showcase the true potential of any space.
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link href="/quote">Get a Quote</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-primary"
-              >
-                <Link href="#portfolio">View Examples</Link>
-              </Button>
-            </div>
+      <section className="relative min-h-[420px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/header-texture.svg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/70" />
+        </div>
+        <div className="container mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10 flex flex-col justify-center h-full">
+          {/* Extra spacing above breadcrumb */}
+          <div className="mb-0" style={{ minHeight: '48px' }} />
+          {/* Breadcrumb */}
+          <nav className="mb-4 text-sm text-white/80 flex items-center gap-1">
+            <Link href="/" className="hover:underline">Home</Link>
+            <span className="mx-1">/</span>
+            <Link href="/services" className="hover:underline">Services</Link>
+            <span className="mx-1">/</span>
+            <span className="text-white">Virtual Staging</span>
+          </nav>
+          {/* Badge */}
+          <div className="mb-4">
+            <span className="inline-block bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-full px-5 py-2 tracking-wide">VIRTUAL STAGING</span>
           </div>
+          {/* Headline */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-4 text-white max-w-4xl leading-tight text-left">
+            Transform Empty Spaces Into<br />Dream Homes
+          </h1>
+          {/* Supporting Paragraph */}
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-4 text-left">
+            Professional virtual staging that sells properties faster at a fraction of traditional staging costs. Showcase the true potential of any space.
+          </p>
         </div>
       </section>
 
@@ -516,25 +507,7 @@ export default function VirtualStagingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-[#2d4654] to-[#1a2b36] text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] opacity-10" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-serif mb-6">Ready to Transform Your Listings?</h2>
-            <p className="text-xl mb-8 text-gray-200">
-              Join thousands of agents using virtual staging to sell properties faster and for more money
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-[#2d4654] hover:bg-gray-100">
-                <Link href="/contact">Start Your First Project</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                <Link href="/pricing">View Pricing</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </div>
   )
 }
