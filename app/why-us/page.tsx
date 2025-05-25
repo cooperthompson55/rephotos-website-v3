@@ -414,7 +414,7 @@ export default function WhyUsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] rounded-lg overflow-hidden">
               <Image
-                src="https://ext.same-assets.com/148878086/3938940115.jpeg"
+                src="/images/why-us/1.jpg"
                 alt="Professional photography equipment"
                 fill
                 className="object-cover"

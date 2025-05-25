@@ -179,9 +179,9 @@ export function MainNav() {
             <Button
               variant="ghost"
               size="icon"
-              className={`${scrolled ? "bg-gray-100" : "bg-black/30"} hover:bg-black/50 md:hidden lg:hidden`}
+              className={`flex items-center justify-center ${scrolled ? "bg-gray-100" : "bg-black/30"} hover:bg-black/50 md:hidden lg:hidden p-0 w-12 h-12`}
             >
-              <Menu className={`h-6 w-6 ${scrolled ? "text-primary" : "text-white"}`} />
+              <Menu className={`h-6 w-6 mx-auto my-auto ${scrolled ? "text-primary" : "text-white"}`} />
               <span className="sr-only">Toggle menu</span>
             </Button>
           </SheetTrigger>

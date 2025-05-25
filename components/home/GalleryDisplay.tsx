@@ -6,24 +6,24 @@ import Image from "next/image"
 // Reduced number of images
 const galleryImages = [
   {
-    src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-    alt: "Modern living room with large windows",
+    src: "/images/home/row_1.jpg",
+    alt: "Gallery image 1",
   },
   {
-    src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
-    alt: "Bright kitchen with island",
+    src: "/images/home/row_2.jpg",
+    alt: "Gallery image 2",
   },
   {
-    src: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea",
-    alt: "Cozy bedroom interior",
+    src: "/images/home/row_3.jpg",
+    alt: "Gallery image 3",
   },
   {
-    src: "https://images.unsplash.com/photo-1600585154526-990dced4db0d",
-    alt: "Modern bathroom design",
+    src: "/images/home/row_4.jpg",
+    alt: "Gallery image 4",
   },
   {
-    src: "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f5",
-    alt: "Modern home exterior",
+    src: "/images/home/row_5.jpg",
+    alt: "Gallery image 5",
   },
 ]
 

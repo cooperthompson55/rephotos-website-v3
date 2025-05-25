@@ -375,22 +375,22 @@ export default function CareersPage() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className={`flex items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+                  className={`flex flex-col items-center md:items-stretch ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
                 >
-                  <div className="flex-1 md:w-1/2">
+                  <div className="w-full md:flex-1 md:w-1/2 flex justify-center md:block">
                     <Card
-                      className={`${index % 2 === 0 ? "md:mr-8" : "md:ml-8"} hover:shadow-lg transition-shadow duration-300`}
+                      className={`${index % 2 === 0 ? "md:mr-8" : "md:ml-8"} hover:shadow-lg transition-shadow duration-300 w-full max-w-md md:max-w-none`}
                     >
                       <CardHeader>
-                        <div className="flex items-center space-x-4">
-                          <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                        <div className="flex flex-col items-center md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
+                          <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-2 md:mb-0">
                             {step.step}
                           </div>
-                          <CardTitle className="text-xl font-spectral">{step.title}</CardTitle>
+                          <CardTitle className="text-xl font-spectral text-center md:text-left">{step.title}</CardTitle>
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-gray-600">{step.description}</p>
+                        <p className="text-gray-600 text-center md:text-left">{step.description}</p>
                       </CardContent>
                     </Card>
                   </div>
@@ -398,7 +398,7 @@ export default function CareersPage() {
                   {/* Timeline dot */}
                   <div className="hidden md:block w-6 h-6 bg-primary rounded-full border-4 border-white shadow-lg z-10" />
 
-                  <div className="flex-1 md:w-1/2" />
+                  <div className="md:flex-1 md:w-1/2" />
                 </motion.div>
               ))}
             </div>
