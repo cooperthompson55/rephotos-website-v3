@@ -8,7 +8,7 @@ export function CaseStudySection() {
         <div className="max-w-6xl mx-auto">
           <div className="rounded-xl overflow-hidden shadow-xl flex flex-col md:flex-row">
             {/* Left content side */}
-            <div className="bg-[#1e3a47] text-white p-8 md:p-12 flex flex-col justify-center md:w-1/2">
+            <div className="bg-[#262F3F] text-white p-8 md:p-12 flex flex-col justify-center md:w-1/2">
               <div className="text-[#f3a952] uppercase tracking-wider text-sm font-medium mb-4">Behind the Scenes</div>
               <h3 className="text-3xl md:text-4xl font-serif font-light mb-6">The Art of the Sale</h3>
               <p className="text-gray-300 mb-8">
@@ -17,7 +17,7 @@ export function CaseStudySection() {
               <div>
                 <Link
                   href="/portfolio/the-art-of-the-eichler"
-                  className="inline-block bg-white text-[#1e3a47] px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors"
+                  className="inline-block bg-white text-[#262F3F] px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors"
                 >
                   Learn more
                 </Link>

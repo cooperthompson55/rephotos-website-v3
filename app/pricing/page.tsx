@@ -21,6 +21,7 @@ import {
   Globe,
   PenTool,
 } from "lucide-react"
+import { QuoteModuleSection } from "@/components/home/QuoteModuleSection"
 
 // Pricing data
 const pricingData = {
@@ -253,6 +254,28 @@ const packages = [
   },
 ]
 
+// Add this type above the packages section
+
+type PackageFeature = {
+  label: string;
+  included: boolean;
+  gold?: boolean;
+  bold?: boolean;
+};
+
+type PackageCard = {
+  name: string;
+  price: string;
+  subtitle: string;
+  sqft: string;
+  sqftExtra: string;
+  discount: string;
+  discountColor: string;
+  buttonColor: string;
+  borderColor?: string;
+  features: PackageFeature[];
+};
+
 export default function PricingPage() {
   const [selectedSize, setSelectedSize] = useState("<1000")
   const [selectedServices, setSelectedServices] = useState<string[]>([])
@@ -328,95 +351,432 @@ export default function PricingPage() {
 
           {/* Pre-designed Packages */}
           <div className="mb-24">
-            <h3 className="text-2xl font-serif mb-8 text-center">Popular Packages</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {packages.map((pkg, index) => (
+            <h2 className="text-4xl font-serif font-bold mb-2 text-[#262F3F]">Packages</h2>
+            <p className="text-lg text-[#262F3F] mb-8">Save on our most popular services and check out in a flash with a package. Pricing is straightforward and additional services can be added à la carte.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {([
+                {
+                  name: "ESSENTIALS",
+                  price: "$800",
+                  subtitle: "starting",
+                  sqft: "up to 999 sq ft",
+                  sqftExtra: "+$50 per 1,000 sq ft",
+                  discount: "$150 discount",
+                  discountColor: "text-[#B42222]",
+                  buttonColor: "bg-[#262F3F] text-white",
+                  features: [
+                    { label: "Premium Photography", included: true },
+                    { label: "3 Virtual Twilight Images", included: true },
+                    { label: "Property Website", included: true },
+                    { label: "Custom Domain for 1 Year", included: true },
+                    { label: "Photo Slideshow", included: true },
+                    { label: "No 3D Tour", included: false },
+                    { label: "No Video Tour", included: false },
+                    { label: "No Aerial Photos", included: false },
+                    { label: "No Aerial Video", included: false },
+                    { label: "No Social Media Teaser", included: false },
+                    { label: "No MLS Video Edit", included: false },
+                    { label: "No Lifestyle Video", included: false },
+                  ],
+                },
+                {
+                  name: "DELUXE TOUR",
+                  price: "$1,000",
+                  subtitle: "starting",
+                  sqft: "up to 999 sq ft",
+                  sqftExtra: "+$100 per 1,000 sq ft",
+                  discount: "$200 discount",
+                  discountColor: "text-[#B42222]",
+                  buttonColor: "bg-[#262F3F] text-white",
+                  features: [
+                    { label: "Premium Photography", included: true },
+                    { label: "3 Virtual Twilight Images", included: true },
+                    { label: "Property Website", included: true },
+                    { label: "Custom Domain for 1 Year", included: true },
+                    { label: "Photo Slideshow", included: true },
+                    { label: "Matterport 3D Tour", included: true },
+                    { label: "No Video Tour", included: false },
+                    { label: "No Aerial Photos", included: false },
+                    { label: "No Aerial Video", included: false },
+                    { label: "No Social Media Teaser", included: false },
+                    { label: "No MLS Video Edit", included: false },
+                    { label: "No Lifestyle Video", included: false },
+                  ],
+                },
+                {
+                  name: "PREMIER AGENT",
+                  price: "$1,500",
+                  subtitle: "starting",
+                  sqft: "up to 999 sq ft",
+                  sqftExtra: "+$200 per 1,000 sq ft",
+                  discount: "$550 discount",
+                  discountColor: "text-[#B42222]",
+                  buttonColor: "bg-[#f3a952] text-[#262F3F]",
+                  borderColor: "border-[#f3a952]",
+                  features: [
+                    { label: "Premium Photography", included: true, gold: true },
+                    { label: "3 Virtual Twilight Images", included: true, gold: true },
+                    { label: "Property Website", included: true, gold: true },
+                    { label: "Custom Domain for 1 Year", included: true, gold: true },
+                    { label: "Photo Slideshow", included: true, gold: true },
+                    { label: "Matterport 3D Tour", included: true, gold: true },
+                    { label: "60–90s Cinematic Video", included: true, gold: true },
+                    { label: "1–7 Aerial Photos", included: true, gold: true },
+                    { label: "15–30s Aerial Video", included: true, gold: true },
+                    { label: "Social Media Teaser", included: true, gold: true },
+                    { label: "MLS Video Edit", included: true, gold: true },
+                    { label: "No Lifestyle Video", included: false },
+                  ],
+                },
+                {
+                  name: "ELITE AGENT",
+                  price: "$2,000",
+                  subtitle: "starting",
+                  sqft: "up to 999 sq ft",
+                  sqftExtra: "+$200 per 1,000 sq ft",
+                  discount: "$750 discount",
+                  discountColor: "text-[#B42222]",
+                  buttonColor: "bg-[#262F3F] text-white",
+                  features: [
+                    { label: "Premium Photography", included: true },
+                    { label: "6 Virtual Twilight Images", included: true },
+                    { label: "Property Website", included: true },
+                    { label: "Custom Domain for 1 Year", included: true },
+                    { label: "Photo Slideshow", included: true },
+                    { label: "Matterport 3D Tour", included: true },
+                    { label: "2–3m Luxury Video", included: true, bold: true },
+                    { label: "5–10 Aerial Photos", included: true, bold: true },
+                    { label: "15–30s Aerial Video", included: true, bold: true },
+                    { label: "Social Media Teaser", included: true },
+                    { label: "MLS Video Edit", included: true },
+                    { label: "15–30s Lifestyle Video", included: true, bold: true },
+                  ],
+                },
+              ] as PackageCard[]).map((pkg, idx) => (
                 <div
-                  key={index}
-                  className={`relative rounded-xl overflow-hidden border flex flex-col ${pkg.popular ? "border-secondary shadow-lg" : "border-gray-200"}`}
+                  key={pkg.name}
+                  className={`flex flex-col rounded-xl border ${pkg.borderColor || "border-gray-200"} bg-white p-6 shadow-sm transition-all`}
                 >
-                  {pkg.popular && (
-                    <div className="absolute top-0 right-0 bg-secondary text-white px-4 py-1 z-10 rounded-bl-lg">
-                      Most Popular
-                    </div>
-                  )}
-                  <div className="h-48 relative">
-                    <Image src={pkg.image || "/placeholder.svg"} alt={pkg.name} fill className="object-cover" />
+                  <div className="mb-2 text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86]">{pkg.name}</div>
+                  <div className="flex items-end gap-2 mb-1">
+                    <span className="text-4xl font-mazzard font-semibold text-[#262F3F]">{pkg.price}</span>
+                    <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">{pkg.subtitle}</span>
                   </div>
-                  <div className="p-4 sm:p-6 bg-white flex flex-col flex-1">
-                    <h4 className="text-xl font-medium mb-2">{pkg.name}</h4>
-                    <p className="text-gray-600 mb-4 text-sm sm:text-base flex-1">{pkg.description}</p>
-                    <div className="text-2xl sm:text-3xl font-light mb-4">{pkg.price}</div>
-                    <ul className="mb-6 space-y-2 text-sm sm:text-base flex-1">
+                  <div className="text-xs text-[#6B7A86] mb-1 font-mazzard font-medium">{pkg.sqft}</div>
+                  <div className="text-xs text-[#6B7A86] mb-2 font-mazzard font-medium">{pkg.sqftExtra}</div>
+                  <div className={`mb-2 text-sm font-mazzard font-semibold ${pkg.discountColor}`}>{pkg.discount}</div>
+                  <BookButton href="/quote" size="lg" className={`w-full mb-4 mt-2 font-mazzard font-semibold ${pkg.buttonColor}`}>Get quote</BookButton>
+                  <ul className="flex-1 mb-0 space-y-1 text-sm">
                       {pkg.features.map((feature, i) => (
-                        <li key={i} className="flex items-center">
-                          <span className="text-secondary mr-2">✓</span>
-                          <span>{feature}</span>
+                      <li key={i} className={`flex items-center gap-2 ${feature.included ? (feature.gold ? "text-[#f3a952]" : "text-[#262F3F]") : "text-[#B0B7C3] line-through"} ${feature.bold ? "font-semibold" : ""}`}>
+                        {feature.included ? (
+                          <span className={`inline-block w-4 h-4 rounded-full flex items-center justify-center ${feature.gold ? "bg-[#f3a952] text-white" : "bg-[#262F3F] text-white"}`}>
+                            ✓
+                          </span>
+                        ) : (
+                          <span className="inline-block w-4 h-4 rounded-full bg-[#E5E7EB] text-[#B0B7C3] flex items-center justify-center">✗</span>
+                        )}
+                        <span>{feature.label}</span>
                         </li>
                       ))}
                     </ul>
-                    <BookButton href="/quote" className="w-full mt-auto">
-                      Get Started
-                    </BookButton>
-                  </div>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Quote Module Section */}
+          <QuoteModuleSection />
+
           {/* Individual Services Pricing */}
           <div className="mb-24">
-            <h3 className="text-2xl font-serif mb-8 text-center">Individual Services</h3>
-
-            <Tabs defaultValue="<1000" className="w-full" onValueChange={setSelectedSize}>
-              <div className="flex justify-center mb-8 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0">
-                <TabsList className="grid grid-cols-5 w-full max-w-3xl min-w-[600px] md:min-w-0">
-                  <TabsTrigger value="<1000">Under 1000 sq ft</TabsTrigger>
-                  <TabsTrigger value="1000-2000">1000-2000 sq ft</TabsTrigger>
-                  <TabsTrigger value="2000-3000">2000-3000 sq ft</TabsTrigger>
-                  <TabsTrigger value="3000-4000">3000-4000 sq ft</TabsTrigger>
-                  <TabsTrigger value="4000-5000">4000-5000 sq ft</TabsTrigger>
-                </TabsList>
+            <h2 className="text-3xl font-serif font-bold mb-2 text-[#262F3F]">Individual services</h2>
+            <p className="text-lg text-[#262F3F] mb-8">Mix and match our premium services to create a custom marketing experience for your listing or project, or add services to a package.</p>
+            <div className="flex flex-col gap-10">
+              {/* Premium Photography */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                {/* Image and Get quote card: hidden on mobile, visible on desktop */}
+                <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F]">
+                  <img src="/images/pricing/photography.jpg" alt="Premium Photography" className="absolute inset-0 w-full h-full object-cover object-bottom" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
+                  <div className="relative z-20 p-8 flex flex-col justify-end h-full">
+                    <div className="mt-auto">
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Premium Photography</h3>
+                      <p className="text-white text-base font-normal mb-4">Help any property stand out on the MLS, social media, and more with stunning photography by our award-winning Visual Artists</p>
+                      <BookButton href="/quote" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold">Get quote</BookButton>
+                    </div>
+                  </div>
+                </div>
+                {/* Price/details card: visible on all screens */}
+                <div className="col-span-1 md:col-span-1">
+                  <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
+                    <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
+                      <img src="/images/pricing/photography.jpg" alt="Premium Photography" className="w-full h-48 object-cover object-bottom" />
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">PHOTOGRAPHY</div>
+                        <div className="flex items-end gap-2 mb-1">
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">$300</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                        </div>
+                        <div className="text-xs text-[#6B7A86] mb-1 font-mazzard font-medium">up to 999 sq ft</div>
+                        <div className="text-xs text-[#6B7A86] mb-2 font-mazzard font-medium">+$50 per 1,000 sq ft</div>
+                        <div className="mb-2 text-sm font-mazzard font-semibold text-[#B42222]">Recommended for most listings</div>
+                        <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
+                          <li className="flex justify-between"><span>Residential</span><span className="font-semibold">$300+</span></li>
+                          <li className="flex justify-between"><span>Commercial & Hourly</span><span className="font-semibold">$300/hr</span></li>
+                          <li className="flex justify-between"><span>Twilight Shoot</span><span className="font-semibold">$350</span></li>
+                          <li className="flex justify-between"><span>Pre-Marketing Mini Shoot</span><span className="font-semibold">$200</span></li>
+                        </ul>
+                        <div className="bg-[#E5E7EB] text-[#262F3F] text-xs rounded-md px-3 py-2 mb-4 flex items-center gap-2"><span>ⓘ</span>Automatically save $100 on any full Premium Photography service by adding a Property Website</div>
+                      </div>
+                      <BookButton href="/services/photography" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Learn more</BookButton>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {Object.keys(pricingData).map((size) => (
-                <TabsContent key={size} value={size} className="mt-0">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {services.map((service) => {
-                      const price =
-                        pricingData[size as keyof typeof pricingData][service.id as keyof (typeof pricingData)["<1000"]]
-                      return (
-                        <Card key={service.id} className="overflow-hidden flex flex-col h-full">
-                          <div className="h-32 sm:h-40 relative">
-                            <Image
-                              src={service.image || "/placeholder.svg"}
-                              alt={service.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <CardHeader className="p-3 sm:p-6">
-                            <div className="flex items-center gap-2">
-                              <div className="bg-primary/10 p-1.5 sm:p-2 rounded-full">{service.icon}</div>
-                              <CardTitle className="text-base sm:text-lg">{service.name}</CardTitle>
-                            </div>
-                            <CardDescription className="text-xs sm:text-sm mt-1">{service.description}</CardDescription>
-                          </CardHeader>
-                          <CardContent className="p-3 sm:p-6 pt-0 flex-grow">
-                            <div className="text-xl sm:text-2xl font-light">{formatPrice(price)}</div>
-                          </CardContent>
-                          <CardFooter className="p-3 sm:p-6 pt-0 mt-auto">
-                            <Button asChild className="w-full bg-[#3182ce] hover:bg-[#2c5282] text-sm sm:text-base">
-                              <Link href="/quote">Order Now</Link>
-                            </Button>
-                          </CardFooter>
-                        </Card>
-                      )
-                    })}
+              {/* Video (Social Media & Cinematic, both shot on iPhone) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                {/* Image and Get quote card: hidden on mobile, visible on desktop */}
+                <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F] order-1 md:order-2">
+                  <img src="/images/services/videography/iphone-video.jpg" alt="Cinematic Video Tours" className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
+                  <div className="relative z-20 p-8 flex flex-col justify-end h-full">
+                    <div className="mt-auto">
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Cinematic Video Tours</h3>
+                      <p className="text-white text-base font-normal mb-4">Transform any property into the main character of its own unique story with awe-inspiring Cinematic Video Tours, shot on iPhone</p>
+                      <BookButton href="/quote" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold">Get quote</BookButton>
+                    </div>
                   </div>
-                </TabsContent>
-              ))}
-            </Tabs>
+                </div>
+                {/* Price/details card: visible on all screens */}
+                <div className="col-span-1 md:col-span-1">
+                  <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
+                    <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
+                      <img src="/images/services/videography/iphone-video.jpg" alt="Cinematic Video Tours" className="w-full h-48 object-cover" />
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">VIDEO TOURS</div>
+                        <div className="flex items-end gap-2 mb-1">
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">$400</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                        </div>
+                        <div className="text-xs text-[#6B7A86] mb-1 font-mazzard font-medium">up to 999 sq ft</div>
+                        <div className="text-xs text-[#6B7A86] mb-2 font-mazzard font-medium">+$100 per 1,000 sq ft</div>
+                        <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
+                          <li className="flex justify-between"><span>Residential</span><span className="font-semibold">$400+</span></li>
+                          <li className="flex justify-between"><span>Commercial & Hourly</span><span className="font-semibold">$300/hr</span></li>
+                          <li className="flex justify-between"><span>Agent Introduction Add-On</span><span className="font-semibold">$200</span></li>
+                          <li className="flex justify-between"><span>Lifestyle Video Add-On</span><span className="font-semibold">$300/hr</span></li>
+                        </ul>
+                      </div>
+                      <BookButton href="/services/videography" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Learn more</BookButton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3D Virtual Tours */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                {/* Image and Get quote card: hidden on mobile, visible on desktop */}
+                <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F]">
+                  <img src="/images/services/virtual-tours/3d-tour.jpg" alt="Matterport 3D Virtual Tours" className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
+                  <div className="relative z-20 p-8 flex flex-col justify-end h-full">
+                    <div className="mt-auto">
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Matterport 3D Virtual Tours</h3>
+                      <p className="text-white text-base font-normal mb-4">Hand clients and buyers the keys from anywhere in the world with industry-leading Matterport 3D Virtual Tours</p>
+                      <BookButton href="/quote" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold">Get quote</BookButton>
+                    </div>
+                  </div>
+                </div>
+                {/* Price/details card: visible on all screens */}
+                <div className="col-span-1 md:col-span-1">
+                  <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
+                    <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
+                      <img src="/images/services/virtual-tours/3d-tour.jpg" alt="Matterport 3D Virtual Tours" className="w-full h-48 object-cover" />
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">3D VIRTUAL TOURS</div>
+                        <div className="flex items-end gap-2 mb-1">
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">$250</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                        </div>
+                        <div className="text-xs text-[#6B7A86] mb-1 font-mazzard font-medium">up to 999 sq ft</div>
+                        <div className="text-xs text-[#6B7A86] mb-2 font-mazzard font-medium">+$50 per 1,000 sq ft</div>
+                        <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
+                          <li className="flex justify-between"><span>Commercial (8,000+ sq ft)</span><span className="font-semibold">$250/hr</span></li>
+                          <li className="flex justify-between"><span>Detached Structure Scan</span><span className="font-semibold">$50</span></li>
+                          <li className="flex justify-between"><span>Floor Plan from Matterport</span><span className="font-semibold">$150 starting</span></li>
+                        </ul>
+                      </div>
+                      <BookButton href="/services/virtual-tours" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Learn more</BookButton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Aerial Photos & Video */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                {/* Image and Get quote card: hidden on mobile, visible on desktop */}
+                <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F] order-1 md:order-2">
+                  <img src="/images/services/aerial/aerial.jpg" alt="Aerial Photos & Video" className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
+                  <div className="relative z-20 p-8 flex flex-col justify-end h-full">
+                    <div className="mt-auto">
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Aerial Photos & Video</h3>
+                      <p className="text-white text-base font-normal mb-4">Elevate any home or property above the rest with incredible drone footage captured by our FAA-certified Visual Artists</p>
+                      <BookButton href="/quote" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold">Get quote</BookButton>
+                    </div>
+                  </div>
+                </div>
+                {/* Price/details card: visible on all screens */}
+                <div className="col-span-1 md:col-span-1">
+                  <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
+                    <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
+                      <img src="/images/services/aerial/aerial.jpg" alt="Aerial Photos & Video" className="w-full h-48 object-cover" />
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">AERIAL PHOTOS & VIDEO</div>
+                        <div className="flex items-end gap-2 mb-1">
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">$300</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                        </div>
+                        <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
+                          <li className="flex justify-between"><span>Aerial Twilight Photography</span><span className="font-semibold">$400</span></li>
+                          <li className="flex justify-between"><span>Aerial Photo Add-On (1-7 photos)</span><span className="font-semibold">$200</span></li>
+                          <li className="flex justify-between"><span>Aerial Video Add-On (15-30s)</span><span className="font-semibold">$250</span></li>
+                        </ul>
+                        <div className="bg-[#E5E7EB] text-[#262F3F] text-xs rounded-md px-3 py-2 mb-4 flex items-center gap-2"><span>ⓘ</span>Aerial Add-Ons require the purchase of a Premium Photography or Cinematic Video service</div>
+                      </div>
+                      <BookButton href="/services/aerial" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Learn more</BookButton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Virtual Services (Staging and Twilight) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                {/* Image and Get quote card: hidden on mobile, visible on desktop */}
+                <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F]">
+                  <img src="/images/services/virtual-staging/staging.jpg" alt="Virtual Services" className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
+                  <div className="relative z-20 p-8 flex flex-col justify-end h-full">
+                    <div className="mt-auto">
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Virtual Services</h3>
+                      <p className="text-white text-base font-normal mb-4">Beautifully stage, declutter, or even remodel any space with Virtual Service magic—no moving truck required</p>
+                      <BookButton href="/quote" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold">Get quote</BookButton>
+                    </div>
+                  </div>
+                </div>
+                {/* Price/details card: visible on all screens */}
+                <div className="col-span-1 md:col-span-1">
+                  <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
+                    <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
+                      <img src="/images/services/virtual-staging/staging.jpg" alt="Virtual Services" className="w-full h-48 object-cover" />
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">VIRTUAL SERVICES</div>
+                        <div className="flex items-end gap-2 mb-1">
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">$100</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                        </div>
+                        <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
+                          <li className="flex justify-between"><span>Virtual Twilight Add-Ons</span><span className="font-semibold">$100/img</span></li>
+                          <li className="flex justify-between"><span>Virtual Staging/Add-Ons</span><span className="font-semibold">$100/img</span></li>
+                          <li className="flex justify-between"><span>Virtual Remodel/Add-On</span><span className="font-semibold">$300/img</span></li>
+                        </ul>
+                      </div>
+                      <BookButton href="/services/virtual-staging" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Learn more</BookButton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Property Websites */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                {/* Image and Get quote card: hidden on mobile, visible on desktop */}
+                <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F] order-1 md:order-2">
+                  <img src="/images/services/websites/website.jpg" alt="Premium Property Websites" className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
+                  <div className="relative z-20 p-8 flex flex-col justify-end h-full">
+                    <div className="mt-auto">
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Premium Property Websites</h3>
+                      <p className="text-white text-base font-normal mb-4">Control the narrative of your listing or project and showcase all of your beautiful content in one place</p>
+                      <BookButton href="/quote" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold">Get quote</BookButton>
+                    </div>
+                  </div>
+                </div>
+                {/* Price/details card: visible on all screens */}
+                <div className="col-span-1 md:col-span-1">
+                  <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
+                    <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
+                      <img src="/images/services/websites/website.jpg" alt="Premium Property Websites" className="w-full h-48 object-cover" />
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">PROPERTY WEBSITES</div>
+                        <div className="flex items-end gap-2 mb-1">
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">$250</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                        </div>
+                        <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
+                          <li className="flex justify-between"><span>Custom Domain for 1 Year</span><span className="font-semibold">Included</span></li>
+                          <li className="flex justify-between"><span>Neighborhood Photo Gallery</span><span className="font-semibold">Included</span></li>
+                          <li className="flex justify-between"><span>Automatically live in 1-2 days</span><span className="font-semibold">Included</span></li>
+                        </ul>
+                      </div>
+                      <BookButton href="/services/websites" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Learn more</BookButton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floor Plans */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                {/* Image and Get quote card: hidden on mobile, visible on desktop */}
+                <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F]">
+                  <img src="/images/services/floor-plans/floorplan.jpg" alt="Professional Floor & Site Plans" className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
+                  <div className="relative z-20 p-8 flex flex-col justify-end h-full">
+                    <div className="mt-auto">
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Professional Floor & Site Plans</h3>
+                      <p className="text-white text-base font-normal mb-4">Land more qualified buyers and clients by showing them the layout of the property before they show up</p>
+                      <BookButton href="/quote" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold">Get quote</BookButton>
+                    </div>
+                  </div>
+                </div>
+                {/* Price/details card: visible on all screens */}
+                <div className="col-span-1 md:col-span-1">
+                  <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
+                    <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
+                      <img src="/images/services/floor-plans/floorplan.jpg" alt="Professional Floor & Site Plans" className="w-full h-48 object-cover" />
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">FLOOR PLANS</div>
+                        <div className="flex items-end gap-2 mb-1">
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">$250</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                        </div>
+                        <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
+                          <li className="flex justify-between"><span>Studio to Existing Plans</span><span className="font-semibold">$100</span></li>
+                          <li className="flex justify-between"><span>Interactive Floor Plan</span><span className="font-semibold">$100</span></li>
+                          <li className="flex justify-between"><span>Place Plan from Hotspot</span><span className="font-semibold">$50/room</span></li>
+                        </ul>
+                          </div>
+                      <BookButton href="/services/floor-plans" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Learn more</BookButton>
+                            </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Build Your Own Package */}

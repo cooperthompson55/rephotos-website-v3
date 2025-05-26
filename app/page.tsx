@@ -23,7 +23,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start relative z-10">
             <div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#2d4654] leading-tight mb-6">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#262F3F] leading-tight mb-6">
                 Southern Ontario's best real estate photography and marketing
               </h2>
               <p className="text-lg text-gray-600 mb-8">
@@ -33,7 +33,7 @@ export default function Home() {
               </p>
               <a
                 href="/why-rephotos"
-                className="inline-flex items-center justify-center px-6 py-3 bg-[#2d4654] text-white font-medium rounded-md hover:bg-[#1d3644] transition-colors"
+                className="inline-flex items-center justify-center px-6 py-3 bg-[#262F3F] text-white font-medium rounded-md hover:bg-[#1d3644] transition-colors"
               >
                 Why RePhotos
               </a>

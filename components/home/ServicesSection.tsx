@@ -69,7 +69,7 @@ export function ServicesSection() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h6 className="text-[#B42222] uppercase tracking-wider text-sm font-medium mb-2">OUR SERVICES</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light text-[#2d4654]">Unlock every home's potential</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-light text-[#262F3F]">Unlock every home's potential</h2>
           </div>
           <Link
             href="/services"
