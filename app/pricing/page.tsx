@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -105,7 +105,9 @@ const pricingData = {
     customDomainName: 24.99,
     virtualTwilight: 49.99,
   },
-}
+} as const;
+
+type SizeKey = keyof typeof pricingData;
 
 // Service details with icons and descriptions
 const services = [
@@ -209,77 +211,98 @@ const services = [
   },
 ]
 
-// Pre-defined packages
-const packages = [
-  {
-    name: "Essential",
-    description: "Perfect for smaller properties and budget-conscious sellers",
-    price: "$299.99",
-    features: ["HDR Photography", "Floor Plan", "Property Website"],
-    popular: false,
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000",
-  },
-  {
-    name: "Premium",
-    description: "Our most popular package for standard residential properties",
-    price: "$499.99",
-    features: [
-      "HDR Photography",
-      "Cinematic Video",
-      "Virtual Tour",
-      "Floor Plan",
-      "Property Website",
-      "Social Media Posts",
-    ],
-    popular: true,
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000",
-  },
-  {
-    name: "Luxury",
-    description: "Comprehensive coverage for high-end properties",
-    price: "$799.99",
-    features: [
-      "HDR Photography",
-      "Cinematic Video",
-      "Virtual Tour",
-      "Drone Aerial Photos & Video",
-      "Floor Plan (2D & 3D)",
-      "Twilight Photography",
-      "Social Media Reel",
-      "Property Website",
-      "Custom Domain Name",
-    ],
-    popular: false,
-    image: "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f5?q=80&w=2000",
-  },
-]
-
-// Add this type above the packages section
-
-type PackageFeature = {
-  label: string;
-  included: boolean;
-  gold?: boolean;
-  bold?: boolean;
-};
-
-type PackageCard = {
-  name: string;
-  price: string;
-  subtitle: string;
-  sqft: string;
-  sqftExtra: string;
-  discount: string;
-  discountColor: string;
-  buttonColor: string;
-  borderColor?: string;
-  features: PackageFeature[];
-};
-
 export default function PricingPage() {
-  const [selectedSize, setSelectedSize] = useState("<1000")
+  const [selectedSize, setSelectedSize] = useState<SizeKey>("<1000")
   const [selectedServices, setSelectedServices] = useState<string[]>([])
   const [totalPrice, setTotalPrice] = useState(0)
+
+  // Add this type above the packages section
+  type PackageFeature = {
+    label: string;
+    included: boolean;
+    gold?: boolean;
+    bold?: boolean;
+  };
+
+  type PackageCard = {
+    name: string;
+    price: string;
+    subtitle: string;
+    sqft: string;
+    discount: string;
+    discountColor: string;
+    buttonColor: string;
+    borderColor?: string;
+    features: PackageFeature[];
+    image: string;
+  };
+
+  // Add this helper for slider stops
+  const sizeOptions: { value: SizeKey; label: string; range: string }[] = [
+    { value: "<1000", label: "1", range: "0–999 sq ft" },
+    { value: "1000-2000", label: "2", range: "1000–1999 sq ft" },
+    { value: "2000-3000", label: "3", range: "2000–2999 sq ft" },
+    { value: "3000-4000", label: "4", range: "3000–3999 sq ft" },
+    { value: "4000-5000", label: "5", range: "4000–4999 sq ft" },
+  ];
+
+  // Pricing and discount maps for each package
+  const essentialsPriceMap: Record<SizeKey, number> = {
+    '<1000': 179.99,
+    '1000-2000': 219.99,
+    '2000-3000': 269.99,
+    '3000-4000': 309.99,
+    '4000-5000': 359.99,
+  };
+  const essentialsDiscountMap: Record<SizeKey, string> = {
+    '<1000': 'Save $20',
+    '1000-2000': 'Save $25',
+    '2000-3000': 'Save $30',
+    '3000-4000': 'Save $35',
+    '4000-5000': 'Save $40',
+  };
+  const deluxePriceMap: Record<SizeKey, number> = {
+    '<1000': 369.99,
+    '1000-2000': 429.99,
+    '2000-3000': 499.99,
+    '3000-4000': 569.99,
+    '4000-5000': 629.99,
+  };
+  const deluxeDiscountMap: Record<SizeKey, string> = {
+    '<1000': 'Save $65',
+    '1000-2000': 'Save $75',
+    '2000-3000': 'Save $90',
+    '3000-4000': 'Save $100',
+    '4000-5000': 'Save $115',
+  };
+  const marketingProPriceMap: Record<SizeKey, number> = {
+    '<1000': 559.99,
+    '1000-2000': 639.99,
+    '2000-3000': 709.99,
+    '3000-4000': 779.99,
+    '4000-5000': 849.99,
+  };
+  const marketingProDiscountMap: Record<SizeKey, string> = {
+    '<1000': 'Save $120',
+    '1000-2000': 'Save $140',
+    '2000-3000': 'Save $165',
+    '3000-4000': 'Save $185',
+    '4000-5000': 'Save $205',
+  };
+  const premiumSellerPriceMap: Record<SizeKey, number> = {
+    '<1000': 799.99,
+    '1000-2000': 909.99,
+    '2000-3000': 1019.99,
+    '3000-4000': 1129.99,
+    '4000-5000': 1239.99,
+  };
+  const premiumSellerDiscountMap: Record<SizeKey, string> = {
+    '<1000': 'Save $200',
+    '1000-2000': 'Save $225',
+    '2000-3000': 'Save $255',
+    '3000-4000': 'Save $280',
+    '4000-5000': 'Save $305',
+  };
 
   const handleServiceToggle = (serviceId: string) => {
     setSelectedServices((prev) => {
@@ -307,7 +330,7 @@ export default function PricingPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80 z-0"></div>
 
         {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] bg-repeat opacity-10 z-0"></div>
+        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] bg-no-repeat bg-cover opacity-10 z-0"></div>
 
         {/* Decorative elements */}
         <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-secondary/20 blur-2xl"></div>
@@ -353,104 +376,157 @@ export default function PricingPage() {
           <div className="mb-24">
             <h2 className="text-4xl font-serif font-bold mb-2 text-[#262F3F]">Packages</h2>
             <p className="text-lg text-[#262F3F] mb-8">Save on our most popular services and check out in a flash with a package. Pricing is straightforward and additional services can be added à la carte.</p>
+            {/* Size Selector */}
+            {/* Mobile: slider/progress bar */}
+            <div className="mb-8">
+              <div className="block md:hidden">
+                <div className="text-center mb-2 text-sm font-medium text-[#262F3F]">Select Property Size</div>
+                <div className="flex flex-col items-center">
+                  <div className="relative w-full max-w-xs">
+                    <input
+                      type="range"
+                      min={0}
+                      max={sizeOptions.length - 1}
+                      step={1}
+                      value={sizeOptions.findIndex(opt => opt.value === selectedSize)}
+                      onChange={e => {
+                        const idx = Number(e.target.value)
+                        setSelectedSize(sizeOptions[idx].value)
+                      }}
+                      className="w-full h-2 bg-[#f5efe0] rounded-full appearance-none focus:outline-none transition-all"
+                      style={{ accentColor: '#262F3F' }}
+                      aria-label="Select property size"
+                    />
+                    {/* Slider stops */}
+                    <div className="absolute left-0 top-1/2 w-full flex justify-between items-center pointer-events-none" style={{transform: 'translateY(-50%)'}}>
+                      {sizeOptions.map((opt, i) => (
+                        <span
+                          key={opt.value}
+                          className={`w-4 h-4 rounded-full border-2 box-content flex-shrink-0 ${selectedSize === opt.value ? 'bg-[#262F3F] border-[#262F3F] z-10' : 'bg-white border-[#262F3F]'} transition-all duration-200`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  {/* Range label under slider */}
+                  <div className="mt-3 text-base font-semibold text-[#262F3F]">{sizeOptions.find(opt => opt.value === selectedSize)?.range}</div>
+                </div>
+              </div>
+              {/* Desktop: tabs/pills */}
+              <div className="hidden md:flex flex-col items-center justify-center">
+                <div className="hidden md:block text-center mb-2 text-sm font-medium text-[#262F3F]">Select Property Size</div>
+                <Tabs value={selectedSize} onValueChange={(val) => setSelectedSize(val as SizeKey)} className="w-full max-w-2xl">
+                  <TabsList className="w-full flex bg-[#f5efe0] rounded-full shadow-sm p-1">
+                    {sizeOptions.map(opt => (
+                      <TabsTrigger
+                        key={opt.value}
+                        value={opt.value}
+                        className="flex-1 data-[state=active]:bg-[#262F3F] data-[state=active]:text-white data-[state=active]:scale-105 transition-all rounded-full px-2 py-2 text-xs sm:text-sm font-semibold"
+                      >
+                        {opt.range}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </Tabs>
+              </div>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {([
                 {
-                  name: "ESSENTIALS",
-                  price: "$800",
+                  name: "ESSENTIALS PACKAGE",
+                  price: `$${essentialsPriceMap[selectedSize].toFixed(2)}`,
                   subtitle: "starting",
-                  sqft: "up to 999 sq ft",
-                  sqftExtra: "+$50 per 1,000 sq ft",
-                  discount: "$150 discount",
+                  sqft: `up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1]}`,
+                  discount: essentialsDiscountMap[selectedSize],
                   discountColor: "text-[#B42222]",
                   buttonColor: "bg-[#262F3F] text-white",
                   features: [
-                    { label: "Premium Photography", included: true },
-                    { label: "3 Virtual Twilight Images", included: true },
-                    { label: "Property Website", included: true },
-                    { label: "Custom Domain for 1 Year", included: true },
-                    { label: "Photo Slideshow", included: true },
-                    { label: "No 3D Tour", included: false },
-                    { label: "No Video Tour", included: false },
-                    { label: "No Aerial Photos", included: false },
-                    { label: "No Aerial Video", included: false },
-                    { label: "No Social Media Teaser", included: false },
-                    { label: "No MLS Video Edit", included: false },
-                    { label: "No Lifestyle Video", included: false },
+                    { label: "HDR Photography", included: true },
+                    { label: "1–2 Drone Shots", included: true },
+                    { label: "MLS-Optimized & High-Res Delivery", included: true },
+                    { label: "24-Hour Turnaround", included: true },
+                    { label: "360° Virtual Tour", included: false },
+                    { label: "Floor Plan", included: false },
+                    { label: "Social Media Video", included: false },
+                    { label: "Property Website", included: false },
+                    { label: "Custom Domain", included: false },
+                    { label: "Drone Video", included: false },
+                    { label: "Virtual Staging", included: false },
+                    { label: "3D House Model", included: false },
+                    { label: "Twilight or Virtual Twilight", included: false },
                   ],
+                  image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000",
                 },
                 {
-                  name: "DELUXE TOUR",
-                  price: "$1,000",
+                  name: "DELUXE TOUR PACKAGE",
+                  price: `$${deluxePriceMap[selectedSize].toFixed(2)}`,
                   subtitle: "starting",
-                  sqft: "up to 999 sq ft",
-                  sqftExtra: "+$100 per 1,000 sq ft",
-                  discount: "$200 discount",
+                  sqft: `up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1]}`,
+                  discount: deluxeDiscountMap[selectedSize],
                   discountColor: "text-[#B42222]",
                   buttonColor: "bg-[#262F3F] text-white",
                   features: [
-                    { label: "Premium Photography", included: true },
-                    { label: "3 Virtual Twilight Images", included: true },
-                    { label: "Property Website", included: true },
-                    { label: "Custom Domain for 1 Year", included: true },
-                    { label: "Photo Slideshow", included: true },
-                    { label: "Matterport 3D Tour", included: true },
-                    { label: "No Video Tour", included: false },
-                    { label: "No Aerial Photos", included: false },
-                    { label: "No Aerial Video", included: false },
-                    { label: "No Social Media Teaser", included: false },
-                    { label: "No MLS Video Edit", included: false },
-                    { label: "No Lifestyle Video", included: false },
+                    { label: "HDR Photography", included: true },
+                    { label: "2–3 Drone Shots", included: true },
+                    { label: "360° Virtual Tour", included: true },
+                    { label: "Floor Plan (2D)", included: true },
+                    { label: "MLS-Optimized & High-Res Delivery", included: true },
+                    { label: "Social Media Video", included: false },
+                    { label: "Property Website", included: false },
+                    { label: "Custom Domain", included: false },
+                    { label: "Drone Video", included: false },
+                    { label: "Virtual Staging", included: false },
+                    { label: "3D House Model", included: false },
+                    { label: "Twilight or Virtual Twilight", included: false },
                   ],
+                  image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000",
                 },
                 {
-                  name: "PREMIER AGENT",
-                  price: "$1,500",
+                  name: "MARKETING PRO PACKAGE",
+                  price: `$${marketingProPriceMap[selectedSize].toFixed(2)}`,
                   subtitle: "starting",
-                  sqft: "up to 999 sq ft",
-                  sqftExtra: "+$200 per 1,000 sq ft",
-                  discount: "$550 discount",
+                  sqft: `up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1]}`,
+                  discount: marketingProDiscountMap[selectedSize],
                   discountColor: "text-[#B42222]",
                   buttonColor: "bg-[#f3a952] text-[#262F3F]",
-                  borderColor: "border-[#f3a952]",
                   features: [
-                    { label: "Premium Photography", included: true, gold: true },
-                    { label: "3 Virtual Twilight Images", included: true, gold: true },
-                    { label: "Property Website", included: true, gold: true },
-                    { label: "Custom Domain for 1 Year", included: true, gold: true },
-                    { label: "Photo Slideshow", included: true, gold: true },
-                    { label: "Matterport 3D Tour", included: true, gold: true },
-                    { label: "60–90s Cinematic Video", included: true, gold: true },
-                    { label: "1–7 Aerial Photos", included: true, gold: true },
-                    { label: "15–30s Aerial Video", included: true, gold: true },
-                    { label: "Social Media Teaser", included: true, gold: true },
-                    { label: "MLS Video Edit", included: true, gold: true },
-                    { label: "No Lifestyle Video", included: false },
+                    { label: "HDR Photography", included: true },
+                    { label: "2–3 Drone Shots", included: true },
+                    { label: "360° Virtual Tour", included: true },
+                    { label: "Floor Plan (2D)", included: true },
+                    { label: "Social Media Vertical Video", included: true },
+                    { label: "Property Website (Branded + Unbranded)", included: true },
+                    { label: "MLS-Optimized & High-Res Delivery", included: true },
+                    { label: "Custom Domain", included: false },
+                    { label: "Drone Video", included: false },
+                    { label: "Virtual Staging", included: false },
+                    { label: "3D House Model", included: false },
+                    { label: "Twilight or Virtual Twilight", included: false },
                   ],
+                  image: "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f5?q=80&w=2000",
                 },
                 {
-                  name: "ELITE AGENT",
-                  price: "$2,000",
+                  name: "PREMIUM SELLER EXPERIENCE",
+                  price: `$${premiumSellerPriceMap[selectedSize].toFixed(2)}`,
                   subtitle: "starting",
-                  sqft: "up to 999 sq ft",
-                  sqftExtra: "+$200 per 1,000 sq ft",
-                  discount: "$750 discount",
+                  sqft: `up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1]}`,
+                  discount: premiumSellerDiscountMap[selectedSize],
                   discountColor: "text-[#B42222]",
                   buttonColor: "bg-[#262F3F] text-white",
                   features: [
-                    { label: "Premium Photography", included: true },
-                    { label: "6 Virtual Twilight Images", included: true },
-                    { label: "Property Website", included: true },
-                    { label: "Custom Domain for 1 Year", included: true },
-                    { label: "Photo Slideshow", included: true },
-                    { label: "Matterport 3D Tour", included: true },
-                    { label: "2–3m Luxury Video", included: true, bold: true },
-                    { label: "5–10 Aerial Photos", included: true, bold: true },
-                    { label: "15–30s Aerial Video", included: true, bold: true },
-                    { label: "Social Media Teaser", included: true },
-                    { label: "MLS Video Edit", included: true },
-                    { label: "15–30s Lifestyle Video", included: true, bold: true },
+                    { label: "HDR Photography", included: true },
+                    { label: "3–5 Drone Shots", included: true },
+                    { label: "360° Virtual Tour", included: true },
+                    { label: "Floor Plan (2D)", included: true },
+                    { label: "Social Media Vertical Video", included: true },
+                    { label: "Property Website (Branded + Unbranded)", included: true },
+                    { label: "Custom Domain", included: true },
+                    { label: "Drone Video (60–90 sec)", included: true },
+                    { label: "Virtual Twilight (1 image)", included: true },
+                    { label: "MLS-Optimized & High-Res Delivery", included: true },
+                    { label: "3D House Model", included: false },
+                    { label: "Additional Virtual Staging", included: false },
                   ],
+                  image: "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f5?q=80&w=2000",
                 },
               ] as PackageCard[]).map((pkg, idx) => (
                 <div
@@ -459,11 +535,16 @@ export default function PricingPage() {
                 >
                   <div className="mb-2 text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86]">{pkg.name}</div>
                   <div className="flex items-end gap-2 mb-1">
-                    <span className="text-4xl font-mazzard font-semibold text-[#262F3F]">{pkg.price}</span>
-                    <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">{pkg.subtitle}</span>
+                    <span className="text-4xl font-mazzard font-semibold text-[#262F3F]">
+                      {pkg.name === 'Essentials Package' ? `$${essentialsPriceMap[selectedSize].toFixed(2)}` : pkg.price}
+                    </span>
+                    <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">
+                      {selectedSize === '<1000' ? pkg.subtitle : ''}
+                    </span>
+                    </div>
+                  <div className="text-xs text-[#6B7A86] mb-1 font-mazzard font-medium">
+                    {`up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1] || pkg.sqft.replace('up to ', '')}`}
                   </div>
-                  <div className="text-xs text-[#6B7A86] mb-1 font-mazzard font-medium">{pkg.sqft}</div>
-                  <div className="text-xs text-[#6B7A86] mb-2 font-mazzard font-medium">{pkg.sqftExtra}</div>
                   <div className={`mb-2 text-sm font-mazzard font-semibold ${pkg.discountColor}`}>{pkg.discount}</div>
                   <BookButton href="/quote" size="lg" className={`w-full mb-4 mt-2 font-mazzard font-semibold ${pkg.buttonColor}`}>Get quote</BookButton>
                   <ul className="flex-1 mb-0 space-y-1 text-sm">
@@ -791,10 +872,10 @@ export default function PricingPage() {
                     key={size}
                     variant={selectedSize === size ? "default" : "outline"}
                     onClick={() => {
-                      setSelectedSize(size)
+                      setSelectedSize(size as SizeKey)
                       // Recalculate total when size changes
                       const newTotal = selectedServices.reduce((sum, id) => {
-                        return sum + pricingData[size][id as keyof (typeof pricingData)["<1000"]]
+                        return sum + pricingData[size as SizeKey][id as keyof (typeof pricingData)["<1000"]]
                       }, 0)
                       setTotalPrice(newTotal)
                     }}
@@ -810,7 +891,7 @@ export default function PricingPage() {
               <h4 className="text-base sm:text-lg font-medium mb-3 sm:mb-4">2. Select your services</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {services.map((service) => {
-                  const price = pricingData[selectedSize][service.id as keyof (typeof pricingData)["<1000"]]
+                  const price = pricingData[selectedSize as SizeKey][service.id as keyof (typeof pricingData)["<1000"]]
                   return (
                     <div key={service.id} className="flex items-start space-x-3 p-3 sm:p-4 border rounded-lg">
                       <Checkbox

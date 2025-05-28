@@ -31,35 +31,38 @@ export function ServiceAreasSection() {
           </div>
 
           <div>
-            <div className="bg-[#fcfaf7] p-6 rounded-lg shadow-sm mb-6">
-              <h3 className="text-2xl font-serif mb-4">Primary Service Areas</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-medium text-lg mb-2">Greater Toronto Area</h4>
-                  <ul className="space-y-1 text-gray-600">
-                    <li>• Toronto</li>
-                    <li>• Mississauga</li>
-                    <li>• Brampton</li>
-                    <li>• Vaughan</li>
-                    <li>• Markham</li>
-                    <li>• Richmond Hill</li>
-                    <li>• Etobicoke</li>
-                    <li>• Newmarket</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-medium text-lg mb-2">Golden Horseshoe</h4>
-                  <ul className="space-y-1 text-gray-600">
-                    <li>• Milton</li>
-                    <li>• Burlington</li>
-                    <li>• Oakville</li>
-                    <li>• Hamilton</li>
-                    <li>• St. Catharines</li>
-                    <li>• Niagara Falls</li>
-                    <li>• Kitchener-Waterloo</li>
-                    <li>• Guelph</li>
-                  </ul>
-                </div>
+            <div className="bg-[#fcfaf7] p-6 rounded-lg shadow-sm mb-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* No Travel Fee (Covered Area) */}
+              <div>
+                <h4 className="font-medium text-lg mb-1">No Travel Fee <span className="text-xs text-[#6B7A86]">(Covered Area)</span></h4>
+                <p className="text-xs text-gray-500 mb-2">These towns fall within our core service zone. No travel fee applies.</p>
+                <ul className="space-y-1 text-gray-600">
+                  <li>• Milton</li>
+                  <li>• Oakville</li>
+                  <li>• Burlington</li>
+                  <li>• Mississauga</li>
+                  <li>• Brampton</li>
+                  <li>• Hamilton</li>
+                  <li>• Cambridge</li>
+                  <li>• Guelph</li>
+                  <li>• Kitchener</li>
+                </ul>
+              </div>
+              {/* $0.65/km Travel Fee (Extended Area) */}
+              <div>
+                <h4 className="font-medium text-lg mb-1">$0.65/km Travel Fee <span className="text-xs text-[#6B7A86]">(Extended Area)</span></h4>
+                <p className="text-xs text-gray-500 mb-2">Travel fees apply to locations outside the core zone.</p>
+                <ul className="space-y-1 text-gray-600">
+                  <li>• Toronto</li>
+                  <li>• Scarborough</li>
+                  <li>• Vaughan</li>
+                  <li>• Markham</li>
+                  <li>• Richmond Hill</li>
+                  <li>• St. Catharines</li>
+                  <li>• Niagara Falls</li>
+                  <li>• Newmarket</li>
+                  <li>• Etobicoke</li>
+                </ul>
               </div>
             </div>
 

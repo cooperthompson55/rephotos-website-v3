@@ -5,60 +5,52 @@ import Image from "next/image"
 
 const services = [
   {
-    title: "Premium Photography",
-    description: "Make a stunning first impression with the best photography in the Bay Area.",
-    image: "https://ext.same-assets.com/2308376233/3572846026.jpeg",
-    price: "$300 STARTING",
-    link: "/real-estate-photography",
+    title: "Photography",
+    price: "$149.99 STARTING",
+    image: "/images/home/s_1.jpg",
+    link: "/services/photography",
   },
   {
-    title: "Cinematic Video Tours",
-    description: "Awe clients and buyers with cinematic videos for your listing or project.",
-    image: "https://ext.same-assets.com/2308376233/428242068.jpeg",
-    price: "$400 STARTING",
-    link: "/real-estate-video-tours",
+    title: "Walkthrough Videos",
+    price: "$249.99 STARTING",
+    image: "/images/home/s_2.jpg",
+    link: "/services/videography",
+  },
+  {
+    title: "Social Media Videos",
+    price: "$179.99 STARTING",
+    image: "/images/home/s_3.jpg",
+    link: "/services/videography",
   },
   {
     title: "Aerial Photos & Video",
-    description: "Elevate your listing or project above the rest with incredible drone footage.",
-    image: "https://ext.same-assets.com/2308376233/2681329802.jpeg",
-    price: "$300 STARTING",
-    link: "/aerial-photography-and-video",
+    price: "$124.99 STARTING",
+    image: "/images/home/s_4.jpg",
+    link: "/services/aerial",
+  },
+  {
+    title: "360° Virtual Tours",
+    price: "$159.99 STARTING",
+    image: "/images/home/s_5.jpg",
+    link: "/services/virtual-tours",
+  },
+  {
+    title: "Floor Plans & Models",
+    price: "$89.99 STARTING",
+    image: "/images/home/s_6.png",
+    link: "/services/floor-plans",
   },
   {
     title: "Property Websites",
-    description: "Give your listing a home on the web and a place for all of your beautiful content.",
-    image: "https://ext.same-assets.com/2498839276/1384018206.jpeg",
-    price: "$250 STARTING",
-    link: "/property-websites",
+    price: "$99.99 STARTING",
+    image: "/images/home/s_7.png",
+    link: "/services/websites",
   },
   {
-    title: "Matterport 3D Virtual Tours",
-    description: "Hand potential renters and buyers the keys from anywhere in the world.",
-    image: "https://ext.same-assets.com/2308376233/342817273.jpeg",
-    price: "$250 STARTING",
-    link: "/3d-matterport",
-  },
-  {
-    title: "Floor & Site Plans",
-    description: "Help renters and buyers plan ahead with flexible measurements and styles.",
-    image: "https://ext.same-assets.com/2498839276/2279170942.jpeg",
-    price: "$100 STARTING",
-    link: "/real-estate-floor-plans",
-  },
-  {
-    title: "Virtual Staging & Decluttering",
-    description: "Beautifully stage your listings without the heavy lifting using impressive CGI.",
-    image: "https://ext.same-assets.com/2498839276/3872760327.jpeg",
-    price: "$100 STARTING",
-    link: "/virtual-staging",
-  },
-  {
-    title: "Brochures & Flyers",
-    description: "Leave visiting buyers with something to help them remember your listing.",
-    image: "https://ext.same-assets.com/2308376233/1203559485.jpeg",
-    price: "$100 STARTING",
-    link: "/real-estate-brochures-and-flyers",
+    title: "Virtual Staging",
+    price: "$39.99 PER IMAGE",
+    image: "/images/home/s_8.png",
+    link: "/services/virtual-staging",
   },
 ]
 
@@ -71,12 +63,6 @@ export function ServicesSection() {
             <h6 className="text-[#B42222] uppercase tracking-wider text-sm font-medium mb-2">OUR SERVICES</h6>
             <h2 className="text-4xl md:text-5xl font-serif font-light text-[#262F3F]">Unlock every home's potential</h2>
           </div>
-          <Link
-            href="/services"
-            className="text-[#2d4654] border border-[#2d4654] hover:bg-[#2d4654] hover:text-white transition-colors px-4 py-2 rounded text-sm"
-          >
-            See all
-          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

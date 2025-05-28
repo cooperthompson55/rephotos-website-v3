@@ -4,65 +4,62 @@ import Image from "next/image"
 import Link from "next/link"
 import { Video, CheckCircle, Smartphone, Plane, Music, Zap, Edit } from "lucide-react"
 import { CTASection } from "@/components/home/CTASection"
+import CustomVideoBuilder from "@/components/services/videography/CustomVideoBuilder";
 
 const videographyFeatures = [
   {
     icon: <Video className="h-6 w-6" />,
-    title: "Professional Videography",
+    title: "Property Walkthrough Video",
     description:
-      "Cinematic quality video production that showcases properties with smooth camera movements and professional lighting.",
+      "A horizontal video walkthrough shot on iPhone that showcases the key selling points of the home. Delivered in 4K and MLS-ready.",
   },
   {
     icon: <Smartphone className="h-6 w-6" />,
-    title: "Social Media Reels",
+    title: "Social Media Video Tours",
     description:
-      "Vertical 9:16 format videos optimized for Instagram, TikTok, and Facebook Reels to maximize social media engagement.",
+      "Vertical walk-throughs filmed in 9:16 format, optimized for Instagram, TikTok, and Facebook Reels. Fast-paced and built for social engagement.",
   },
   {
     icon: <Plane className="h-6 w-6" />,
-    title: "Drone Footage",
+    title: "Drone Video",
     description:
-      "Stunning aerial perspectives that showcase property exteriors, neighborhoods, and surrounding amenities from above.",
+      "Smooth, high-res aerial footage showcasing the home, property lines, and surrounding neighborhood. Captured with precision to elevate listing appeal.",
   },
   {
     icon: <Music className="h-6 w-6" />,
     title: "Royalty-Free Music",
     description:
-      "Professionally curated background music that enhances the viewing experience without licensing concerns.",
+      "All videos include background music selected to match the property vibe, fully licensed for online use.",
   },
   {
     icon: <Edit className="h-6 w-6" />,
-    title: "Expert Editing",
+    title: "Professional Editing",
     description:
-      "Professional post-production with color grading, smooth transitions, and engaging pacing to captivate viewers.",
+      "Clean transitions, natural color grading, and fast turnaround. Delivered polished and ready to post.",
   },
   {
     icon: <Zap className="h-6 w-6" />,
-    title: "Quick Turnaround",
-    description: "Edited videos delivered within 48-72 hours, ready for immediate use across all marketing channels.",
+    title: "48–72 Hour Delivery",
+    description:
+      "Most videos are delivered within 2–3 business days, so you can start marketing the listing fast.",
   },
 ]
 
 const videographyBenefits = [
   {
-    stat: "87%",
-    label: "Higher Engagement",
-    description: "Video content receives significantly more engagement than static images on social media",
-  },
-  {
     stat: "4x",
     label: "More Shares",
-    description: "Video listings are shared 4 times more often than photo-only listings",
+    description: "Video listings get shared 4x more often than photo-only listings",
+  },
+  {
+    stat: "87%",
+    label: "Higher Engagement",
+    description: "Video content leads to significantly more interaction on social media",
   },
   {
     stat: "73%",
     label: "Faster Sales",
-    description: "Properties with video tours sell faster than those with photos alone",
-  },
-  {
-    stat: "403%",
-    label: "More Inquiries",
-    description: "Video listings generate significantly more buyer inquiries and showings",
+    description: "Listings with video often move faster than those without",
   },
 ]
 
@@ -117,89 +114,76 @@ const videographyProcess = [
 
 const pricingTiers = [
   {
-    size: "Basic Video Package",
-    price: "$299.99",
-    duration: "1-2 minute video",
+    size: "Property Walkthrough Video",
+    price: "$249.99",
+    duration: "1–2 minute horizontal video",
     features: [
-      "Interior walkthrough video",
+      "Shot in 4K on iPhone",
+      "Interior walk-through",
       "Professional editing",
-      "Royalty-free music",
-      "Multiple format delivery",
-      "48-72 hour turnaround",
+      "Royalty-free background music",
+      "Delivered MLS-ready",
+      "Next day turnaround",
     ],
   },
   {
-    size: "Social Media Package",
-    price: "$399.99",
-    duration: "30-60 second reel",
+    size: "Social Media Reel",
+    price: "$179.99",
+    duration: "30–60 second vertical video",
     features: [
-      "9:16 vertical format",
-      "Engagement-optimized editing",
-      "Trending music selection",
-      "Interior + exterior footage",
-      "Social media ready",
-      "Multiple platform formats",
-    ],
-    popular: true,
-  },
-  {
-    size: "Drone + Interior Package",
-    price: "$549.99",
-    duration: "2-3 minute video",
-    features: [
-      "Aerial drone footage",
-      "Interior walkthrough",
-      "Professional editing",
-      "Royalty-free music",
-      "Multiple format delivery",
-      "Neighborhood showcase",
+      "Optimized for Instagram, TikTok, and Reels",
+      "Fast-paced and engagement-driven",
+      "Interior footage formatted for mobile",
+      "Royalty-free trending music",
+      "Social-ready delivery",
+      "Next day turnaround",
     ],
   },
   {
-    size: "Premium Package",
-    price: "$799.99",
-    duration: "3-5 minute video",
+    size: "Drone Video",
+    price: "$124.99",
+    duration: "30–60 seconds of aerial footage",
     features: [
-      "Cinematic drone footage",
-      "Complete interior tour",
-      "Social media reel included",
-      "Professional voiceover option",
-      "Custom music selection",
-      "Priority 24-hour delivery",
+      "High-resolution exterior shots",
+      "Captures the property and surroundings",
+      "Smooth motion edits",
+      "Royalty-free music included",
+      "Delivered in multiple formats",
+      "Next day turnaround",
     ],
   },
 ]
 
 const faqItems = [
   {
-    question: "What's included in the social media reel format?",
+    question: "What's included in the Property Walkthrough Video?",
     answer:
-      "Our 9:16 vertical format videos are specifically edited for Instagram Reels, TikTok, and Facebook Reels. They include engaging transitions, trending music, and are optimized for maximum social media engagement with quick cuts and dynamic pacing.",
+      "You'll get a horizontal video walkthrough in 4K, shot on iPhone. It's professionally edited with background music and delivered MLS-ready, hosted on Vimeo for easy sharing.",
   },
   {
-    question: "Do you have drone licensing and insurance?",
+    question: "How are Social Media Videos different?",
     answer:
-      "Yes, all our drone operators are FAA Part 107 certified and fully insured. We handle all necessary permissions and follow strict safety protocols for aerial filming in residential areas.",
+      "These are vertical 9:16 videos optimized for Instagram, TikTok, and Facebook Reels. They're shorter, faster-paced, and designed to grab attention quickly with trending-style edits and mobile-first framing.",
   },
   {
-    question: "Can I choose the background music?",
+    question: "Do the Property Walkthrough or Social Media Videos include drone footage?",
     answer:
-      "We provide a curated selection of royalty-free music that works well with real estate videos. You can request specific styles or moods, and we'll select the best tracks that complement your property and target audience.",
+      "Yes — if the property is in airspace that allows drone flight, we include aerial footage in both videos at no extra cost.",
   },
   {
-    question: "How long does video production take?",
+    question: "Do you offer standalone drone video?",
     answer:
-      "Filming typically takes 1-2 hours depending on property size and package. Edited videos are delivered within 48-72 hours for standard packages, with rush delivery available for urgent needs.",
+      "Yes. We provide smooth, high-res aerial video showcasing the property, lot, and surrounding area.",
   },
   {
-    question: "What video formats do you provide?",
+    question: "Can I choose the music?",
     answer:
-      "We deliver videos in multiple formats: landscape (16:9) for websites and YouTube, vertical (9:16) for social media reels, and square (1:1) for Instagram posts. All formats are optimized for their respective platforms.",
+      "We use royalty-free music selected to match the mood and energy of each listing. If you have a specific vibe or style in mind, we'll do our best to match it.",
   },
   {
-    question: "Can you add property information or text overlays?",
+    question: "Can you add text or property info to the video?",
     answer:
-      "Yes, we can include property details, pricing, contact information, and custom text overlays. We'll work with you to ensure all important information is prominently displayed in an attractive way.",
+      "Yes. We can add listing details, your branding, or any key features you want to highlight in the video.",
   },
 ]
 
@@ -239,7 +223,7 @@ export default function VideographyServicePage() {
           </h1>
           {/* Supporting Paragraph */}
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-4 text-left">
-            Cinematic videography, social media reels, and stunning drone footage to engage buyers and sell faster.
+            Property walkthrough videos, vertical social media tours, and smooth drone footage designed to grab attention and drive results.
           </p>
         </div>
       </section>
@@ -250,17 +234,16 @@ export default function VideographyServicePage() {
           <div className="text-center mb-16">
             <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">The Impact</h6>
             <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">
-              Video marketing drives exceptional results
+              Video makes listings stand out
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              Video content is the most engaging form of real estate marketing. See how professional videography
-              transforms your listing performance and buyer engagement.
+              Buyers engage more with listings that include video. It adds movement, emotion, and a real sense of space—driving better results across platforms.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {videographyBenefits.map((benefit, index) => (
-              <div key={index} className="text-center">
+              <div key={index} className="flex flex-col items-center text-center">
                 <div className="text-4xl md:text-5xl font-serif font-light text-secondary mb-2">{benefit.stat}</div>
                 <h3 className="text-lg font-medium mb-2">{benefit.label}</h3>
                 <p className="text-sm text-gray-600">{benefit.description}</p>
@@ -274,11 +257,10 @@ export default function VideographyServicePage() {
       <section className="py-16 md:py-24 bg-[#F8F5F0]">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Our Services</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Comprehensive video production services</h2>
+            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Video Services</h6>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Video Services</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              From social media reels to cinematic property tours and aerial drone footage, we create compelling video
-              content that captures attention and drives buyer interest.
+              We produce property highlight videos, social media reels, and drone footage to help your listings stand out. Fast delivery and clean editing every time.
             </p>
           </div>
 
@@ -294,136 +276,48 @@ export default function VideographyServicePage() {
         </div>
       </section>
 
-      {/* Video Portfolio Section */}
-      <section id="portfolio" className="py-16 md:py-24 bg-white">
+      {/* Pricing Section */}
+      <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Our Work</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">See our videography in action</h2>
+            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Video Pricing</h6>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Video Pricing</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              Browse examples of our video work and see how professional videography brings properties to life and
-              engages potential buyers.
+              Choose the perfect video service to showcase your listing. All packages include professional editing, royalty-free music, and quick delivery.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {/* Social Media Reel Example */}
-            <div className="relative h-80 rounded-lg overflow-hidden shadow-md group bg-gray-100">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <Smartphone className="h-8 w-8 text-secondary" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {pricingTiers.map((tier, index) => (
+              <Card key={index} className="relative">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg">{tier.size}</CardTitle>
+                  <div className="text-3xl font-light">{tier.price}</div>
+                  <CardDescription>{tier.duration}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {tier.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center text-sm">
+                        <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6">
+                    <Button asChild className="w-full">
+                      <Link href="/quote">Book Now</Link>
+                    </Button>
                   </div>
-                  <h3 className="text-lg font-medium mb-2">Social Media Reel</h3>
-                  <p className="text-sm text-gray-600 mb-4">9:16 Vertical Format</p>
-                  <div className="bg-secondary text-white px-3 py-1 rounded-full text-xs">30-60 seconds</div>
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Instagram/TikTok Ready</p>
-                <p className="text-white/80 text-xs">Optimized for engagement</p>
-              </div>
-            </div>
-
-            {/* Drone Footage Example */}
-            <div className="relative h-80 rounded-lg overflow-hidden shadow-md group">
-              <Image
-                src="https://images.unsplash.com/photo-1564013434775-f71db0030976?q=80&w=2000"
-                alt="Aerial drone footage of luxury home"
-                fill
-                className="object-cover transition-transform group-hover:scale-105"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  <Video className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Aerial Drone Footage</p>
-                <p className="text-white/80 text-xs">Stunning bird's eye views</p>
-              </div>
-            </div>
-
-            {/* Interior Walkthrough Example */}
-            <div className="relative h-80 rounded-lg overflow-hidden shadow-md group">
-              <Image
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000"
-                alt="Interior walkthrough video"
-                fill
-                className="object-cover transition-transform group-hover:scale-105"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  <Video className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Interior Walkthrough</p>
-                <p className="text-white/80 text-xs">Smooth cinematic movement</p>
-              </div>
-            </div>
-
-            {/* Neighborhood Showcase */}
-            <div className="relative h-80 rounded-lg overflow-hidden shadow-md group">
-              <Image
-                src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=2000"
-                alt="Neighborhood showcase video"
-                fill
-                className="object-cover transition-transform group-hover:scale-105"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  <Video className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Neighborhood Tour</p>
-                <p className="text-white/80 text-xs">Showcase local amenities</p>
-              </div>
-            </div>
-
-            {/* Luxury Property Tour */}
-            <div className="relative h-80 rounded-lg overflow-hidden shadow-md group">
-              <Image
-                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000"
-                alt="Luxury property video tour"
-                fill
-                className="object-cover transition-transform group-hover:scale-105"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  <Video className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Luxury Property Tour</p>
-                <p className="text-white/80 text-xs">Premium cinematic quality</p>
-              </div>
-            </div>
-
-            {/* Twilight Exterior */}
-            <div className="relative h-80 rounded-lg overflow-hidden shadow-md group">
-              <Image
-                src="https://images.unsplash.com/photo-1605146769289-440113cc3d00?q=80&w=2000"
-                alt="Twilight exterior video"
-                fill
-                className="object-cover transition-transform group-hover:scale-105"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                  <Video className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Twilight Showcase</p>
-                <p className="text-white/80 text-xs">Golden hour magic</p>
-              </div>
-            </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
-          <div className="text-center">
-            <Button asChild className="bg-secondary hover:bg-secondary/90 text-white">
-              <Link href="/portfolio">View Full Video Portfolio</Link>
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-4">Need a custom video package or have special requirements?</p>
+            <Button asChild variant="outline">
+              <Link href="/contact">Contact Us for Custom Pricing</Link>
             </Button>
           </div>
         </div>
@@ -485,58 +379,10 @@ export default function VideographyServicePage() {
         </div>
       </section>
 
-      {/* Pricing Section */}
+      {/* Custom Video Builder Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Pricing</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Professional video packages</h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Choose the perfect video package for your property. All packages include professional editing,
-              royalty-free music, and multiple format delivery.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pricingTiers.map((tier, index) => (
-              <Card key={index} className={`relative ${tier.popular ? "border-secondary shadow-lg" : ""}`}>
-                {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-secondary text-white px-4 py-1 rounded-full text-sm font-medium">
-                      Most Popular
-                    </div>
-                  </div>
-                )}
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg">{tier.size}</CardTitle>
-                  <div className="text-3xl font-light">{tier.price}</div>
-                  <CardDescription>{tier.duration}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {tier.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-sm">
-                        <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-6">
-                    <Button asChild className="w-full">
-                      <Link href="/quote">Book Now</Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-4">Need a custom video package or have special requirements?</p>
-            <Button asChild variant="outline">
-              <Link href="/contact">Contact Us for Custom Pricing</Link>
-            </Button>
-          </div>
+            <CustomVideoBuilder />
         </div>
       </section>
 

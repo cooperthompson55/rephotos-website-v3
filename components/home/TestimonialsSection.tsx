@@ -53,7 +53,7 @@ export function TestimonialsSection() {
                       <div className="flex items-center">
                         <div className="text-secondary">
                           {Array.from({ length: 5 }).map((_, i) => (
-                            <span key={i} className="text-lg">
+                            <span key={i} className="text-lg text-[#f3a952]">
                               ★
                             </span>
                           ))}
@@ -84,63 +84,6 @@ export function TestimonialsSection() {
               <CarouselNext className="relative static" />
             </div>
           </Carousel>
-        </div>
-
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center justify-center">
-          <div className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-            <Image
-              src="https://ext.same-assets.com/148878086/128511358.png"
-              alt="Partner"
-              width={120}
-              height={40}
-              className="mx-auto"
-            />
-          </div>
-          <div className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-            <Image
-              src="https://ext.same-assets.com/148878086/3125659672.png"
-              alt="Partner"
-              width={120}
-              height={40}
-              className="mx-auto"
-            />
-          </div>
-          <div className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-            <Image
-              src="https://ext.same-assets.com/148878086/1510460591.png"
-              alt="Partner"
-              width={120}
-              height={40}
-              className="mx-auto"
-            />
-          </div>
-          <div className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-            <Image
-              src="https://ext.same-assets.com/148878086/3513071886.png"
-              alt="Partner"
-              width={120}
-              height={40}
-              className="mx-auto"
-            />
-          </div>
-          <div className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-            <Image
-              src="https://ext.same-assets.com/148878086/3163603778.png"
-              alt="Partner"
-              width={120}
-              height={40}
-              className="mx-auto"
-            />
-          </div>
-          <div className="grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all">
-            <Image
-              src="https://ext.same-assets.com/148878086/4112012668.png"
-              alt="Partner"
-              width={120}
-              height={40}
-              className="mx-auto"
-            />
-          </div>
         </div>
       </div>
     </section>

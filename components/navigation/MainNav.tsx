@@ -169,7 +169,13 @@ export function MainNav() {
 
         {/* Book Now button on the far right */}
         <div className="hidden md:block">
-          <BookButton href="/book-now" size="default">
+          <BookButton
+            href="/book-now"
+            size="default"
+            className={scrolled
+              ? "bg-[#262f3f] text-white hover:bg-[#1d3644]"
+              : "bg-white text-black hover:bg-gray-100"}
+          >
             Book Now
           </BookButton>
         </div>
@@ -240,7 +246,13 @@ export function MainNav() {
 
               {/* Book Now button in mobile menu */}
               <div className="pt-4 mt-4 border-t">
-                <BookButton href="/book-now" className="w-full" onClick={() => setIsOpen(false)}>
+                <BookButton
+                  href="/book-now"
+                  className={scrolled
+                    ? "bg-[#262f3f] text-white hover:bg-[#1d3644] w-full"
+                    : "bg-white text-black hover:bg-gray-100 w-full"}
+                  onClick={() => setIsOpen(false)}
+                >
                   Book Now
                 </BookButton>
               </div>

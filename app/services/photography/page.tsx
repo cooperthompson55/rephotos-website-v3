@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
 import Link from "next/link"
-import { Camera, CheckCircle, Lightbulb, Eye, Zap, Palette, Settings } from "lucide-react"
+import { Camera, CheckCircle, Lightbulb, Eye, Zap, Palette, Settings, MousePointerClick, Star, Globe, Sun } from "lucide-react"
 import { CTASection } from "@/components/home/CTASection"
 
 const photographyFeatures = [
@@ -10,34 +10,37 @@ const photographyFeatures = [
     icon: <Camera className="h-6 w-6" />,
     title: "HDR Photography",
     description:
-      "High Dynamic Range imaging captures every detail from shadows to highlights, creating perfectly balanced exposures.",
+      "Balanced exposures that capture every detail and make rooms feel bright and spacious.",
   },
   {
-    icon: <Lightbulb className="h-6 w-6" />,
-    title: "Professional Lighting",
+    icon: <Sun className="h-6 w-6" />,
+    title: "Natural Lighting Style",
     description:
-      "Advanced lighting techniques and equipment ensure every room is showcased in its best possible light.",
+      "We aim for a clean, realistic look using available light whenever possible, enhancing the space without overediting.",
   },
   {
-    icon: <Eye className="h-6 w-6" />,
-    title: "Composition Expertise",
+    icon: <MousePointerClick className="h-6 w-6" />,
+    title: "Marketing-Driven Shots",
     description:
-      "Our photographers understand real estate marketing and compose shots that highlight a property's best features.",
+      "Our angles and compositions are chosen to showcase flow, layout, and key selling features.",
   },
   {
     icon: <Palette className="h-6 w-6" />,
-    title: "Color Correction",
-    description: "Professional editing ensures accurate colors and enhances the natural beauty of each space.",
+    title: "Consistent Editing",
+    description:
+      "All photos are professionally edited for clarity, color accuracy, and consistency across every image set.",
   },
   {
     icon: <Settings className="h-6 w-6" />,
-    title: "Advanced Equipment",
-    description: "Full-frame cameras, professional lenses, and specialized real estate photography gear.",
+    title: "Modern Equipment",
+    description:
+      "We use high-resolution cameras and wide-angle lenses built specifically for real estate photography.",
   },
   {
     icon: <Zap className="h-6 w-6" />,
-    title: "Fast Turnaround",
-    description: "Edited photos delivered within 24 hours, so you can start marketing immediately.",
+    title: "Next-Day Delivery",
+    description:
+      "Photos are edited and delivered by the next business day so you can get your listing live fast.",
   },
 ]
 
@@ -110,59 +113,51 @@ const photographyProcess = [
 
 const pricingTiers = [
   {
-    size: "Under 1,000 sq ft",
-    price: "$149.99",
-    photos: "15-20 photos",
+    label: "Small Homes",
+    price: "$149.99 – $199.99",
+    size: "Up to 1,999 sq ft",
     features: [
-      "HDR Photography",
+      "15–25 HDR photos",
       "Professional editing",
-      "24-hour delivery",
-      "High-resolution downloads",
-      "Web-optimized versions",
+      "Next-day delivery",
+      "MLS + Web versions",
     ],
+    cta: { text: "Book Now", href: "/quote" },
   },
   {
-    size: "1,000-2,000 sq ft",
-    price: "$199.99",
-    photos: "20-25 photos",
+    label: "Medium Homes",
+    price: "$249.99 – $299.99",
+    size: "2,000–3,999 sq ft",
     features: [
-      "HDR Photography",
-      "Professional editing",
-      "24-hour delivery",
-      "High-resolution downloads",
-      "Web-optimized versions",
-      "Exterior shots included",
+      "25–35 HDR photos",
+      "Interior + exterior",
+      "Delivered next business day",
+      "High-res and web-optimized",
     ],
+    cta: { text: "Book Now", href: "/quote" },
     popular: true,
   },
   {
-    size: "2,000-3,000 sq ft",
-    price: "$249.99",
-    photos: "25-30 photos",
+    label: "Large Homes",
+    price: "$349.99 – $399.99",
+    size: "4,000–4,999 sq ft",
     features: [
-      "HDR Photography",
-      "Professional editing",
-      "24-hour delivery",
-      "High-resolution downloads",
-      "Web-optimized versions",
-      "Exterior shots included",
-      "Detail shots",
+      "35+ HDR photos",
+      "Custom shot list if needed",
+      "Fast turnaround",
+      "All file formats included",
     ],
+    cta: { text: "Book Now", href: "/quote" },
   },
   {
-    size: "3,000+ sq ft",
-    price: "Custom Quote",
-    photos: "30+ photos",
+    label: "5,000+ sq ft?",
+    price: "Contact for Quote",
+    size: null,
     features: [
-      "HDR Photography",
-      "Professional editing",
-      "24-hour delivery",
-      "High-resolution downloads",
-      "Web-optimized versions",
-      "Exterior shots included",
-      "Detail shots",
-      "Custom shot list",
+      "We'll build a custom plan based on your layout and needs. Quick turnaround guaranteed.",
     ],
+    cta: { text: "Get in Touch", href: "/contact" },
+    custom: true,
   },
 ]
 
@@ -245,21 +240,33 @@ export default function PhotographyServicePage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">The Impact</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Professional photography drives results</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Professional photography helps listings stand out</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              The numbers speak for themselves. Professional real estate photography isn't just about aesthetics—it's
-              about driving real business results.
+              It's not just about looking good. In today's market, strong visuals help listings stop the scroll, hold attention, and build trust with potential buyers.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {photographyBenefits.map((benefit, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-serif font-light text-secondary mb-2">{benefit.stat}</div>
-                <h3 className="text-lg font-medium mb-2">{benefit.label}</h3>
-                <p className="text-sm text-gray-600">{benefit.description}</p>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
+            <div className="flex flex-col items-center h-full">
+              <Eye className="h-10 w-10 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 min-h-[56px] flex items-center justify-center">Better First Impressions</h3>
+              <p className="text-gray-600">Buyers decide in seconds. Clear, well-lit photos create immediate interest and help set the tone for the entire listing experience.</p>
+            </div>
+            <div className="flex flex-col items-center h-full">
+              <MousePointerClick className="h-10 w-10 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 min-h-[56px] flex items-center justify-center">More Clicks and Engagement</h3>
+              <p className="text-gray-600">Professionally shot properties get more attention online, leading to more views and higher-quality leads.</p>
+            </div>
+            <div className="flex flex-col items-center h-full">
+              <Star className="h-10 w-10 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 min-h-[56px] flex items-center justify-center">Stronger Brand Perception</h3>
+              <p className="text-gray-600">Agents who consistently market with quality visuals are seen as more professional, trustworthy, and client-focused.</p>
+            </div>
+            <div className="flex flex-col items-center h-full">
+              <Globe className="h-10 w-10 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 min-h-[56px] flex items-center justify-center">Optimized for Online</h3>
+              <p className="text-gray-600">Most buyers start their search online. That first photo is often your only shot to make them click.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -269,10 +276,9 @@ export default function PhotographyServicePage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Our Approach</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">What makes our photography exceptional</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">What makes our photography stand out</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              We combine technical expertise with artistic vision to create images that not only look beautiful but also
-              drive buyer interest and engagement.
+              We focus on clean, well-composed, naturally lit images that make listings look polished and professional. Our goal is simple: help agents sell faster and look great doing it.
             </p>
           </div>
 
@@ -468,12 +474,12 @@ export default function PhotographyServicePage() {
                   </div>
                 )}
                 <CardHeader className="text-center">
-                  <CardTitle className="text-lg">{tier.size}</CardTitle>
+                  <CardTitle className="text-lg">{tier.label}</CardTitle>
                   <div className="text-3xl font-light">{tier.price}</div>
-                  <CardDescription>{tier.photos}</CardDescription>
+                  {tier.size && <CardDescription>{tier.size}</CardDescription>}
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 mb-6">
                     {tier.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center text-sm">
                         <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
@@ -481,11 +487,9 @@ export default function PhotographyServicePage() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-6">
-                    <Button asChild className="w-full">
-                      <Link href="/quote">Book Now</Link>
-                    </Button>
-                  </div>
+                  <Button asChild className="w-full" variant={tier.custom ? "outline" : undefined}>
+                    <Link href={tier.cta.href}>{tier.cta.text}</Link>
+                  </Button>
                 </CardContent>
               </Card>
             ))}

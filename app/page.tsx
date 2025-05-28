@@ -62,8 +62,7 @@ export default function Home() {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-3 text-white">
-                    <p className="font-medium">Cooper Thompson</p>
-                    <p className="text-xs opacity-80">REAL ESTATE PHOTOGRAPHY © 2025</p>
+                    <p className="font-medium">RePhotos © 2025</p>
                   </div>
                 </div>
                 <div className="col-span-4 row-span-3 rounded-lg overflow-hidden shadow-md">

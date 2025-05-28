@@ -7,56 +7,56 @@ import { Camera, Clock, Award, Users, Zap, Shield, Star, CheckCircle } from "luc
 const differentiators = [
   {
     icon: <Clock className="h-8 w-8" />,
-    title: "24-Hour Turnaround",
-    description: "Get your professionally edited photos delivered by 9 AM the next business day, guaranteed.",
-  },
-  {
-    icon: <Award className="h-8 w-8" />,
-    title: "Award-Winning Quality",
-    description: "Our visual artists have won multiple industry awards for excellence in real estate photography.",
-  },
-  {
-    icon: <Users className="h-8 w-8" />,
-    title: "Dedicated Support",
-    description: "Personal account managers and responsive customer service ensure your success.",
-  },
-  {
-    icon: <Zap className="h-8 w-8" />,
-    title: "Cutting-Edge Technology",
-    description: "Latest equipment and editing techniques deliver stunning results every time.",
-  },
-  {
-    icon: <Shield className="h-8 w-8" />,
-    title: "Fully Insured",
-    description: "Complete liability coverage and bonded photographers give you peace of mind.",
+    title: "Next-Day Delivery",
+    description: "Professionally edited photos delivered by the next business day, so you're never waiting to list.",
   },
   {
     icon: <Star className="h-8 w-8" />,
-    title: "5-Star Service",
-    description: "Consistently rated 5 stars by real estate professionals across Southern Ontario.",
+    title: "Reliable Quality",
+    description: "Crisp, bright, consistent visuals that help listings show their full potential every time.",
+  },
+  {
+    icon: <Users className="h-8 w-8" />,
+    title: "Responsive Support",
+    description: "Get direct help when you need it — no call centers, just real communication that respects your time.",
+  },
+  {
+    icon: <Zap className="h-8 w-8" />,
+    title: "Streamlined Process",
+    description: "From booking to delivery, everything is designed to be fast, simple, and stress-free.",
+  },
+  {
+    icon: <Award className="h-8 w-8" />,
+    title: "Trusted by Agents",
+    description: "RePhotos is the go-to media partner for agents who care about how their listings look and perform.",
+  },
+  {
+    icon: <Shield className="h-8 w-8" />,
+    title: "Built for Realtors",
+    description: "We understand what moves listings. Our services are tailored to help agents stand out in a competitive market.",
   },
 ]
 
 const stats = [
   {
-    number: "50,000+",
-    label: "Properties Photographed",
-    description: "Trusted by thousands of real estate professionals",
+    number: "24hr",
+    label: "Turnaround Time",
+    description: "Photos are edited and delivered fast — usually within 24 hours or less.",
   },
   {
-    number: "24hrs",
-    label: "Average Turnaround",
-    description: "Industry-leading delivery speed",
+    number: "Top Agents",
+    label: "Trust RePhotos",
+    description: "We work with serious agents who care about quality, speed, and results.",
   },
   {
-    number: "98%",
-    label: "Client Satisfaction",
-    description: "Consistently exceeding expectations",
+    number: "Client-Focused",
+    label: "Service First",
+    description: "Easy communication, flexible scheduling, and consistent results every time.",
   },
   {
-    number: "15+",
-    label: "Years Experience",
-    description: "Proven track record in real estate marketing",
+    number: "Built for the Market",
+    label: "Modern Visuals That Sell",
+    description: "Everything we shoot is designed to help listings stand out and move faster.",
   },
 ]
 
@@ -162,7 +162,7 @@ export default function WhyUsPage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-16 sm:pt-18 md:pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80 z-0"></div>
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] bg-repeat opacity-10 z-0"></div>
+        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] bg-no-repeat bg-cover opacity-10 z-0"></div>
 
         <div className="container mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -191,14 +191,35 @@ export default function WhyUsPage() {
       {/* Stats Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-serif font-light text-secondary mb-2">{stat.number}</div>
-                <h3 className="text-lg font-medium mb-1">{stat.label}</h3>
-                <p className="text-sm text-gray-600">{stat.description}</p>
-              </div>
-            ))}
+          <div className="text-center mb-16">
+            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">The Impact</h6>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Why agents choose RePhotos</h2>
+            <p className="text-gray-600 max-w-3xl mx-auto">
+              Our service is built for speed, trust, and results. Here's what sets us apart in the market.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
+            <div className="flex flex-col items-center h-full">
+              <Clock className="h-10 w-10 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 min-h-[56px] flex items-center justify-center">24hr Turnaround Time</h3>
+              <p className="text-gray-600">Photos are edited and delivered fast — usually within 24 hours or less.</p>
+            </div>
+            <div className="flex flex-col items-center h-full">
+              <Users className="h-10 w-10 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 min-h-[56px] flex items-center justify-center">Top Agents Trust RePhotos</h3>
+              <p className="text-gray-600">We work with serious agents who care about quality, speed, and results.</p>
+            </div>
+            <div className="flex flex-col items-center h-full">
+              <Star className="h-10 w-10 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 min-h-[56px] flex items-center justify-center">Client-Focused Service First</h3>
+              <p className="text-gray-600">Easy communication, flexible scheduling, and consistent results every time.</p>
+            </div>
+            <div className="flex flex-col items-center h-full">
+              <Zap className="h-10 w-10 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2 min-h-[56px] flex items-center justify-center">Built for the Market</h3>
+              <p className="text-gray-600">Everything we shoot is designed to help listings stand out and move faster.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -258,45 +279,41 @@ export default function WhyUsPage() {
 
             <div className="relative">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div className="h-48 rounded-lg overflow-hidden">
-                    <Image
-                      src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"
-                      alt="Professional real estate photography"
-                      width={300}
-                      height={200}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="h-32 rounded-lg overflow-hidden">
-                    <Image
-                      src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea"
-                      alt="Interior photography"
-                      width={300}
-                      height={130}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                <div className="h-48 rounded-lg overflow-hidden">
+                  <Image
+                    src="/images/why-us/impact_1.jpg"
+                    alt="Impact 1"
+                    width={300}
+                    height={200}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="space-y-4 mt-8">
-                  <div className="h-32 rounded-lg overflow-hidden">
-                    <Image
-                      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
-                      alt="Living room photography"
-                      width={300}
-                      height={130}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="h-48 rounded-lg overflow-hidden">
-                    <Image
-                      src="https://images.unsplash.com/photo-1600607687644-aac4c3eac7f5"
-                      alt="Exterior photography"
-                      width={300}
-                      height={200}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                <div className="h-48 rounded-lg overflow-hidden">
+                  <Image
+                    src="/images/why-us/impact_2.jpg"
+                    alt="Impact 2"
+                    width={300}
+                    height={200}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="h-48 rounded-lg overflow-hidden">
+                  <Image
+                    src="/images/why-us/impact_3.jpg"
+                    alt="Impact 3"
+                    width={300}
+                    height={200}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="h-48 rounded-lg overflow-hidden">
+                  <Image
+                    src="/images/why-us/impact_4.jpg"
+                    alt="Impact 4"
+                    width={300}
+                    height={200}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </div>
