@@ -9,7 +9,7 @@ import CustomVideoBuilder from "@/components/services/videography/CustomVideoBui
 const videographyFeatures = [
   {
     icon: <Video className="h-6 w-6" />,
-    title: "Property Walkthrough Video",
+    title: "Property Highlights Video",
     description:
       "A horizontal video walkthrough shot on iPhone that showcases the key selling points of the home. Delivered in 4K and MLS-ready.",
   },
@@ -114,7 +114,7 @@ const videographyProcess = [
 
 const pricingTiers = [
   {
-    size: "Property Walkthrough Video",
+    size: "Property Highlights Video",
     price: "$249.99",
     duration: "1–2 minute horizontal video",
     features: [
@@ -123,7 +123,7 @@ const pricingTiers = [
       "Professional editing",
       "Royalty-free background music",
       "Delivered MLS-ready",
-      "Next day turnaround",
+      "48-72 hour turnaround",
     ],
   },
   {
@@ -136,7 +136,7 @@ const pricingTiers = [
       "Interior footage formatted for mobile",
       "Royalty-free trending music",
       "Social-ready delivery",
-      "Next day turnaround",
+      "48-72 hour turnaround",
     ],
   },
   {
@@ -156,9 +156,9 @@ const pricingTiers = [
 
 const faqItems = [
   {
-    question: "What's included in the Property Walkthrough Video?",
+    question: "What's included in the Property Highlights Video?",
     answer:
-      "You'll get a horizontal video walkthrough in 4K, shot on iPhone. It's professionally edited with background music and delivered MLS-ready, hosted on Vimeo for easy sharing.",
+      "You'll get a horizontal highlights video in 4K, shot on iPhone. It's professionally edited with background music and delivered MLS-ready, hosted on Vimeo for easy sharing.",
   },
   {
     question: "How are Social Media Videos different?",
@@ -166,7 +166,7 @@ const faqItems = [
       "These are vertical 9:16 videos optimized for Instagram, TikTok, and Facebook Reels. They're shorter, faster-paced, and designed to grab attention quickly with trending-style edits and mobile-first framing.",
   },
   {
-    question: "Do the Property Walkthrough or Social Media Videos include drone footage?",
+    question: "Do the Property Highlights or Social Media Videos include drone footage?",
     answer:
       "Yes — if the property is in airspace that allows drone flight, we include aerial footage in both videos at no extra cost.",
   },

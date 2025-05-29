@@ -5,11 +5,12 @@ import { motion } from "framer-motion"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Search, ArrowRight, Calendar, User, Tag, ChevronRight, ChevronLeft } from "lucide-react"
 import Image from "next/image"
 import { CTASection } from "@/components/home/CTASection"
+import { Footer } from "@/components/layout/Footer"
 
 // Sample blog post data
 const blogPosts = [
@@ -114,35 +115,24 @@ const blogPosts = [
 // Popular tags from the blog posts
 const popularTags = ["photography", "virtual-tours", "technology", "marketing", "aerial", "tips", "staging"]
 
-export default function BlogPage() {
-  const [activeCategory, setActiveCategory] = useState("all")
-  const [searchQuery, setSearchQuery] = useState("")
-  const [currentSlide, setCurrentSlide] = useState(0)
+export default function BlogComingSoonPage() {
+  const [email, setEmail] = useState("")
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState("")
 
-  // Filter posts based on active category and search query
-  const filteredPosts = blogPosts.filter((post) => {
-    const matchesCategory = activeCategory === "all" || post.category === activeCategory
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-    return matchesCategory && matchesSearch
-  })
-
-  // Get featured posts for the slider
-  const featuredPosts = blogPosts.filter((post) => post.featured)
-
-  // Handle slider navigation
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === featuredPosts.length - 1 ? 0 : prev + 1))
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? featuredPosts.length - 1 : prev - 1))
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setError("")
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      setError("Please enter a valid email address.")
+      return
+    }
+    setSubmitted(true)
+    // Here you would typically send the email to your backend or a service
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-[320px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -162,267 +152,51 @@ export default function BlogPage() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl mx-auto text-center text-white"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">RePhotos Blog</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Blog Coming Soon</h1>
             <p className="text-lg md:text-xl mb-2">
-              Expert insights, tips, and trends in real estate photography and property marketing
+              We're working on expert insights, tips, and stories to help you master real estate marketing. Stay tuned!
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Featured Posts Slider */}
-      <section className="py-12 bg-gray-50">
-        <div className="container">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8">Featured Articles</h2>
-
-          <div className="relative">
-            <div className="overflow-hidden rounded-xl">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
-                {featuredPosts.map((post) => (
-                  <div key={post.id} className="w-full flex-shrink-0">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white rounded-xl overflow-hidden shadow-lg">
-                      <div className="relative aspect-[4/3] md:aspect-auto">
-                        <img
-                          src={post.image || "/placeholder.svg"}
-                          alt={post.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute top-4 left-4">
-                          <Badge className="bg-primary hover:bg-primary/90">{post.category}</Badge>
-                        </div>
-                      </div>
-                      <div className="p-6 md:p-8 flex flex-col justify-center">
-                        <div className="flex items-center text-sm text-gray-500 mb-3">
-                          <Calendar className="h-4 w-4 mr-1" />
-                          <span>{post.date}</span>
-                          <span className="mx-2">•</span>
-                          <User className="h-4 w-4 mr-1" />
-                          <span>{post.author}</span>
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-bold mb-4">{post.title}</h3>
-                        <p className="text-gray-600 mb-6">{post.excerpt}</p>
-                        <Button asChild className="w-fit">
-                          <a href={`/blog/${post.id}`}>
-                            Read Article <ArrowRight className="ml-2 h-4 w-4" />
-                          </a>
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+      {/* Coming Soon Card Section */}
+      <section className="flex-1 flex items-center justify-center bg-gray-50 py-16">
+        <Card className="max-w-lg w-full mx-4 shadow-xl border-0 bg-white/90 backdrop-blur-sm">
+          <CardContent className="p-8">
+            <CardTitle className="text-2xl md:text-3xl mb-4 text-primary text-center">Our Blog is Launching Soon!</CardTitle>
+            <CardDescription className="mb-6 text-center text-base text-gray-700">
+              Be the first to know when we launch. Enter your email below to get early access, exclusive updates, and a chance to shape the content you want to see!
+            </CardDescription>
+            {submitted ? (
+              <div className="text-green-600 text-center font-medium py-4">
+                Thank you for subscribing! You'll be the first to know when our blog goes live.
               </div>
-            </div>
-
-            {/* Slider Controls */}
-            <button
-              onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-primary p-2 rounded-full shadow-md z-10"
-              aria-label="Previous slide"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-primary p-2 rounded-full shadow-md z-10"
-              aria-label="Next slide"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </button>
-
-            {/* Slider Indicators */}
-            <div className="flex justify-center mt-4">
-              {featuredPosts.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`h-2 w-2 rounded-full mx-1 ${currentSlide === index ? "bg-primary" : "bg-gray-300"}`}
-                  aria-label={`Go to slide ${index + 1}`}
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  className="bg-white border-gray-300 focus:border-primary focus:ring-primary"
+                  required
+                  aria-label="Email address"
                 />
-              ))}
+                {error && <div className="text-red-600 text-sm text-center">{error}</div>}
+                <Button type="submit" className="w-full bg-primary text-white hover:bg-primary/90" size="lg">
+                  Subscribe Early
+                </Button>
+              </form>
+            )}
+            <div className="mt-6 text-center text-sm text-gray-500">
+              <span role="img" aria-label="lightbulb">💡</span> Have a topic you want us to cover? <a href="mailto:info@rephotos.ca" className="text-primary underline">Let us know!</a>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </section>
 
-      {/* Blog Content Section */}
-      <section className="py-16">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Main Content */}
-            <div className="lg:col-span-2">
-              {/* Search and Filters */}
-              <div className="mb-8">
-                <div className="flex flex-col md:flex-row gap-4 mb-6">
-                  <div className="relative flex-grow">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                    <Input
-                      type="search"
-                      placeholder="Search articles..."
-                      className="pl-10"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="md:w-auto"
-                    onClick={() => setSearchQuery("")}
-                    disabled={!searchQuery}
-                  >
-                    Clear
-                  </Button>
-                </div>
-
-                <Tabs defaultValue="all" onValueChange={setActiveCategory}>
-                  <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:flex lg:flex-wrap mb-8">
-                    <TabsTrigger value="all">All Posts</TabsTrigger>
-                    <TabsTrigger value="photography">Photography</TabsTrigger>
-                    <TabsTrigger value="virtual-tours">Virtual Tours</TabsTrigger>
-                    <TabsTrigger value="aerial">Aerial</TabsTrigger>
-                    <TabsTrigger value="business">Business</TabsTrigger>
-                    <TabsTrigger value="floor-plans">Floor Plans</TabsTrigger>
-                    <TabsTrigger value="virtual-staging">Virtual Staging</TabsTrigger>
-                  </TabsList>
-
-                  <TabsContent value="all" className="mt-0">
-                    {/* Content will be filtered by the state */}
-                  </TabsContent>
-                </Tabs>
-              </div>
-
-              {/* Blog Posts Grid */}
-              {filteredPosts.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {filteredPosts.map((post) => (
-                    <motion.div
-                      key={post.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      <Card className="overflow-hidden h-full hover:shadow-lg transition-shadow duration-300">
-                        <div className="relative aspect-[16/9]">
-                          <img
-                            src={post.image || "/placeholder.svg"}
-                            alt={post.title}
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute top-4 left-4">
-                            <Badge className="bg-primary hover:bg-primary/90">{post.category}</Badge>
-                          </div>
-                        </div>
-                        <CardContent className="p-6">
-                          <div className="flex items-center text-sm text-gray-500 mb-3">
-                            <Calendar className="h-4 w-4 mr-1" />
-                            <span>{post.date}</span>
-                          </div>
-                          <h3 className="text-xl font-bold mb-2 line-clamp-2">{post.title}</h3>
-                          <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
-                          <div className="flex justify-between items-center">
-                            <div className="flex items-center text-sm text-gray-500">
-                              <User className="h-4 w-4 mr-1" />
-                              <span>{post.author}</span>
-                            </div>
-                            <Button variant="ghost" size="sm" asChild>
-                              <a href={`/blog/${post.id}`}>
-                                Read More <ArrowRight className="ml-1 h-4 w-4" />
-                              </a>
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-12 bg-gray-50 rounded-lg">
-                  <h3 className="text-xl font-semibold mb-2">No articles found</h3>
-                  <p className="text-gray-600 mb-4">Try adjusting your search or filter criteria</p>
-                  <Button
-                    onClick={() => {
-                      setSearchQuery("")
-                      setActiveCategory("all")
-                    }}
-                  >
-                    Reset Filters
-                  </Button>
-                </div>
-              )}
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-8">
-              {/* Newsletter Signup */}
-              <Card>
-                <CardContent className="pt-6">
-                  <h3 className="text-xl font-bold mb-4">Subscribe to Our Newsletter</h3>
-                  <p className="text-gray-600 mb-4">
-                    Get the latest articles, tips, and industry insights delivered to your inbox.
-                  </p>
-                  <div className="space-y-4">
-                    <Input type="email" placeholder="Your email address" />
-                    <Button className="w-full">Subscribe</Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Popular Tags */}
-              <Card>
-                <CardContent className="pt-6">
-                  <h3 className="text-xl font-bold mb-4">Popular Tags</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {popularTags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className="cursor-pointer hover:bg-primary hover:text-white transition-colors"
-                        onClick={() => setSearchQuery(tag)}
-                      >
-                        <Tag className="h-3 w-3 mr-1" />
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Recent Posts */}
-              <Card>
-                <CardContent className="pt-6">
-                  <h3 className="text-xl font-bold mb-4">Recent Posts</h3>
-                  <div className="space-y-4">
-                    {blogPosts.slice(0, 4).map((post) => (
-                      <div key={post.id} className="flex items-start gap-3">
-                        <div className="w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
-                          <img
-                            src={post.image || "/placeholder.svg"}
-                            alt={post.title}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h4 className="font-medium line-clamp-2 text-sm">
-                            <a href={`/blog/${post.id}`} className="hover:text-primary">
-                              {post.title}
-                            </a>
-                          </h4>
-                          <p className="text-xs text-gray-500 mt-1">{post.date}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <CTASection />
+      <Footer />
     </div>
   )
 }

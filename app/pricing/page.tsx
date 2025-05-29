@@ -211,12 +211,462 @@ const services = [
   },
 ]
 
-export default function PricingPage() {
-  const [selectedSize, setSelectedSize] = useState<SizeKey>("<1000")
-  const [selectedServices, setSelectedServices] = useState<string[]>([])
-  const [totalPrice, setTotalPrice] = useState(0)
+// Replace dynamic package logic with hardcoded content for each size and package
+const hardcodedPackages: Record<SizeKey, PackageCard[]> = {
+  '<1000': [
+    {
+      name: 'ESSENTIALS PACKAGE',
+      price: '$179.99',
+      subtitle: '',
+      sqft: '0–999 sq ft',
+      discount: 'Save $20',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '1–2 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: false },
+        { label: '2D Floor Plan', included: false },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'DELUXE TOUR PACKAGE',
+      price: '$389.99',
+      subtitle: '',
+      sqft: '0–999 sq ft',
+      discount: 'Save $60',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '2–3 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'MARKETING PRO PACKAGE',
+      price: '$569.99',
+      subtitle: '',
+      sqft: '0–999 sq ft',
+      discount: 'Save $160',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: 'Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'PREMIUM SELLER EXPERIENCE',
+      price: '$849.99',
+      subtitle: '',
+      sqft: '0–999 sq ft',
+      discount: 'Save $80',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '3–5 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: true },
+        { label: '3D House Model', included: true },
+        { label: 'Virtual Twilight', included: true },
+        { label: 'Virtual Staging', included: false },
+      ],
+      image: '',
+    },
+  ],
+  '1000-2000': [
+    {
+      name: 'ESSENTIALS PACKAGE',
+      price: '$229.99',
+      subtitle: '',
+      sqft: '1000–1999 sq ft',
+      discount: 'Save $20',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '1–2 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: false },
+        { label: '2D Floor Plan', included: false },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'DELUXE TOUR PACKAGE',
+      price: '$459.99',
+      subtitle: '',
+      sqft: '1000–1999 sq ft',
+      discount: 'Save $100',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '2–3 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'MARKETING PRO PACKAGE',
+      price: '$639.99',
+      subtitle: '',
+      sqft: '1000–1999 sq ft',
+      discount: 'Save $220',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: 'Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'PREMIUM SELLER EXPERIENCE',
+      price: '$959.99',
+      subtitle: '',
+      sqft: '1000–1999 sq ft',
+      discount: 'Save $100',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '3–5 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: true },
+        { label: '3D House Model', included: true },
+        { label: 'Virtual Twilight', included: true },
+        { label: 'Virtual Staging', included: false },
+      ],
+      image: '',
+    },
+  ],
+  '2000-3000': [
+    {
+      name: 'ESSENTIALS PACKAGE',
+      price: '$279.99',
+      subtitle: '',
+      sqft: '2000–2999 sq ft',
+      discount: 'Save $20',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '1–2 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: false },
+        { label: '2D Floor Plan', included: false },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'DELUXE TOUR PACKAGE',
+      price: '$519.99',
+      subtitle: '',
+      sqft: '2000–2999 sq ft',
+      discount: 'Save $150',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '2–3 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'MARKETING PRO PACKAGE',
+      price: '$709.99',
+      subtitle: '',
+      sqft: '2000–2999 sq ft',
+      discount: 'Save $280',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: 'Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'PREMIUM SELLER EXPERIENCE',
+      price: '$1049.99',
+      subtitle: '',
+      sqft: '2000–2999 sq ft',
+      discount: 'Save $140',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '3–5 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: true },
+        { label: '3D House Model', included: true },
+        { label: 'Virtual Twilight', included: true },
+        { label: 'Virtual Staging', included: false },
+      ],
+      image: '',
+    },
+  ],
+  '3000-4000': [
+    {
+      name: 'ESSENTIALS PACKAGE',
+      price: '$309.99',
+      subtitle: '',
+      sqft: '3000–3999 sq ft',
+      discount: 'Save $40',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '1–2 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: false },
+        { label: '2D Floor Plan', included: false },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'DELUXE TOUR PACKAGE',
+      price: '$569.99',
+      subtitle: '',
+      sqft: '3000–3999 sq ft',
+      discount: 'Save $210',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '2–3 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'MARKETING PRO PACKAGE',
+      price: '$779.99',
+      subtitle: '',
+      sqft: '3000–3999 sq ft',
+      discount: 'Save $340',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: 'Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'PREMIUM SELLER EXPERIENCE',
+      price: '$1129.99',
+      subtitle: '',
+      sqft: '3000–3999 sq ft',
+      discount: 'Save $190',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '3–5 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: true },
+        { label: '3D House Model', included: true },
+        { label: 'Virtual Twilight', included: true },
+        { label: 'Virtual Staging', included: false },
+      ],
+      image: '',
+    },
+  ],
+  '4000-5000': [
+    {
+      name: 'ESSENTIALS PACKAGE',
+      price: '$359.99',
+      subtitle: '',
+      sqft: '4000–4999 sq ft',
+      discount: 'Save $40',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '1–2 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: false },
+        { label: '2D Floor Plan', included: false },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'DELUXE TOUR PACKAGE',
+      price: '$639.99',
+      subtitle: '',
+      sqft: '4000–4999 sq ft',
+      discount: 'Save $250',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '2–3 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: false },
+        { label: 'Property Website', included: false },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'MARKETING PRO PACKAGE',
+      price: '$849.99',
+      subtitle: '',
+      sqft: '4000–4999 sq ft',
+      discount: 'Save $400',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: 'Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: false },
+        { label: 'Virtual Twilight', included: false },
+        { label: 'Virtual Staging', included: false },
+        { label: '3D House Model', included: false },
+      ],
+      image: '',
+    },
+    {
+      name: 'PREMIUM SELLER EXPERIENCE',
+      price: '$1229.99',
+      subtitle: '',
+      sqft: '4000–4999 sq ft',
+      discount: 'Save $220',
+      discountColor: 'text-[#B42222]',
+      buttonColor: 'bg-[#262F3F] text-white',
+      features: [
+        { label: 'HDR Photography', included: true },
+        { label: '3–5 Drone Shots', included: true },
+        { label: '360° Virtual Tour', included: true },
+        { label: '2D Floor Plan', included: true },
+        { label: 'Custom Video (Built with Your Preferences)', included: true },
+        { label: 'Property Website', included: true },
+        { label: 'Custom Domain', included: true },
+        { label: '3D House Model', included: true },
+        { label: 'Virtual Twilight', included: true },
+        { label: 'Virtual Staging', included: false },
+      ],
+      image: '',
+    },
+  ],
+};
 
-  // Add this type above the packages section
+// Move type definitions above hardcodedPackages and outside the component
+
   type PackageFeature = {
     label: string;
     included: boolean;
@@ -236,6 +686,11 @@ export default function PricingPage() {
     features: PackageFeature[];
     image: string;
   };
+
+export default function PricingPage() {
+  const [selectedSize, setSelectedSize] = useState<SizeKey>("<1000")
+  const [selectedServices, setSelectedServices] = useState<string[]>([])
+  const [totalPrice, setTotalPrice] = useState(0)
 
   // Add this helper for slider stops
   const sizeOptions: { value: SizeKey; label: string; range: string }[] = [
@@ -430,130 +885,27 @@ export default function PricingPage() {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {([
-                {
-                  name: "ESSENTIALS PACKAGE",
-                  price: `$${essentialsPriceMap[selectedSize].toFixed(2)}`,
-                  subtitle: "starting",
-                  sqft: `up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1]}`,
-                  discount: essentialsDiscountMap[selectedSize],
-                  discountColor: "text-[#B42222]",
-                  buttonColor: "bg-[#262F3F] text-white",
-                  features: [
-                    { label: "HDR Photography", included: true },
-                    { label: "1–2 Drone Shots", included: true },
-                    { label: "MLS-Optimized & High-Res Delivery", included: true },
-                    { label: "24-Hour Turnaround", included: true },
-                    { label: "360° Virtual Tour", included: false },
-                    { label: "Floor Plan", included: false },
-                    { label: "Social Media Video", included: false },
-                    { label: "Property Website", included: false },
-                    { label: "Custom Domain", included: false },
-                    { label: "Drone Video", included: false },
-                    { label: "Virtual Staging", included: false },
-                    { label: "3D House Model", included: false },
-                    { label: "Twilight or Virtual Twilight", included: false },
-                  ],
-                  image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000",
-                },
-                {
-                  name: "DELUXE TOUR PACKAGE",
-                  price: `$${deluxePriceMap[selectedSize].toFixed(2)}`,
-                  subtitle: "starting",
-                  sqft: `up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1]}`,
-                  discount: deluxeDiscountMap[selectedSize],
-                  discountColor: "text-[#B42222]",
-                  buttonColor: "bg-[#262F3F] text-white",
-                  features: [
-                    { label: "HDR Photography", included: true },
-                    { label: "2–3 Drone Shots", included: true },
-                    { label: "360° Virtual Tour", included: true },
-                    { label: "Floor Plan (2D)", included: true },
-                    { label: "MLS-Optimized & High-Res Delivery", included: true },
-                    { label: "Social Media Video", included: false },
-                    { label: "Property Website", included: false },
-                    { label: "Custom Domain", included: false },
-                    { label: "Drone Video", included: false },
-                    { label: "Virtual Staging", included: false },
-                    { label: "3D House Model", included: false },
-                    { label: "Twilight or Virtual Twilight", included: false },
-                  ],
-                  image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000",
-                },
-                {
-                  name: "MARKETING PRO PACKAGE",
-                  price: `$${marketingProPriceMap[selectedSize].toFixed(2)}`,
-                  subtitle: "starting",
-                  sqft: `up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1]}`,
-                  discount: marketingProDiscountMap[selectedSize],
-                  discountColor: "text-[#B42222]",
-                  buttonColor: "bg-[#f3a952] text-[#262F3F]",
-                  features: [
-                    { label: "HDR Photography", included: true },
-                    { label: "2–3 Drone Shots", included: true },
-                    { label: "360° Virtual Tour", included: true },
-                    { label: "Floor Plan (2D)", included: true },
-                    { label: "Social Media Vertical Video", included: true },
-                    { label: "Property Website (Branded + Unbranded)", included: true },
-                    { label: "MLS-Optimized & High-Res Delivery", included: true },
-                    { label: "Custom Domain", included: false },
-                    { label: "Drone Video", included: false },
-                    { label: "Virtual Staging", included: false },
-                    { label: "3D House Model", included: false },
-                    { label: "Twilight or Virtual Twilight", included: false },
-                  ],
-                  image: "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f5?q=80&w=2000",
-                },
-                {
-                  name: "PREMIUM SELLER EXPERIENCE",
-                  price: `$${premiumSellerPriceMap[selectedSize].toFixed(2)}`,
-                  subtitle: "starting",
-                  sqft: `up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1]}`,
-                  discount: premiumSellerDiscountMap[selectedSize],
-                  discountColor: "text-[#B42222]",
-                  buttonColor: "bg-[#262F3F] text-white",
-                  features: [
-                    { label: "HDR Photography", included: true },
-                    { label: "3–5 Drone Shots", included: true },
-                    { label: "360° Virtual Tour", included: true },
-                    { label: "Floor Plan (2D)", included: true },
-                    { label: "Social Media Vertical Video", included: true },
-                    { label: "Property Website (Branded + Unbranded)", included: true },
-                    { label: "Custom Domain", included: true },
-                    { label: "Drone Video (60–90 sec)", included: true },
-                    { label: "Virtual Twilight (1 image)", included: true },
-                    { label: "MLS-Optimized & High-Res Delivery", included: true },
-                    { label: "3D House Model", included: false },
-                    { label: "Additional Virtual Staging", included: false },
-                  ],
-                  image: "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f5?q=80&w=2000",
-                },
-              ] as PackageCard[]).map((pkg, idx) => (
+              {hardcodedPackages[selectedSize].map((pkg, idx) => (
                 <div
-                  key={pkg.name}
+                  key={pkg.name + idx}
                   className={`flex flex-col rounded-xl border ${pkg.borderColor || "border-gray-200"} bg-white p-6 shadow-sm transition-all`}
                 >
                   <div className="mb-2 text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86]">{pkg.name}</div>
                   <div className="flex items-end gap-2 mb-1">
                     <span className="text-4xl font-mazzard font-semibold text-[#262F3F]">
-                      {pkg.name === 'Essentials Package' ? `$${essentialsPriceMap[selectedSize].toFixed(2)}` : pkg.price}
-                    </span>
-                    <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">
-                      {selectedSize === '<1000' ? pkg.subtitle : ''}
+                      {pkg.price}
                     </span>
                     </div>
                   <div className="text-xs text-[#6B7A86] mb-1 font-mazzard font-medium">
-                    {`up to ${sizeOptions.find(opt => opt.value === selectedSize)?.range.split('–')[1] || pkg.sqft.replace('up to ', '')}`}
+                    {pkg.sqft}
                   </div>
                   <div className={`mb-2 text-sm font-mazzard font-semibold ${pkg.discountColor}`}>{pkg.discount}</div>
                   <BookButton href="/quote" size="lg" className={`w-full mb-4 mt-2 font-mazzard font-semibold ${pkg.buttonColor}`}>Get quote</BookButton>
                   <ul className="flex-1 mb-0 space-y-1 text-sm">
-                      {pkg.features.map((feature, i) => (
-                      <li key={i} className={`flex items-center gap-2 ${feature.included ? (feature.gold ? "text-[#f3a952]" : "text-[#262F3F]") : "text-[#B0B7C3] line-through"} ${feature.bold ? "font-semibold" : ""}`}>
+                    {pkg.features.map((feature: PackageFeature, i: number) => (
+                      <li key={i} className={`flex items-center gap-2 ${feature.included ? "text-[#262F3F]" : "text-[#B0B7C3] line-through"}`}>
                         {feature.included ? (
-                          <span className={`inline-block w-4 h-4 rounded-full flex items-center justify-center ${feature.gold ? "bg-[#f3a952] text-white" : "bg-[#262F3F] text-white"}`}>
-                            ✓
-                          </span>
+                          <span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>
                         ) : (
                           <span className="inline-block w-4 h-4 rounded-full bg-[#E5E7EB] text-[#B0B7C3] flex items-center justify-center">✗</span>
                         )}

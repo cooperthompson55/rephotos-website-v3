@@ -47,7 +47,7 @@ export default function OurStoryPage() {
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Story</h1>
             <p className="text-lg md:text-xl mb-2">
-              From a passion project in Milton to Southern Ontario's trusted real estate photography partner
+              From local roots to one of Southern Ontario's most dependable real estate media partners
             </p>
           </motion.div>
         </div>
@@ -64,12 +64,9 @@ export default function OurStoryPage() {
             viewport={{ once: true }}
           >
             <motion.div variants={fadeInUp} className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Founded in the Heart of Milton</h2>
+              <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Founded in Milton. Built for Realtors</h2>
               <p className="text-lg text-gray-600 leading-relaxed">
-                RePhotos began as a passion project by our founder, Cooper. As a proud Canadian small business, we
-                understand the unique needs of our local real estate market and the value of community. Our journey
-                started with a simple mission: to help realtors and homeowners showcase their properties in the best
-                possible light, using the power of professional photography and marketing.
+                RePhotos started with one clear goal: help agents win more listings and close faster with premium visuals that convert. We understand what buyers look for and what sellers expect. We deliver both with speed, quality, and consistency.
               </p>
             </motion.div>
 
@@ -79,9 +76,9 @@ export default function OurStoryPage() {
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Camera className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-2">One-Person Start</h3>
+                  <h3 className="text-2xl font-semibold mb-2">One Camera Start</h3>
                   <p className="text-gray-600">
-                    Started as Cooper's passion project to bring creativity to real estate marketing
+                    Launched with just a camera and a few listings. Now a full-service media partner
                   </p>
                 </CardContent>
               </Card>
@@ -91,8 +88,8 @@ export default function OurStoryPage() {
                   <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Users className="w-8 h-8 text-secondary" />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-2">Trusted Partner</h3>
-                  <p className="text-gray-600">Now serving real estate professionals across Southern Ontario</p>
+                  <h3 className="text-2xl font-semibold mb-2">Trusted by Agents Across the GTA</h3>
+                  <p className="text-gray-600">Chosen by agents who need reliability, fast turnaround, and professional results</p>
                 </CardContent>
               </Card>
 
@@ -101,94 +98,27 @@ export default function OurStoryPage() {
                   <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Heart className="w-8 h-8 text-accent" />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-2">Core Values</h3>
-                  <p className="text-gray-600">Quality, reliability, and personal service remain at our core</p>
+                  <h3 className="text-2xl font-semibold mb-2">Focused on Results</h3>
+                  <p className="text-gray-600">Everything we offer is designed to get listings noticed, shared, and sold</p>
                 </CardContent>
               </Card>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="text-center">
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Over the years, we've grown from a one-person operation into a trusted partner for real estate
-                professionals across Southern Ontario. Our commitment to quality, reliability, and personal service
-                remains at the core of everything we do.
+            <motion.div variants={fadeInUp} className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Why Agents Stick With Us</h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                We do more than shoot and send. We build long-term partnerships that help agents stand out in busy markets.
               </p>
             </motion.div>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Founder Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            className="max-w-6xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="order-2 lg:order-1">
-                <div className="flex flex-wrap gap-3 mb-6">
-                  <Badge variant="outline" className="border-primary text-primary">
-                    Founder
-                  </Badge>
-                  <Badge variant="outline" className="border-secondary text-secondary">
-                    Milton Local
-                  </Badge>
-                  <Badge variant="outline" className="border-accent text-accent">
-                    Community Focused
-                  </Badge>
-                </div>
-
-                <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Meet Cooper</h2>
-
-                <div className="space-y-4 text-gray-600 leading-relaxed">
-                  <p>
-                    Hi, I'm Cooper, the founder of RePhotos. As a lifelong resident of Milton and a passionate
-                    photographer, I started this business to bring a new level of care and creativity to real estate
-                    marketing.
-                  </p>
-
-                  <p>
-                    I believe every home has a story, and it's my mission to help you tell it. Whether it's capturing
-                    the perfect golden hour shot or highlighting the unique architectural details that make a property
-                    special, I approach every project with the same dedication and artistic vision.
-                  </p>
-
-                  <p className="font-medium text-primary">
-                    When you work with RePhotos, you're not just getting a service—you're partnering with a local expert
-                    who cares about your success. Thank you for supporting a Canadian small business!
-                  </p>
-                </div>
-
-                <div className="mt-8">
-                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-                    <Link href="/contact">Get in Touch with Cooper</Link>
-                  </Button>
-                </div>
-              </div>
-
-              <div className="order-1 lg:order-2">
-                <div className="relative">
-                  <div className="aspect-[4/5] relative rounded-2xl overflow-hidden shadow-2xl">
-                    <Image
-                      src="/placeholder.svg?height=600&width=480&query=Professional headshot of Cooper, RePhotos founder, with camera equipment in Milton Ontario"
-                      alt="Cooper, Founder of RePhotos"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-lg">
-                    <div className="flex items-center space-x-2">
-                      <Camera className="w-6 h-6 text-primary" />
-                      <span className="font-semibold text-primary">RePhotos Founder</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <motion.div variants={fadeInUp} className="text-center">
+              <p className="text-lg text-gray-600 leading-relaxed">
+                <strong>Real Estate Photography in Milton, Oakville, Mississauga, Burlington & GTA</strong><br />
+                Looking for real estate photographers near me who actually deliver? RePhotos is your trusted real estate photography company serving Milton, Oakville, Mississauga, Burlington, and the Greater Toronto Area. We specialize in HDR real estate photography, drone photography, virtual tours, 3D walkthroughs, and real estate video tours that help your listings sell faster and stand out on MLS, Realtor.ca, and social media. From Milton real estate photography to Oakville drone video tours, our professional services are designed for agents across the Halton Region and Peel Region who want premium visuals that drive results.<br /><br />
+                Our complete real estate media services include crystal-clear interior and exterior photography, stunning aerial drone shots, interactive virtual tours, cinematic video content, twilight photography, and social media-ready content. Whether you're listing luxury homes in Oakville, family properties in Burlington, condos in Mississauga, or any property throughout Georgetown, Brampton, Hamilton, and the GTA, we know what buyers want to see and how to capture it professionally.<br /><br />
+                Time is money in real estate – that's why we offer same-day turnaround on most shoots and clear, upfront pricing with no surprises. Our real estate photography packages work for every agent and budget, from top producers to agents building their business. Stop losing listings to better photos. Contact RePhotos today and discover why we're the go-to real estate photography service for agents who want more views, more leads, and faster sales across the Greater Toronto Area.
+              </p>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -205,10 +135,6 @@ export default function OurStoryPage() {
           >
             <motion.div variants={fadeInUp} className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Our Values</h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                We believe in building lasting relationships, delivering exceptional quality, and supporting our local
-                community. Here's what drives us every day:
-              </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -218,10 +144,9 @@ export default function OurStoryPage() {
                     <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Heart className="w-10 h-10 text-primary" />
                     </div>
-                    <h3 className="text-2xl font-semibold mb-4">Personal Service</h3>
+                    <h3 className="text-2xl font-semibold mb-4">Clarity Over Hype</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Every client is unique. We take the time to understand your needs and deliver a tailored
-                      experience that exceeds expectations.
+                      We focus on what matters. Helping you sell listings faster with clean visuals and transparent pricing
                     </p>
                   </CardContent>
                 </Card>
@@ -233,10 +158,9 @@ export default function OurStoryPage() {
                     <div className="w-20 h-20 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Lightbulb className="w-10 h-10 text-secondary" />
                     </div>
-                    <h3 className="text-2xl font-semibold mb-4">Quality & Creativity</h3>
+                    <h3 className="text-2xl font-semibold mb-4">Efficiency Matters</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      We combine technical expertise with artistic vision to make every property shine and stand out in
-                      the market.
+                      We show up on time, deliver fast, and make it easy for you to put everything to work right away
                     </p>
                   </CardContent>
                 </Card>
@@ -248,9 +172,9 @@ export default function OurStoryPage() {
                     <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Award className="w-10 h-10 text-accent" />
                     </div>
-                    <h3 className="text-2xl font-semibold mb-4">Community Roots</h3>
+                    <h3 className="text-2xl font-semibold mb-4">Local Focus</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      We're proud to support local businesses and give back to the Milton community whenever we can.
+                      We live and work in the same market you do. That means no guesswork. Just media that works
                     </p>
                   </CardContent>
                 </Card>
