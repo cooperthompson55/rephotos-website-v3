@@ -43,9 +43,9 @@ const CustomVideoBuilder = () => {
 
   // Define options data
   const orientationOptions: Option[] = [
-    { id: "horizontal", label: "Horizontal", price: 0 },
-    { id: "vertical", label: "Vertical", price: 0 },
-    { id: "square", label: "Square", price: 0 },
+    { id: "property_highlights", label: "Property Highlights Video", price: 319.99 },
+    { id: "social_reel", label: "Social Media Reel", price: 229.99 },
+    { id: "drone_aerial", label: "Drone Aerial Video", price: 159.99 },
   ];
 
   const soundDesignOptions: Option[] = [
@@ -79,13 +79,10 @@ const CustomVideoBuilder = () => {
 
   const additionalDurationPrice = 5.00; // per 30 seconds
 
-  const HORIZONTAL_PRICE = 249.99;
-  const VERTICAL_PRICE = 179.99;
-
   const orientationNotes: Record<string, string> = {
-    horizontal: "1–2 minutes",
-    vertical: "30–60 seconds",
-    square: "30–60 seconds",
+    property_highlights: "1–2 minutes, horizontal",
+    social_reel: "30–60 seconds, vertical",
+    drone_aerial: "30–60 seconds, aerial",
   };
 
   // Calculate total price
@@ -93,11 +90,10 @@ const CustomVideoBuilder = () => {
     let currentTotal = 0;
 
     // Orientation pricing logic
-    if (options.orientation === "horizontal") {
-      currentTotal += HORIZONTAL_PRICE;
-    } else if (options.orientation === "vertical" || options.orientation === "square") {
-      currentTotal += VERTICAL_PRICE;
-    } // Square now matches vertical
+    const selectedOrientation = orientationOptions.find(opt => opt.id === options.orientation);
+    if (selectedOrientation) {
+      currentTotal += selectedOrientation.price;
+    }
 
     // Sound Design
     options.soundDesign.forEach(sdId => {
@@ -206,8 +202,9 @@ const CustomVideoBuilder = () => {
               >
                 <RadioGroupItem value={opt.id} id={opt.id} className="sr-only" />
                 <span>{opt.label}</span>
-                {opt.id === "horizontal" && <span className="text-xs text-muted-foreground mt-1">${HORIZONTAL_PRICE.toFixed(2)}</span>}
-                {(opt.id === "vertical" || opt.id === "square") && <span className="text-xs text-muted-foreground mt-1">${VERTICAL_PRICE.toFixed(2)}</span>}
+                {opt.id === "property_highlights" && <span className="text-xs text-muted-foreground mt-1">${319.99.toFixed(2)}</span>}
+                {opt.id === "social_reel" && <span className="text-xs text-muted-foreground mt-1">${229.99.toFixed(2)}</span>}
+                {opt.id === "drone_aerial" && <span className="text-xs text-muted-foreground mt-1">${159.99.toFixed(2)}</span>}
                 <span className="text-xs text-muted-foreground mt-1">{orientationNotes[opt.id]}</span>
               </Label>
             ))}

@@ -26,9 +26,9 @@ export function CaseStudySection() {
 
             {/* Right image side */}
             <div className="md:w-1/2 relative">
-              <div className="h-full">
+              <div className="relative aspect-[4/3] w-full min-h-[300px]">
                 <Image
-                  src="/images/home/backyard_2.jpg"
+                  src="/images/home/backyard_2.webp"
                   alt="The Art of the Sale"
                   fill
                   className="object-cover"

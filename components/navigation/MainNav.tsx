@@ -173,8 +173,8 @@ export function MainNav() {
             href="/book-now"
             size="default"
             className={scrolled
-              ? "bg-[#262f3f] text-white hover:bg-[#1d3644]"
-              : "bg-white text-black hover:bg-gray-100"}
+              ? "bg-[#262f3f] text-white hover:bg-[#2853AE] active:bg-[#2853AE]"
+              : "bg-white text-black hover:bg-[#2853AE] active:bg-[#2853AE]"}
           >
             Book Now
           </BookButton>
@@ -249,8 +249,8 @@ export function MainNav() {
                 <BookButton
                   href="/book-now"
                   className={scrolled
-                    ? "bg-[#262f3f] text-white hover:bg-[#1d3644] w-full"
-                    : "bg-white text-black hover:bg-gray-100 w-full"}
+                    ? "bg-[#262f3f] text-white hover:bg-[#2853AE] active:bg-[#2853AE] w-full"
+                    : "bg-white text-black hover:bg-[#2853AE] active:bg-[#2853AE] w-full"}
                   onClick={() => setIsOpen(false)}
                 >
                   Book Now

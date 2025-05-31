@@ -6,23 +6,23 @@ import Image from "next/image"
 // Reduced number of images
 const galleryImages = [
   {
-    src: "/images/home/row_1.jpg",
+    src: "/images/home/row_1.webp",
     alt: "Gallery image 1",
   },
   {
-    src: "/images/home/row_2.jpg",
+    src: "/images/home/row_2.webp",
     alt: "Gallery image 2",
   },
   {
-    src: "/images/home/row_3.jpg",
+    src: "/images/home/row_3.webp",
     alt: "Gallery image 3",
   },
   {
-    src: "/images/home/row_4.jpg",
+    src: "/images/home/row_4.webp",
     alt: "Gallery image 4",
   },
   {
-    src: "/images/home/row_5.jpg",
+    src: "/images/home/row_5.webp",
     alt: "Gallery image 5",
   },
 ]

@@ -28,7 +28,7 @@ export function CaseStudySection() {
             <div className="md:w-1/2 relative">
               <div className="h-full">
                 <Image
-                  src="/images/home/backyard_2.jpg"
+                  src="/images/home/backyard_2.webp"
                   alt="The art of the Eichler"
                   fill
                   className="object-cover"

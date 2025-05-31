@@ -7,31 +7,31 @@ const services = [
   {
     title: "Photography",
     price: "$149.99 STARTING",
-    image: "/images/home/s_1.jpg",
+    image: "/images/home/s_1.webp",
     link: "/services/photography",
   },
   {
     title: "Walkthrough Videos",
     price: "$249.99 STARTING",
-    image: "/images/home/s_2.jpg",
+    image: "/images/home/s_2.webp",
     link: "/services/videography",
   },
   {
     title: "Social Media Videos",
     price: "$179.99 STARTING",
-    image: "/images/home/s_3.jpg",
+    image: "/images/home/s_3.webp",
     link: "/services/videography",
   },
   {
     title: "Aerial Photos & Video",
     price: "$124.99 STARTING",
-    image: "/images/home/s_4.jpg",
+    image: "/images/home/s_4.webp",
     link: "/services/aerial",
   },
   {
     title: "360° Virtual Tours",
     price: "$159.99 STARTING",
-    image: "/images/home/s_5.jpg",
+    image: "/images/home/s_5.webp",
     link: "/services/virtual-tours",
   },
   {

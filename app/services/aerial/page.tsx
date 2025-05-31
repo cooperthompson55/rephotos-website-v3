@@ -1,11 +1,16 @@
+"use client";
+
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Camera, Video, MapPin, Shield, Clock, CheckCircle, Star, Eye } from "lucide-react"
 import { CTASection } from "@/components/home/CTASection"
+import { useState } from "react"
 
 export default function AerialPage() {
+  const [media, setMedia] = useState<'video' | 1 | 2 | 3>('video')
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -55,16 +60,16 @@ export default function AerialPage() {
               <p className="text-muted-foreground">More online views with aerial photos</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif font-light text-primary mb-2">95%</div>
-              <p className="text-muted-foreground">Client satisfaction rate</p>
+              <div className="text-4xl font-serif font-light text-primary mb-2">97%</div>
+              <p className="text-muted-foreground">Satisfaction rating from agents</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif font-light text-primary mb-2">24hr</div>
-              <p className="text-muted-foreground">Typical delivery time</p>
+              <p className="text-muted-foreground">Turnaround time on most projects</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif font-light text-primary mb-2">500+</div>
-              <p className="text-muted-foreground">Properties captured</p>
+              <div className="text-4xl font-serif font-light text-primary mb-2">10+ Areas</div>
+              <p className="text-muted-foreground">Servicing the GTA and beyond</p>
             </div>
           </div>
         </div>
@@ -127,10 +132,9 @@ export default function AerialPage() {
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Shield className="w-6 h-6 text-secondary" />
                 </div>
-                <h3 className="text-xl font-serif font-medium mb-3">FAA Certified</h3>
+                <h3 className="text-xl font-serif font-medium mb-3">Transport Canada Certified</h3>
                 <p className="text-muted-foreground">
-                  All our drone pilots are FAA Part 107 certified with full commercial insurance, ensuring legal
-                  compliance and professional operation.
+                  All our drone pilots are certified by Transport Canada with full commercial insurance, ensuring legal compliance and professional operation.
                 </p>
               </CardContent>
             </Card>
@@ -153,10 +157,9 @@ export default function AerialPage() {
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Clock className="w-6 h-6 text-secondary" />
                 </div>
-                <h3 className="text-xl font-serif font-medium mb-3">Quick Turnaround</h3>
+                <h3 className="text-xl font-serif font-medium mb-3">Next-Day Delivery</h3>
                 <p className="text-muted-foreground">
-                  Professional editing and delivery within 24-48 hours, ensuring your listings go live quickly with
-                  stunning aerial content.
+                  Professionally edited and delivered by the next day, so your listings go live fast with stunning aerial content.
                 </p>
               </CardContent>
             </Card>
@@ -176,102 +179,59 @@ export default function AerialPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="relative group overflow-hidden rounded-lg">
-              <Image
-                src="/placeholder.svg?height=400&width=600&query=aerial view luxury estate with pool and gardens"
-                alt="Luxury Estate Aerial View"
-                width={600}
-                height={400}
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="text-white text-center">
-                  <h3 className="text-lg font-serif font-medium mb-2">Luxury Estate</h3>
-                  <p className="text-sm">Aerial Photography</p>
-                </div>
-              </div>
+          {/* Large Video or Selected Image */}
+          <div className="flex justify-center mb-10">
+            <div className="w-full max-w-4xl aspect-video rounded-lg shadow-lg overflow-hidden">
+              {media === 'video' ? (
+                <iframe
+                  src="https://player.vimeo.com/video/1031855047?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                  title="Bronte Harbor, Oakville ON"
+                  className="w-full h-full"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <button
+                  type="button"
+                  className="w-full h-full cursor-pointer focus:outline-none"
+                  onClick={() => setMedia('video')}
+                  aria-label="Return to video"
+                  style={{ background: 'none', border: 'none', padding: 0 }}
+                >
+                  <Image
+                    src={`/images/photobank/drone_${media}-gallery.webp`}
+                    alt={`Aerial Photo ${media}`}
+                    width={1280}
+                    height={720}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              )}
             </div>
+          </div>
 
-            <div className="relative group overflow-hidden rounded-lg">
-              <Image
-                src="/placeholder.svg?height=400&width=600&query=aerial drone video of waterfront property with dock"
-                alt="Waterfront Property Aerial"
-                width={600}
-                height={400}
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="text-white text-center">
-                  <h3 className="text-lg font-serif font-medium mb-2">Waterfront Property</h3>
-                  <p className="text-sm">Aerial Video</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative group overflow-hidden rounded-lg">
-              <Image
-                src="/placeholder.svg?height=400&width=600&query=aerial view of commercial building and parking lot"
-                alt="Commercial Property Aerial"
-                width={600}
-                height={400}
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="text-white text-center">
-                  <h3 className="text-lg font-serif font-medium mb-2">Commercial Property</h3>
-                  <p className="text-sm">Aerial Photography</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative group overflow-hidden rounded-lg">
-              <Image
-                src="/placeholder.svg?height=400&width=600&query=aerial view of farm property with fields and barn"
-                alt="Farm Property Aerial"
-                width={600}
-                height={400}
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="text-white text-center">
-                  <h3 className="text-lg font-serif font-medium mb-2">Farm Property</h3>
-                  <p className="text-sm">Aerial Mapping</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative group overflow-hidden rounded-lg">
-              <Image
-                src="/placeholder.svg?height=400&width=600&query=aerial view of suburban neighborhood with houses"
-                alt="Residential Neighborhood Aerial"
-                width={600}
-                height={400}
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="text-white text-center">
-                  <h3 className="text-lg font-serif font-medium mb-2">Residential Area</h3>
-                  <p className="text-sm">Neighborhood Context</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative group overflow-hidden rounded-lg">
-              <Image
-                src="/placeholder.svg?height=400&width=600&query=aerial sunset view of lakefront cottage property"
-                alt="Lakefront Cottage Aerial"
-                width={600}
-                height={400}
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="text-white text-center">
-                  <h3 className="text-lg font-serif font-medium mb-2">Lakefront Cottage</h3>
-                  <p className="text-sm">Golden Hour Aerial</p>
-                </div>
-              </div>
-            </div>
+          {/* 3 Photo Cards in a Row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((num) => (
+              <button
+                key={num}
+                type="button"
+                className="relative group overflow-hidden rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-primary"
+                onClick={() => setMedia(num as 1 | 2 | 3)}
+                aria-label={`Show Aerial Photo ${num}`}
+              >
+                <Image
+                  src={`/images/photobank/drone_${num}-gallery.webp`}
+                  alt={`Aerial Photo ${num}`}
+                  width={350}
+                  height={200}
+                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </button>
+            ))}
           </div>
         </div>
       </section>
@@ -345,118 +305,52 @@ export default function AerialPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Aerial Photos Add-on */}
             <Card className="relative">
               <CardContent className="p-6">
-                <h3 className="text-xl font-serif font-medium mb-2">Basic Aerial</h3>
-                <div className="text-3xl font-serif font-light text-primary mb-4">$199</div>
+                <h3 className="text-xl font-serif font-medium mb-2">HDR Photography + Drone Shots</h3>
+                <div className="text-3xl font-serif font-light text-primary mb-4">$189.99</div>
                 <ul className="space-y-2 mb-6">
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>10-15 aerial photos</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Multiple angles & heights</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Professional editing</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>24-hour delivery</span>
-                  </li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Add-on to any photo package</span></li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Great for highlighting views or lot size</span></li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Transport Canada Certified</span></li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Delivered next day</span></li>
                 </ul>
                 <Button asChild className="w-full">
-                  <Link href="/contact">Choose Basic</Link>
+                  <Link href="/book-now">Get Started</Link>
                 </Button>
               </CardContent>
             </Card>
-
-            <Card className="relative border-secondary border-2">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <span className="bg-secondary text-white px-3 py-1 rounded-full text-xs font-medium">Most Popular</span>
-              </div>
+            {/* Aerial Photos */}
+            <Card className="relative">
               <CardContent className="p-6">
-                <h3 className="text-xl font-serif font-medium mb-2">Aerial Plus</h3>
-                <div className="text-3xl font-serif font-light text-primary mb-4">$299</div>
+                <h3 className="text-xl font-serif font-medium mb-2">Aerial Photos</h3>
+                <div className="text-3xl font-serif font-light text-primary mb-4">$159.99</div>
                 <ul className="space-y-2 mb-6">
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>20-25 aerial photos</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>1-2 minute aerial video</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Property mapping shots</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Neighborhood context</span>
-                  </li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Standalone or added to a shoot</span></li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>10–15 aerial shots from multiple angles</span></li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Edited for sky replacement and clarity</span></li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Delivered next day</span></li>
                 </ul>
                 <Button asChild className="w-full">
-                  <Link href="/contact">Choose Plus</Link>
+                  <Link href="/book-now">Get Started</Link>
                 </Button>
               </CardContent>
             </Card>
-
+            {/* Aerial Video */}
             <Card className="relative">
               <CardContent className="p-6">
-                <h3 className="text-xl font-serif font-medium mb-2">Aerial Pro</h3>
-                <div className="text-3xl font-serif font-light text-primary mb-4">$399</div>
+                <h3 className="text-xl font-serif font-medium mb-2">Aerial Video</h3>
+                <div className="text-3xl font-serif font-light text-primary mb-4">$159.99</div>
                 <ul className="space-y-2 mb-6">
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>30+ aerial photos</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>3-4 minute cinematic video</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Golden hour shots</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Social media formats</span>
-                  </li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Standalone or added to a shoot</span></li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>30–60 sec cinematic drone video</span></li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Perfect for social media and listings</span></li>
+                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Delivered next day</span></li>
                 </ul>
                 <Button asChild className="w-full">
-                  <Link href="/contact">Choose Pro</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="relative">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-serif font-medium mb-2">Commercial</h3>
-                <div className="text-3xl font-serif font-light text-primary mb-4">$599</div>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Unlimited aerial photos</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Extended video content</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Detailed property mapping</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Rush delivery available</span>
-                  </li>
-                </ul>
-                <Button asChild className="w-full">
-                  <Link href="/contact">Choose Commercial</Link>
+                  <Link href="/book-now">Get Started</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -475,67 +369,54 @@ export default function AerialPage() {
           <div className="max-w-4xl mx-auto space-y-6">
             <Card>
               <CardContent className="p-6">
-                <h3 className="text-lg font-serif font-medium mb-3">Are your drone pilots FAA certified?</h3>
+                <h3 className="text-lg font-serif font-medium mb-3">Who operates your drones?</h3>
                 <p className="text-muted-foreground">
-                  Yes, all our drone pilots hold FAA Part 107 Remote Pilot Certificates and maintain current commercial
-                  insurance. We operate legally and safely in accordance with all federal aviation regulations.
+                  All aerial shoots are handled by experienced operators trained in real estate media and safety protocols. We ensure smooth, high-quality results every time.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <h3 className="text-lg font-serif font-medium mb-3">What weather conditions affect aerial shoots?</h3>
+                <h3 className="text-lg font-serif font-medium mb-3">What weather conditions affect drone shoots?</h3>
                 <p className="text-muted-foreground">
-                  We monitor wind speeds, precipitation, and visibility conditions. Flights are postponed if winds
-                  exceed 25 mph, during rain or snow, or when visibility is poor. We'll reschedule at no additional cost
-                  for weather delays.
+                  We don't fly during rain, snow, or high winds. If weather conditions aren't safe, we'll reschedule your shoot at no extra cost.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <h3 className="text-lg font-serif font-medium mb-3">Can you fly in all areas of Southern Ontario?</h3>
+                <h3 className="text-lg font-serif font-medium mb-3">Can you fly anywhere in the GTA and surrounding regions?</h3>
                 <p className="text-muted-foreground">
-                  We can fly in most areas, but some locations near airports or restricted airspace require special
-                  authorization. We check all airspace restrictions during our planning phase and obtain necessary
-                  permits when required.
+                  We cover most areas across the GTA and Golden Horseshoe. Some locations near airports or in controlled airspace may need special flight approval, which we handle ahead of time.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <h3 className="text-lg font-serif font-medium mb-3">
-                  What's the difference between aerial photos and videos?
-                </h3>
+                <h3 className="text-lg font-serif font-medium mb-3">What's the difference between aerial photos and aerial video?</h3>
                 <p className="text-muted-foreground">
-                  Aerial photos are high-resolution still images perfect for MLS listings and print materials. Aerial
-                  videos provide dynamic movement and cinematic perspectives ideal for virtual tours and social media
-                  marketing.
+                  Aerial photos are high-resolution stills great for MLS, brochures, and websites. Aerial video captures smooth flyovers and cinematic motion—perfect for social media or property promo reels.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <h3 className="text-lg font-serif font-medium mb-3">How high do you fly for aerial shots?</h3>
+                <h3 className="text-lg font-serif font-medium mb-3">How high do you fly?</h3>
                 <p className="text-muted-foreground">
-                  We typically fly between 50-400 feet above ground level, depending on the property size and desired
-                  perspective. All flights comply with FAA altitude restrictions and local regulations.
+                  Most shots are taken between 10–50 feet to highlight the home, yard, and surrounding area in the best light. We fly safely and with intention to get the perfect angle.
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <h3 className="text-lg font-serif font-medium mb-3">
-                  Do you provide raw footage or only edited content?
-                </h3>
+                <h3 className="text-lg font-serif font-medium mb-3">How long does it take to receive the final aerial media?</h3>
                 <p className="text-muted-foreground">
-                  Our packages include professionally edited photos and videos. Raw footage can be provided upon request
-                  for an additional fee. All edited content is color-corrected and optimized for web and print use.
+                  Photos are typically delivered within 24 hours. Videos take 48–72 hours depending on editing complexity. Let us know if you need a rush turnaround.
                 </p>
               </CardContent>
             </Card>
@@ -543,36 +424,42 @@ export default function AerialPage() {
         </div>
       </section>
 
-      {/* Testimonial Section */}
+      {/* Testimonial Section (now 3-card feature section) */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container-wide">
-          <Card className="max-w-4xl mx-auto">
-            <CardContent className="p-8 md:p-12 text-center">
-              <div className="flex justify-center mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 text-yellow-400 fill-current" />
-                ))}
+          <div className="text-center mb-10">
+            <p className="text-sm tracking-widest text-muted-foreground mb-2">CLIENT SUCCESS</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-8">Trusted by top real estate professionals</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-muted/40 rounded-lg p-8 text-center shadow-sm border">
+              <div className="flex justify-center mb-4 text-3xl">
+                <Camera className="w-8 h-8 mx-auto text-primary" />
               </div>
-              <blockquote className="text-xl md:text-2xl font-serif font-light text-primary mb-6 leading-relaxed">
-                "The aerial shots completely transformed our listing presentation. We had multiple offers within days,
-                and buyers specifically mentioned how the drone footage helped them understand the property's full
-                potential. The professionalism and quality exceeded our expectations."
-              </blockquote>
-              <div className="flex items-center justify-center gap-4">
-                <Image
-                  src="/placeholder.svg?height=60&width=60&query=professional real estate agent headshot"
-                  alt="Client"
-                  width={60}
-                  height={60}
-                  className="rounded-full"
-                />
-                <div className="text-left">
-                  <div className="font-medium">Sarah Mitchell</div>
-                  <div className="text-sm text-muted-foreground">Royal LePage, Toronto</div>
-                </div>
+              <div className="font-bold text-lg mb-2">Sell the view, not just the house</div>
+              <div className="text-muted-foreground">
+                Showcase lot size, surroundings, and neighborhood highlights that ground-level shots miss.
               </div>
-            </CardContent>
-          </Card>
+            </div>
+            <div className="bg-muted/40 rounded-lg p-8 text-center shadow-sm border">
+              <div className="flex justify-center mb-4 text-3xl">
+                <Video className="w-8 h-8 mx-auto text-primary" />
+              </div>
+              <div className="font-bold text-lg mb-2">Social-ready content</div>
+              <div className="text-muted-foreground">
+                Get vertical and cinematic drone video formatted for Instagram, TikTok, and YouTube—no extra editing needed.
+              </div>
+            </div>
+            <div className="bg-muted/40 rounded-lg p-8 text-center shadow-sm border">
+              <div className="flex justify-center mb-4 text-3xl">
+                <Clock className="w-8 h-8 mx-auto text-primary" />
+              </div>
+              <div className="font-bold text-lg mb-2">Fast turnaround, no surprises</div>
+              <div className="text-muted-foreground">
+                Edited aerial photos in 24 hours, video in 48–72. No hidden fees or delays—just clean, sharp visuals delivered fast.
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

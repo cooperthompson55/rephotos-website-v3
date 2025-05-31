@@ -10,8 +10,8 @@ export function CTASection() {
           Get started to turn your listing into their dream home.
         </h2>
         <div className="mt-6">
-          <BookButton href="/quote" size="lg">
-            Get a quote
+          <BookButton href="/book-now" size="lg">
+            Get Started
           </BookButton>
         </div>
       </div>

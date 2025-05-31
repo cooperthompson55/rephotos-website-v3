@@ -33,28 +33,19 @@ export default function VirtualStagingPage() {
   const [beforeAfterPosition, setBeforeAfterPosition] = useState(50)
   const [selectedStyle, setSelectedStyle] = useState("modern")
   const [selectedRooms, setSelectedRooms] = useState<string[]>([])
-  const [totalPrice, setTotalPrice] = useState(0)
-  const [viewCount, setViewCount] = useState(0)
-  const [leadCount, setLeadCount] = useState(0)
-  const [saleCount, setSaleCount] = useState(0)
 
-  // Animate statistics on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const statsSection = document.getElementById("stats-section")
-      if (statsSection) {
-        const rect = statsSection.getBoundingClientRect()
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          setViewCount((prev) => Math.min(prev + 50, 3500))
-          setLeadCount((prev) => Math.min(prev + 2, 90))
-          setSaleCount((prev) => Math.min(prev + 1, 73))
-        }
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  // Add type for room counts
+  type RoomId = 'living' | 'bedroom' | 'kitchen' | 'bathroom' | 'dining' | 'office';
+  type RoomCounts = Record<RoomId, number>;
+  const initialRoomCounts: RoomCounts = {
+    living: 0,
+    bedroom: 0,
+    kitchen: 0,
+    bathroom: 0,
+    dining: 0,
+    office: 0,
+  };
+  const [roomCounts, setRoomCounts] = useState<RoomCounts>(initialRoomCounts);
 
   const styles = [
     { id: "modern", name: "Modern", icon: Building },
@@ -73,13 +64,23 @@ export default function VirtualStagingPage() {
     { id: "office", name: "Home Office", price: 35, icon: Building },
   ]
 
+  // Helper to update room count
+  const updateRoomCount = (roomId: RoomId, delta: number) => {
+    setRoomCounts((prev) => {
+      const newCount = Math.max(0, (prev[roomId] || 0) + delta);
+      return { ...prev, [roomId]: newCount };
+    });
+  };
+
+  // Calculate total price
+  const totalImages = Object.values(roomCounts).reduce((sum, count) => sum + count, 0);
+  const totalPrice = (totalImages * 39.99).toFixed(2);
+
   const handleRoomToggle = (roomId: string, price: number) => {
     if (selectedRooms.includes(roomId)) {
       setSelectedRooms(selectedRooms.filter((id) => id !== roomId))
-      setTotalPrice(totalPrice - price)
     } else {
       setSelectedRooms([...selectedRooms, roomId])
-      setTotalPrice(totalPrice + price)
     }
   }
 
@@ -182,16 +183,16 @@ export default function VirtualStagingPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#2d4654] mb-2">{viewCount}+</div>
-              <p className="text-gray-600">More Property Views</p>
+              <div className="text-4xl md:text-5xl font-bold text-[#2d4654] mb-2">Up to 3x</div>
+              <p className="text-gray-600">More online views when listings include virtual tours and floor plans</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#2d4654] mb-2">{leadCount}%</div>
-              <p className="text-gray-600">Increase in Leads</p>
+              <div className="text-4xl md:text-5xl font-bold text-[#2d4654] mb-2">90%</div>
+              <p className="text-gray-600">Of buyers say virtual tours help them make faster decisions</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#2d4654] mb-2">{saleCount}%</div>
-              <p className="text-gray-600">Faster Sales</p>
+              <div className="text-4xl md:text-5xl font-bold text-[#2d4654] mb-2">67%</div>
+              <p className="text-gray-600">Of listings with virtual media sell faster than those without</p>
             </div>
           </div>
         </div>
@@ -266,30 +267,48 @@ export default function VirtualStagingPage() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif text-center mb-4">Build Your Package</h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-center mb-4">Build Your Virtual Staging Package</h2>
             <p className="text-xl text-gray-600 text-center mb-12">
-              Select the rooms you want to stage and see instant pricing
+              Select the rooms you want staged – flat rate $39.99 per image
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-semibold mb-6">Select Rooms to Stage</h3>
+                <h3 className="text-xl font-semibold mb-6">Choose Rooms to Stage</h3>
                 <div className="space-y-4">
-                  {roomTypes.map((room) => (
+                  {[
+                    { id: "living", name: "Living Room", icon: Sofa },
+                    { id: "bedroom", name: "Bedroom", icon: Bed },
+                    { id: "kitchen", name: "Kitchen", icon: ChefHat },
+                    { id: "bathroom", name: "Bathroom", icon: Bath },
+                    { id: "dining", name: "Dining Room", icon: Home },
+                    { id: "office", name: "Home Office", icon: Building },
+                  ].map((room) => (
                     <Card key={room.id} className="p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Checkbox
-                            id={room.id}
-                            checked={selectedRooms.includes(room.id)}
-                            onCheckedChange={() => handleRoomToggle(room.id, room.price)}
-                          />
-                          <Label htmlFor={room.id} className="flex items-center gap-2 cursor-pointer">
-                            <room.icon className="w-5 h-5 text-gray-500" />
-                            <span>{room.name}</span>
-                          </Label>
+                          <room.icon className="w-5 h-5 text-gray-500" />
+                          <span>{room.name} – $39.99</span>
                         </div>
-                        <span className="font-semibold">${room.price}</span>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            className="px-2 py-1 bg-gray-200 rounded text-lg font-bold"
+                            onClick={() => updateRoomCount(room.id as RoomId, -1)}
+                            aria-label={`Remove one ${room.name}`}
+                          >
+                            -
+                          </button>
+                          <span className="w-6 text-center">{roomCounts[room.id as RoomId]}</span>
+                          <button
+                            type="button"
+                            className="px-2 py-1 bg-gray-200 rounded text-lg font-bold"
+                            onClick={() => updateRoomCount(room.id as RoomId, 1)}
+                            aria-label={`Add one ${room.name}`}
+                          >
+                            +
+                          </button>
+                        </div>
                       </div>
                     </Card>
                   ))}
@@ -298,19 +317,26 @@ export default function VirtualStagingPage() {
 
               <div>
                 <Card className="p-6 sticky top-4">
-                  <h3 className="text-xl font-semibold mb-6">Your Package</h3>
-                  {selectedRooms.length === 0 ? (
+                  <h3 className="text-xl font-semibold mb-6">Your Price</h3>
+                  {totalImages === 0 ? (
                     <p className="text-gray-500 mb-6">Select rooms to see pricing</p>
                   ) : (
                     <div className="space-y-3 mb-6">
-                      {selectedRooms.map((roomId) => {
-                        const room = roomTypes.find((r) => r.id === roomId)
-                        return room ? (
+                      {Object.entries(roomCounts).filter(([, count]) => count > 0).map(([roomId, count]) => {
+                        const room = {
+                          living: "Living Room",
+                          bedroom: "Bedroom",
+                          kitchen: "Kitchen",
+                          bathroom: "Bathroom",
+                          dining: "Dining Room",
+                          office: "Home Office",
+                        }[roomId as RoomId];
+                        return (
                           <div key={roomId} className="flex justify-between">
-                            <span>{room.name}</span>
-                            <span>${room.price}</span>
+                            <span>{room}</span>
+                            <span>{count} × $39.99</span>
                           </div>
-                        ) : null
+                        );
                       })}
                     </div>
                   )}
@@ -320,13 +346,10 @@ export default function VirtualStagingPage() {
                       <span>Total</span>
                       <span>${totalPrice}</span>
                     </div>
-                    {selectedRooms.length >= 3 && (
-                      <p className="text-sm text-green-600 mt-2">You qualify for a 10% bulk discount!</p>
-                    )}
                   </div>
 
-                  <Button asChild className="w-full" size="lg" disabled={selectedRooms.length === 0}>
-                    <Link href="/contact">Get Started</Link>
+                  <Button asChild className="w-full" size="lg" disabled={totalImages === 0}>
+                    <Link href="/book-now">Get Started</Link>
                   </Button>
                 </Card>
               </div>
@@ -335,59 +358,27 @@ export default function VirtualStagingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 md:py-24 bg-[#F8F5F0]">
+      {/* Features Section (replaces testimonial) */}
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif text-center mb-12">Why Choose Virtual Staging?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <Card className="p-6 hover:shadow-lg transition-shadow">
-                <DollarSign className="w-12 h-12 text-[#2d4654] mb-4" />
-                <h3 className="text-xl font-semibold mb-3">90% Cost Savings</h3>
-                <p className="text-gray-600">
-                  Virtual staging costs a fraction of traditional staging while delivering the same visual impact
-                </p>
-              </Card>
-
-              <Card className="p-6 hover:shadow-lg transition-shadow">
-                <Clock className="w-12 h-12 text-[#2d4654] mb-4" />
-                <h3 className="text-xl font-semibold mb-3">24-48 Hour Delivery</h3>
-                <p className="text-gray-600">
-                  Get professionally staged photos back in days, not weeks, keeping your listings moving fast
-                </p>
-              </Card>
-
-              <Card className="p-6 hover:shadow-lg transition-shadow">
-                <Palette className="w-12 h-12 text-[#2d4654] mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Unlimited Revisions</h3>
-                <p className="text-gray-600">
-                  Not happy with a style? We'll revise until it's perfect at no additional cost
-                </p>
-              </Card>
-
-              <Card className="p-6 hover:shadow-lg transition-shadow">
-                <Home className="w-12 h-12 text-[#2d4654] mb-4" />
-                <h3 className="text-xl font-semibold mb-3">No Physical Logistics</h3>
-                <p className="text-gray-600">
-                  No moving trucks, no storage, no coordination - just upload photos and we handle the rest
-                </p>
-              </Card>
-
-              <Card className="p-6 hover:shadow-lg transition-shadow">
-                <TrendingUp className="w-12 h-12 text-[#2d4654] mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Proven ROI</h3>
-                <p className="text-gray-600">
-                  Staged homes sell 73% faster and for up to 10% more than unstaged properties
-                </p>
-              </Card>
-
-              <Card className="p-6 hover:shadow-lg transition-shadow">
-                <Users className="w-12 h-12 text-[#2d4654] mb-4" />
-                <h3 className="text-xl font-semibold mb-3">Buyer Psychology</h3>
-                <p className="text-gray-600">
-                  Help buyers visualize themselves in the space, creating emotional connections that drive offers
-                </p>
-              </Card>
+            <h2 className="text-3xl md:text-4xl font-serif text-center mb-12">Why Choose Our Virtual Staging?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-[#FAF9F7] rounded-lg shadow p-8 flex flex-col items-center text-center border">
+                <span className="text-3xl mb-4">📋</span>
+                <div className="font-bold text-lg mb-2">MLS-Compliant & Listing-Ready</div>
+                <div className="text-gray-600">Every image includes both staged and original versions to meet MLS rules and avoid any compliance issues.</div>
+              </div>
+              <div className="bg-[#FAF9F7] rounded-lg shadow p-8 flex flex-col items-center text-center border">
+                <span className="text-3xl mb-4">⚡</span>
+                <div className="font-bold text-lg mb-2">Flat-Rate Pricing with Fast Delivery</div>
+                <div className="text-gray-600">No surprises—$39.99 per image with 24–48 hour turnaround. Rush options available.</div>
+              </div>
+              <div className="bg-[#FAF9F7] rounded-lg shadow p-8 flex flex-col items-center text-center border">
+                <span className="text-3xl mb-4">🔄</span>
+                <div className="font-bold text-lg mb-2">Unlimited Revisions for 7 Days</div>
+                <div className="text-gray-600">We'll tweak the design until it's right. Style changes, furniture swaps, no extra charge within the revision window.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -440,68 +431,45 @@ export default function VirtualStagingPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-serif text-center mb-12">Frequently Asked Questions</h2>
+            <p className="text-xl text-gray-600 text-center mb-10">Answers about our virtual staging process, pricing, and what's included.</p>
             <div className="space-y-4">
               <Card className="p-6">
                 <h3 className="font-semibold mb-2">Is virtual staging legal and ethical?</h3>
                 <p className="text-gray-600">
-                  Yes, virtual staging is completely legal when properly disclosed. We provide disclosure text for all
-                  listings and watermarks are available upon request.
+                  Yes. Virtual staging is completely legal and widely used in real estate. We include staged and non-staged versions of each image to stay MLS compliant and can add disclosure text or watermarks if requested.
                 </p>
               </Card>
-
-              <Card className="p-6">
-                <h3 className="font-semibold mb-2">What photo requirements do you have?</h3>
-                <p className="text-gray-600">
-                  We need high-resolution photos (minimum 1920x1080) taken from a straight angle with good lighting. Our
-                  team can guide you on best practices for photos.
-                </p>
-              </Card>
-
               <Card className="p-6">
                 <h3 className="font-semibold mb-2">Can you remove existing furniture?</h3>
                 <p className="text-gray-600">
-                  Yes! We offer furniture removal services to clear cluttered or outdated furniture before adding
-                  virtual staging. This service is available for an additional fee.
+                  Yes. We offer virtual furniture removal to clear out clutter or outdated items before staging. Just let us know which items to remove—this is billed as an add-on per image.
                 </p>
               </Card>
-
               <Card className="p-6">
                 <h3 className="font-semibold mb-2">How many revisions are included?</h3>
                 <p className="text-gray-600">
-                  We include unlimited revisions within 7 days of delivery. We want you to be completely satisfied with
-                  the final result.
+                  Unlimited revisions are included for 7 days after delivery. We want you to be fully satisfied with the result.
                 </p>
               </Card>
-
               <Card className="p-6">
-                <h3 className="font-semibold mb-2">Do you offer bulk discounts?</h3>
+                <h3 className="font-semibold mb-2">How long does it take?</h3>
                 <p className="text-gray-600">
-                  Yes! We offer 10% off for 3+ rooms, 15% off for 5+ rooms, and custom pricing for large projects or
-                  ongoing partnerships.
+                  Most virtual staging orders are delivered within 24–48 hours. Rush options are available if you're in a time crunch.
+                </p>
+              </Card>
+              <Card className="p-6">
+                <h3 className="font-semibold mb-2">Can I choose the style of staging?</h3>
+                <p className="text-gray-600">
+                  Yes. You can request specific styles (modern, cozy, luxury, etc.) or let our design team choose what fits the room best. We'll work with your preferences.
+                </p>
+              </Card>
+              <Card className="p-6">
+                <h3 className="font-semibold mb-2">What rooms can be staged?</h3>
+                <p className="text-gray-600">
+                  We stage any room: living rooms, bedrooms, kitchens, offices, bathrooms, dining rooms, and more. Each image is $39.99 flat—no hidden fees.
                 </p>
               </Card>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonial Section */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="flex justify-center mb-4">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
-              ))}
-            </div>
-            <blockquote className="text-2xl md:text-3xl font-serif mb-6 text-gray-700">
-              "Virtual staging transformed our vacant listings. We're seeing 3x more online engagement and properties
-              are moving 50% faster. It's become an essential part of our marketing strategy."
-            </blockquote>
-            <cite className="text-gray-600">
-              <span className="font-semibold">Jennifer Martinez</span>
-              <span className="block">Luxury Real Estate Specialist, Toronto</span>
-            </cite>
           </div>
         </div>
       </section>

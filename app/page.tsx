@@ -43,21 +43,21 @@ export default function Home() {
               <div className="relative grid grid-cols-12 grid-rows-6 gap-3 h-[500px]">
                 <div className="col-span-5 row-span-3 rounded-lg overflow-hidden shadow-md">
                   <img
-                    src="/images/home/1.jpg"
+                    src="/images/home/1.webp"
                     alt="Modern kitchen interior"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="col-span-7 row-span-3 rounded-lg overflow-hidden shadow-md">
                   <img
-                    src="/images/home/4.jpg"
+                    src="/images/home/4.webp"
                     alt="Cozy interior space"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="col-span-8 row-span-3 rounded-lg overflow-hidden shadow-md relative">
                   <img
-                    src="/images/home/3.jpg"
+                    src="/images/home/3.webp"
                     alt="Modern Woodland Estate"
                     className="w-full h-full object-cover"
                   />
@@ -67,7 +67,7 @@ export default function Home() {
                 </div>
                 <div className="col-span-4 row-span-3 rounded-lg overflow-hidden shadow-md">
                   <img
-                    src="/images/home/2.jpg"
+                    src="/images/home/2.webp"
                     alt="Luxury living room"
                     className="w-full h-full object-cover"
                   />

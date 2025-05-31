@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { Camera, Clock, Award, Users, Zap, Shield, Star, CheckCircle } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 
 const differentiators = [
   {
@@ -178,10 +179,10 @@ export default function WhyUsPage() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link href="/quote">Get Started Today</Link>
+                <Link href="/book-now">Get Started Today</Link>
               </Button>
               <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link href="/portfolio">View Our Work</Link>
+                <Link href="/pricing">View Pricing</Link>
               </Button>
             </div>
           </div>
@@ -394,33 +395,30 @@ export default function WhyUsPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonialHighlights.map((testimonial, index) => (
-              <div key={index} className="bg-[#F8F5F0] p-6 rounded-lg">
-                <div className="flex items-center mb-4">
-                  <div className="text-secondary">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <span key={i} className="text-lg">
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <p className="text-gray-700 italic mb-6">"{testimonial.quote}"</p>
-                <div className="flex items-center">
-                  <Image
-                    src={testimonial.avatar || "/placeholder.svg"}
-                    alt={testimonial.author}
-                    width={48}
-                    height={48}
-                    className="rounded-full mr-4"
-                  />
-                  <div>
-                    <p className="font-medium">{testimonial.author}</p>
-                    <p className="text-sm text-gray-500">{testimonial.title}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {/* Info Card 1 */}
+            <Card className="bg-[#F8F5F0] p-6 rounded-lg text-center">
+              <CardContent>
+                <div className="text-4xl mb-4">📸</div>
+                <h3 className="text-xl font-semibold mb-2">Variety of Homes Captured</h3>
+                <p className="text-gray-700">From condos to luxury estates, RePhotos delivers consistent quality across every listing type. Agents count on us for clean, modern visuals that sell.</p>
+              </CardContent>
+            </Card>
+            {/* Info Card 2 */}
+            <Card className="bg-[#F8F5F0] p-6 rounded-lg text-center">
+              <CardContent>
+                <div className="text-4xl mb-4">⚡</div>
+                <h3 className="text-xl font-semibold mb-2">24-Hour Turnaround</h3>
+                <p className="text-gray-700">Speed matters. We deliver edited photos within 24 hours—helping agents list faster and win over sellers with quick, professional media.</p>
+              </CardContent>
+            </Card>
+            {/* Info Card 3 */}
+            <Card className="bg-[#F8F5F0] p-6 rounded-lg text-center">
+              <CardContent>
+                <div className="text-4xl mb-4">🏡</div>
+                <h3 className="text-xl font-semibold mb-2">Trusted by Top Agents</h3>
+                <p className="text-gray-700">Agents from Royal LePage, Century 21, Remax, and more use RePhotos to stand out in competitive markets. You're in good company.</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -431,7 +429,7 @@ export default function WhyUsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] rounded-lg overflow-hidden">
               <Image
-                src="/images/why-us/1.jpg"
+                src="/images/photobank/15-gallery.webp"
                 alt="Professional photography equipment"
                 fill
                 className="object-cover"
@@ -456,15 +454,6 @@ export default function WhyUsPage() {
                     <h4 className="font-medium mb-1">Professional Camera Systems</h4>
                     <p className="text-sm text-gray-600">
                       Full-frame DSLRs with professional lenses for maximum image quality
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <Zap className="h-6 w-6 text-secondary mt-1" />
-                  <div>
-                    <h4 className="font-medium mb-1">Advanced Lighting Equipment</h4>
-                    <p className="text-sm text-gray-600">
-                      Professional strobes and continuous lighting for perfect exposure
                     </p>
                   </div>
                 </div>

@@ -199,9 +199,9 @@ export default function WebsitesPage() {
                   color: "bg-green-500",
                 },
                 {
-                  icon: BarChart3,
-                  title: "Analytics Dashboard",
-                  description: "Track visitors, engagement, and lead sources in real-time",
+                  icon: Sparkles,
+                  title: "Easy Content Updates",
+                  description: "Need a price change, new photos, or updated info? Just ask—we'll handle it fast",
                   color: "bg-purple-500",
                 },
                 {
@@ -273,14 +273,15 @@ export default function WebsitesPage() {
               </TabsList>
 
               <TabsContent value="desktop" className="mt-0">
-                <div className="bg-gray-900 rounded-lg p-4 max-w-5xl mx-auto">
-                  <div className="bg-white rounded aspect-[16/9]">
+                <div className="bg-gray-900 rounded-lg p-4 max-w-4xl mx-auto">
+                  <div className="bg-white rounded aspect-[16/5] w-full" style={{ maxWidth: '1000px', margin: '0 auto' }}>
                     <Image
-                      src="/placeholder.svg?height=720&width=1280&query=luxury-property-website-desktop"
+                      src="/placeholder.svg?height=400&width=1280&query=luxury-property-website-desktop"
                       alt="Desktop website preview"
                       width={1280}
-                      height={720}
+                      height={400}
                       className="rounded"
+                      style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
                     />
                   </div>
                 </div>
@@ -318,69 +319,61 @@ export default function WebsitesPage() {
         </div>
       </section>
 
-      {/* Interactive Pricing Calculator */}
+      {/* Unified Features Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-serif text-[#2d4654] mb-4">
-                Build Your Perfect Property Website
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-serif text-[#2d4654] mb-2">
+                Everything You Need in a Property Website
               </h2>
-              <p className="text-xl text-gray-600">Start with our base package and add features as needed</p>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                A modern, high-converting listing page—built for agents who want to stand out.
+              </p>
             </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Base Package Includes:</h3>
-                  <ul className="space-y-3 mb-6">
-                    {[
-                      "Custom property website",
-                      "Mobile responsive design",
-                      "Photo gallery (up to 50 photos)",
-                      "Property details & features",
-                      "Contact form with lead capture",
-                      "Basic analytics",
-                      "SSL security",
-                      "1 year hosting",
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-700">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Add Premium Features:</h3>
-                  <div className="space-y-3 mb-6">
-                    {features.map((feature) => (
-                      <label
-                        key={feature.id}
-                        className="flex items-center justify-between p-3 rounded-lg border hover:bg-gray-50 cursor-pointer transition-colors"
-                      >
-                        <div className="flex items-center gap-3">
-                          <Checkbox
-                            checked={selectedFeatures.includes(feature.id)}
-                            onCheckedChange={() => handleFeatureToggle(feature.id, feature.price)}
-                          />
-                          <span className="text-gray-700">{feature.name}</span>
-                        </div>
-                        <span className="text-gray-600">+${feature.price}</span>
-                      </label>
-                    ))}
-                  </div>
-
-                  <div className="bg-[#2d4654] text-white rounded-lg p-6 text-center">
-                    <p className="text-sm mb-2">Your Investment:</p>
-                    <p className="text-4xl font-bold mb-4">${calculatedPrice}</p>
-                    <Button asChild size="lg" className="w-full bg-white text-[#2d4654] hover:bg-gray-100">
-                      <Link href="/pricing">Get Started Today</Link>
-                    </Button>
-                  </div>
-                </div>
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Professionally designed single property website <span className="text-gray-500">– Clean, modern layout tailored to each listing</span></li>
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Mobile-responsive <span className="text-gray-500">– Looks great on phones, tablets, and desktops</span></li>
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Photo gallery <span className="text-gray-500">– High-resolution images displayed beautifully (up to 50 included)</span></li>
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Property details & features <span className="text-gray-500">– Showcase specs, highlights, and unique selling points</span></li>
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Agent branding <span className="text-gray-500">– Your name, photo, contact info, and logo included</span></li>
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Lead capture <span className="text-gray-500">– Built-in contact form so interested buyers can reach out directly</span></li>
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Google Maps integration <span className="text-gray-500">– Show property location with zoom and street view</span></li>
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />SSL-secured <span className="text-gray-500">– Safe and encrypted site</span></li>
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />1 year of reliable hosting <span className="text-gray-500">– Fast load times and no maintenance required</span></li>
+                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Quick turnaround <span className="text-gray-500">– Sites are live within 24–48 hours of photo shoot</span></li>
+              </ul>
+              <div className="border-t pt-6 mt-2">
+                <h3 className="text-xl font-semibold mb-4 text-[#2d4654]">Optional Add-Ons</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Virtual Tour Integration <span className="text-gray-500">– Embed Matterport or 360° walkthroughs</span></li>
+                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Interactive Floor Plans <span className="text-gray-500">– Let buyers click through the layout</span></li>
+                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Advanced Analytics <span className="text-gray-500">– Know where traffic is coming from and what's performing</span></li>
+                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Social Media Integration <span className="text-gray-500">– Share-ready and optimized previews</span></li>
+                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Showing Calendar <span className="text-gray-500">– Display open house dates or private viewing times</span></li>
+                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Custom Domain <span className="text-gray-500">– Branded subdomain or your own unique URL</span></li>
+                </ul>
               </div>
+            </div>
+            {/* Pricing Section */}
+            <div className="bg-gray-50 rounded-xl shadow p-8 mb-8">
+              <div className="mb-6">
+                <p className="text-xl font-semibold text-[#2d4654] mb-1">One-Time Setup $129.99</p>
+                <p className="text-gray-700">Covers full site creation, hosting setup, domain config, and launch.</p>
+              </div>
+              <div className="mb-4">
+                <p className="text-xl font-semibold text-[#2d4654] mb-1">Ongoing Hosting & Support $9.99/month <span className='ml-2 inline-block bg-green-100 text-green-800 text-sm font-medium px-2 py-0.5 rounded'>First month free</span></p>
+                <p className="text-gray-700">Includes fast hosting, support, and tweaks if needed.</p>
+              </div>
+              <p className="text-gray-600 text-sm">Billed monthly, cancel anytime. If you cancel, the site stays live until the end of the billing cycle.</p>
+            </div>
+            <div className="bg-[#2d4654] text-white rounded-lg p-6 text-center mb-8">
+              <p className="text-xl mb-4">Your Investment</p>
+              <p className="text-lg mb-4">A complete, customizable web experience for every listing—professionally built, fast, and ready to impress.</p>
+              <Button asChild size="lg" className="w-full bg-white text-[#2d4654] hover:bg-gray-100">
+                <Link href="/pricing">Get Started Today</Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -427,7 +420,10 @@ export default function WebsitesPage() {
                     <div className="w-20 h-20 bg-[#2d4654] rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
                       <item.icon className="h-10 w-10 text-white" />
                     </div>
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    <div
+                      className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                      style={{ backgroundColor: '#EAB309' }}
+                    >
                       {item.step}
                     </div>
                   </div>
@@ -446,39 +442,52 @@ export default function WebsitesPage() {
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-serif text-[#2d4654] mb-4">Frequently Asked Questions</h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">Everything you need to know about our property websites and pricing.</p>
             </div>
-
             <div className="space-y-4">
               {[
                 {
-                  question: "How long does it take to build a property website?",
-                  answer:
-                    "Most property websites are completed within 48 hours. Complex sites with custom features may take 3-5 business days.",
+                  question: "How fast is the website ready?",
+                  answer: "We usually have it live within 24–48 hours after your photo shoot. We handle the full setup and launch.",
                 },
                 {
-                  question: "Can I update the website content myself?",
-                  answer:
-                    "Yes! Every website comes with an easy-to-use content management system. We also provide training and support.",
+                  question: "How much does it cost?",
+                  answer: "A one-time setup fee of $129.99 and $9.99/month for hosting and support. First month is free. Cancel anytime.",
                 },
                 {
-                  question: "What happens after the first year of hosting?",
-                  answer:
-                    "Hosting renewal is $99/year, which includes continued support, security updates, and unlimited content changes.",
+                  question: "What's included in the monthly fee?",
+                  answer: (
+                    <ul className="list-disc pl-5 text-gray-600 space-y-1">
+                      <li>Fast, secure hosting</li>
+                      <li>SSL certificate</li>
+                      <li>Basic updates or content tweaks</li>
+                      <li>Site stays live as long as you're subscribed</li>
+                    </ul>
+                  ),
                 },
                 {
                   question: "Can I use my own domain name?",
-                  answer:
-                    "We can use your existing domain or help you register a new one. Custom domains are included in our premium features.",
+                  answer: "Yes. We can connect your domain or use a custom subdomain like 123main.new-home.ca.",
                 },
                 {
-                  question: "Do you integrate with MLS systems?",
-                  answer:
-                    "Yes, we can integrate with most MLS systems to automatically sync property details and updates.",
+                  question: "Can I edit the website myself?",
+                  answer: "No need. Just message us with changes—we'll handle it for you, usually the same day.",
                 },
                 {
-                  question: "What kind of analytics do you provide?",
-                  answer:
-                    "Our analytics dashboard tracks visitors, page views, lead sources, device types, and user behavior to help you optimize your marketing.",
+                  question: "What if I cancel?",
+                  answer: "You can cancel any time. Your site stays live through the current billing cycle and then goes offline.",
+                },
+                {
+                  question: "Do you offer traffic stats or analytics?",
+                  answer: "Yes. Advanced analytics are available as an optional add-on if you want to track views and engagement.",
+                },
+                {
+                  question: "Can you embed tours or floor plans?",
+                  answer: "Yes. We can embed Matterport, iGUIDE, 360° virtual tours, video walkthroughs, and interactive floor plans.",
+                },
+                {
+                  question: "What if I change the price or need to swap photos?",
+                  answer: "Easy—just send us the updates and we'll refresh the site right away.",
                 },
               ].map((item, index) => (
                 <Card key={index} className="hover:shadow-md transition-shadow">
@@ -486,7 +495,11 @@ export default function WebsitesPage() {
                     <CardTitle className="text-lg">{item.question}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600">{item.answer}</p>
+                    {typeof item.answer === 'string' ? (
+                      <p className="text-gray-600">{item.answer}</p>
+                    ) : (
+                      item.answer
+                    )}
                   </CardContent>
                 </Card>
               ))}
@@ -508,13 +521,13 @@ export default function WebsitesPage() {
                 ))}
               </div>
               <blockquote className="text-xl md:text-2xl text-gray-700 mb-6 italic">
-                "The property website RePhotos created for our luxury listing was incredible. We had over 500 virtual
+                "The property website RePhotos created for our listing was incredible. We had over 500 virtual
                 visitors in the first week, and it directly led to 3 serious offers. The interactive features really set
                 our listing apart."
               </blockquote>
               <cite className="text-gray-600 not-italic">
-                <span className="font-semibold">Jennifer Martinez</span>
-                <span className="block">Luxury Real Estate Specialist, Toronto</span>
+                <span className="font-semibold">Samantha Grewal</span>
+                <span className="block">Real Estate Specialist, Oakville</span>
               </cite>
             </div>
           </div>

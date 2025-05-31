@@ -179,68 +179,12 @@ export default function VirtualToursPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-              <div className="aspect-[4/3] relative">
-                <Image
-                  src="/placeholder.svg?height=300&width=400&query=luxury modern home interior living room"
-                  alt="Luxury Home Virtual Tour"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Play className="h-8 w-8 text-primary ml-1" />
-                  </div>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-white font-semibold text-lg mb-1">Luxury Home</h3>
-                  <p className="text-white/80 text-sm">4,500 sq ft • 5 bed • 4 bath</p>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="relative overflow-hidden rounded-lg shadow-lg bg-black">
+              <iframe width="100%" height="400" src="https://my.matterport.com/show/?m=VBL9LR86Hv5" frameBorder="0" allowFullScreen allow="autoplay; fullscreen; web-share; xr-spatial-tracking;"></iframe>
             </div>
-
-            <div className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-              <div className="aspect-[4/3] relative">
-                <Image
-                  src="/placeholder.svg?height=300&width=400&query=modern condo apartment interior kitchen"
-                  alt="Condo Virtual Tour"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Play className="h-8 w-8 text-primary ml-1" />
-                  </div>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-white font-semibold text-lg mb-1">Modern Condo</h3>
-                  <p className="text-white/80 text-sm">1,200 sq ft • 2 bed • 2 bath</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-              <div className="aspect-[4/3] relative">
-                <Image
-                  src="/placeholder.svg?height=300&width=400&query=commercial office space interior modern"
-                  alt="Commercial Space Virtual Tour"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Play className="h-8 w-8 text-primary ml-1" />
-                  </div>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-white font-semibold text-lg mb-1">Commercial Space</h3>
-                  <p className="text-white/80 text-sm">3,000 sq ft • Office • Retail</p>
-                </div>
-              </div>
+            <div className="relative overflow-hidden rounded-lg shadow-lg bg-black">
+              <iframe width="100%" height="400" src="https://my.matterport.com/show/?m=BBPo2Z39gRq" frameBorder="0" allowFullScreen allow="autoplay; fullscreen; web-share; xr-spatial-tracking;"></iframe>
             </div>
           </div>
         </div>
@@ -304,145 +248,85 @@ export default function VirtualToursPage() {
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">Virtual Tour Packages</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">Virtual Tour Pricing</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Professional 3D virtual tours for every property type and budget
+              Interactive Matterport tours priced by property size
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors">
-              <CardContent className="p-8">
-                <h3 className="text-xl font-serif font-semibold text-primary mb-2">Starter</h3>
-                <div className="text-3xl font-bold text-primary mb-4">$299</div>
-                <p className="text-gray-600 mb-6">Perfect for smaller properties</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+            <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
+              <CardContent className="p-8 flex flex-col h-full">
+                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">Up to 999 sq ft</h3>
+                <div className="text-3xl font-bold text-primary mb-4 text-center">$199.99</div>
                 <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Up to 2,000 sq ft</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">3D Walkthrough</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Dollhouse View</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Floor Plans</span>
-                  </li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Smooth 3D Walkthrough Experience</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Dollhouse View Included</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 24 hrs</span></li>
                 </ul>
-                <Button asChild className="w-full">
-                  <Link href="/contact">Choose Plan</Link>
-                </Button>
+                <div className="mt-auto pt-2">
+                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                </div>
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-primary shadow-lg relative">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-primary text-white px-4 py-1">Most Popular</Badge>
-              </div>
-              <CardContent className="p-8">
-                <h3 className="text-xl font-serif font-semibold text-primary mb-2">Professional</h3>
-                <div className="text-3xl font-bold text-primary mb-4">$499</div>
-                <p className="text-gray-600 mb-6">Ideal for most properties</p>
+            <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
+              <CardContent className="p-8 flex flex-col h-full">
+                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">1,000–1,999 sq ft</h3>
+                <div className="text-3xl font-bold text-primary mb-4 text-center">$239.99</div>
                 <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Up to 4,000 sq ft</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">3D Walkthrough</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Dollhouse View</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Floor Plans</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Measurement Tools</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Custom Branding</span>
-                  </li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">360° Walkthrough with Room Labels</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Dollhouse + Floor Plan View</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 24–36 hrs</span></li>
                 </ul>
-                <Button asChild className="w-full">
-                  <Link href="/contact">Choose Plan</Link>
-                </Button>
+                <div className="mt-auto pt-2">
+                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                </div>
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors">
-              <CardContent className="p-8">
-                <h3 className="text-xl font-serif font-semibold text-primary mb-2">Premium</h3>
-                <div className="text-3xl font-bold text-primary mb-4">$799</div>
-                <p className="text-gray-600 mb-6">For luxury properties</p>
+            <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
+              <CardContent className="p-8 flex flex-col h-full">
+                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">2,000–2,999 sq ft</h3>
+                <div className="text-3xl font-bold text-primary mb-4 text-center">$279.99</div>
                 <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Up to 6,000 sq ft</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Everything in Professional</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">VR Compatibility</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Information Tags</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Lead Capture</span>
-                  </li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Interactive 3D Tour with Navigation Tags</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Branded & Unbranded Links</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 24–48 hrs</span></li>
                 </ul>
-                <Button asChild className="w-full">
-                  <Link href="/contact">Choose Plan</Link>
-                </Button>
+                <div className="mt-auto pt-2">
+                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                </div>
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors">
-              <CardContent className="p-8">
-                <h3 className="text-xl font-serif font-semibold text-primary mb-2">Commercial</h3>
-                <div className="text-3xl font-bold text-primary mb-4">$1,299</div>
-                <p className="text-gray-600 mb-6">For commercial properties</p>
+            <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
+              <CardContent className="p-8 flex flex-col h-full">
+                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">3,000–3,999 sq ft</h3>
+                <div className="text-3xl font-bold text-primary mb-4 text-center">$319.99</div>
                 <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Up to 10,000 sq ft</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Everything in Premium</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Multiple Floors</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Advanced Analytics</span>
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                    <span className="text-sm">Priority Support</span>
-                  </li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Full Property Scan in 4K Detail</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Includes Floor Plan View & Hotspot Navigation</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 48 hrs</span></li>
                 </ul>
-                <Button asChild className="w-full">
-                  <Link href="/contact">Choose Plan</Link>
-                </Button>
+                <div className="mt-auto pt-2">
+                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
+              <CardContent className="p-8 flex flex-col h-full">
+                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">4,000–4,999 sq ft</h3>
+                <div className="text-3xl font-bold text-primary mb-4 text-center">$349.99</div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Advanced Multi-Zone Tour Experience</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Lead Capture + Analytics Enabled</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 48–72 hrs</span></li>
+                </ul>
+                <div className="mt-auto pt-2">
+                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -455,57 +339,51 @@ export default function VirtualToursPage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">Virtual Tour FAQ</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Common questions about our 3D virtual tour services
+              Common questions about our Matterport 3D virtual tour services
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-lg font-semibold text-primary mb-3">How long does scanning take?</h3>
+                <h3 className="text-lg font-semibold text-primary mb-3">How long does the scan take?</h3>
                 <p className="text-gray-600 mb-6">
-                  Scanning typically takes 1-3 hours depending on property size. We work efficiently to minimize
-                  disruption to your schedule.
+                  Most scans take 30 minutes to 2 hours depending on square footage and layout. We work quickly and efficiently with minimal disruption.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-primary mb-3">When will my tour be ready?</h3>
+                <h3 className="text-lg font-semibold text-primary mb-3">When will I get the finished tour?</h3>
                 <p className="text-gray-600 mb-6">
-                  Virtual tours are typically delivered within 24-48 hours after scanning, complete with all viewing
-                  options and embed codes.
+                  You'll receive the completed virtual tour within 24–48 hours, including shareable links and MLS-ready embed codes.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-primary mb-3">Can I add information to the tour?</h3>
+                <h3 className="text-lg font-semibold text-primary mb-3">Can I add custom info to the tour?</h3>
                 <p className="text-gray-600 mb-6">
-                  Yes! We can add custom information tags, room labels, and property details throughout the virtual
-                  tour.
+                  Yes. We can add info tags, room labels, and even feature callouts to highlight selling points inside the home.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-primary mb-3">Is the tour mobile-friendly?</h3>
+                <h3 className="text-lg font-semibold text-primary mb-3">Is the tour compatible with mobile?</h3>
                 <p className="text-gray-600 mb-6">
-                  Our virtual tours work seamlessly on all devices - desktop, tablet, and mobile with intuitive touch
-                  navigation.
+                  Absolutely. All tours are responsive and work smoothly on phones, tablets, and desktops with easy tap-to-move navigation.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-primary mb-3">Can I track tour engagement?</h3>
+                <h3 className="text-lg font-semibold text-primary mb-3">Do you offer virtual staging inside the tour?</h3>
                 <p className="text-gray-600 mb-6">
-                  Yes, we provide analytics showing view counts, time spent, and user engagement to help measure
-                  marketing effectiveness.
+                  We can digitally stage empty rooms and blend them into the 3D experience so buyers see both unfurnished and furnished versions.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-primary mb-3">Do you offer virtual staging?</h3>
+                <h3 className="text-lg font-semibold text-primary mb-3">Do you use iGuide for your virtual tours?</h3>
                 <p className="text-gray-600 mb-6">
-                  We can integrate virtual staging into your 3D tour, allowing viewers to see furnished and unfurnished
-                  versions.
+                  No. We use Matterport because of its higher image quality, smoother navigation, and better overall viewer experience compared to iGuide.
                 </p>
               </div>
             </div>
@@ -516,27 +394,25 @@ export default function VirtualToursPage() {
       {/* Testimonial Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="flex justify-center mb-6">
-              <div className="flex space-x-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-6 w-6 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
+          <div className="text-center mb-2">
+            <div className="uppercase tracking-widest text-xs text-gray-400 mb-4">Client Success</div>
+            <h2 className="text-3xl md:text-4xl font-serif font-light mb-12">Trusted by top real estate professionals</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-[#FAF9F7] rounded-lg shadow-sm border border-gray-200 p-8 flex flex-col items-center text-center">
+              <div className="text-3xl mb-4">🔗</div>
+              <div className="font-bold mb-2">MLS-Ready + Branded Versions</div>
+              <div className="text-gray-600 text-sm">Each tour comes with both branded and unbranded links—perfect for agent marketing and MLS compliance without any extra steps.</div>
             </div>
-            <blockquote className="text-2xl md:text-3xl font-serif text-primary mb-8 leading-relaxed">
-              "The virtual tour was a game-changer for our listing. We had 300% more online engagement and received
-              multiple offers within the first week. Buyers loved being able to explore the property in detail before
-              visiting."
-            </blockquote>
-            <div className="flex items-center justify-center space-x-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                <Users className="h-6 w-6 text-primary" />
-              </div>
-              <div className="text-left">
-                <div className="font-semibold text-primary">Sarah Chen</div>
-                <div className="text-gray-600">Royal LePage Realtor</div>
-              </div>
+            <div className="bg-[#FAF9F7] rounded-lg shadow-sm border border-gray-200 p-8 flex flex-col items-center text-center">
+              <div className="text-3xl mb-4">⚡</div>
+              <div className="font-bold mb-2">Delivered Fast, No Hassle</div>
+              <div className="text-gray-600 text-sm">Tours are scanned, edited, and delivered within 24–48 hours so your listing goes live quickly and looks polished from day one.</div>
+            </div>
+            <div className="bg-[#FAF9F7] rounded-lg shadow-sm border border-gray-200 p-8 flex flex-col items-center text-center">
+              <div className="text-3xl mb-4">🏠</div>
+              <div className="font-bold mb-2">Smooth, Realistic Experience</div>
+              <div className="text-gray-600 text-sm">Matterport's industry-leading tech gives buyers a true feel for the layout and flow—way more immersive than photos or slideshows.</div>
             </div>
           </div>
         </div>

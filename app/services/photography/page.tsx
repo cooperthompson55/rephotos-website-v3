@@ -114,40 +114,40 @@ const photographyProcess = [
 const pricingTiers = [
   {
     label: "Small Homes",
-    price: "$149.99 – $199.99",
+    price: "$189.99",
     size: "Up to 1,999 sq ft",
     features: [
-      "15–25 HDR photos",
+      "Full interior + exterior coverage",
       "Professional editing",
       "Next-day delivery",
       "MLS + Web versions",
     ],
-    cta: { text: "Book Now", href: "/quote" },
+    cta: { text: "Book Now", href: "/book-now" },
   },
   {
     label: "Medium Homes",
-    price: "$249.99 – $299.99",
+    price: "$249.99",
     size: "2,000–3,999 sq ft",
     features: [
-      "25–35 HDR photos",
-      "Interior + exterior",
+      "Full interior + exterior coverage",
       "Delivered next business day",
       "High-res and web-optimized",
+      "MLS ready images",
     ],
-    cta: { text: "Book Now", href: "/quote" },
+    cta: { text: "Book Now", href: "/book-now" },
     popular: true,
   },
   {
     label: "Large Homes",
-    price: "$349.99 – $399.99",
+    price: "$349.99",
     size: "4,000–4,999 sq ft",
     features: [
-      "35+ HDR photos",
+      "Full interior + exterior coverage",
       "Custom shot list if needed",
       "Fast turnaround",
       "All file formats included",
     ],
-    cta: { text: "Book Now", href: "/quote" },
+    cta: { text: "Book Now", href: "/book-now" },
   },
   {
     label: "5,000+ sq ft?",
@@ -156,7 +156,7 @@ const pricingTiers = [
     features: [
       "We'll build a custom plan based on your layout and needs. Quick turnaround guaranteed.",
     ],
-    cta: { text: "Get in Touch", href: "/contact" },
+    cta: { text: "Get in Touch", href: "/contact-us" },
     custom: true,
   },
 ]
@@ -310,12 +310,20 @@ export default function PhotographyServicePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000"
+                src="/images/photobank/15-gallery.webp"
                 alt="Modern kitchen photography"
                 fill
-                className="object-cover transition-transform group-hover:scale-105"
+                className="object-cover transition-transform duration-500"
+                style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+              <Image
+                src="/images/photobank/18-gallery.webp"
+                alt="Modern kitchen alternate view"
+                fill
+                className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ zIndex: 2, transition: 'opacity 0.5s', objectPosition: 'bottom' }}
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
                 <p className="text-white text-sm font-medium">Modern Kitchen</p>
                 <p className="text-white/80 text-xs">HDR Photography</p>
               </div>
@@ -323,25 +331,41 @@ export default function PhotographyServicePage() {
 
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000"
-                alt="Luxury living room photography"
+                src="/images/photobank/5-gallery.webp"
+                alt="Luxury dining area photography"
                 fill
-                className="object-cover transition-transform group-hover:scale-105"
+                className="object-cover transition-transform duration-500"
+                style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Luxury Living Room</p>
-                <p className="text-white/80 text-xs">Professional Lighting</p>
+              <Image
+                src="/images/photobank/6-gallery.webp"
+                alt="Luxury dining area alternate view"
+                fill
+                className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ zIndex: 2, transition: 'opacity 0.5s', objectPosition: 'bottom' }}
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
+                <p className="text-white text-sm font-medium">Luxury Dining Area</p>
+                <p className="text-white/80 text-xs">Professional Staging</p>
               </div>
             </div>
 
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?q=80&w=2000"
+                src="/images/photobank/20-gallery.webp"
                 alt="Master bedroom photography"
                 fill
-                className="object-cover transition-transform group-hover:scale-105"
+                className="object-cover transition-transform duration-500"
+                style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+              <Image
+                src="/images/photobank/21-gallery.webp"
+                alt="Master bedroom alternate view"
+                fill
+                className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ zIndex: 2, transition: 'opacity 0.5s', objectPosition: 'bottom' }}
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
                 <p className="text-white text-sm font-medium">Master Bedroom</p>
                 <p className="text-white/80 text-xs">Natural Light Enhancement</p>
               </div>
@@ -349,48 +373,66 @@ export default function PhotographyServicePage() {
 
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="https://images.unsplash.com/photo-1600607687644-aac4c3eac7f5?q=80&w=2000"
-                alt="Modern home exterior photography"
+                src="/images/photobank/40-gallery.webp"
+                alt="Large lot photography"
                 fill
-                className="object-cover transition-transform group-hover:scale-105"
+                className="object-cover transition-transform duration-500"
+                style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Modern Exterior</p>
-                <p className="text-white/80 text-xs">Architectural Photography</p>
+              <Image
+                src="/images/photobank/DSC_8243-gallery.webp"
+                alt="Large lot alternate view"
+                fill
+                className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ zIndex: 2, transition: 'opacity 0.5s', objectPosition: 'bottom' }}
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
+                <p className="text-white text-sm font-medium">Large Lot</p>
+                <p className="text-white/80 text-xs">Aerial Coverage</p>
               </div>
             </div>
 
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=2000"
-                alt="Luxury bathroom photography"
+                src="/images/photobank/12_backyard-gallery.webp"
+                alt="Bright backyard photography"
                 fill
-                className="object-cover transition-transform group-hover:scale-105"
+                className="object-cover transition-transform duration-500"
+                style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Luxury Bathroom</p>
-                <p className="text-white/80 text-xs">Detail Photography</p>
+              <Image
+                src="/images/photobank/11_backyard-gallery.webp"
+                alt="Bright backyard alternate view"
+                fill
+                className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ zIndex: 2, transition: 'opacity 0.5s', objectPosition: 'bottom' }}
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
+                <p className="text-white text-sm font-medium">Bright Backyard</p>
+                <p className="text-white/80 text-xs">Natural Color Enhancement</p>
               </div>
             </div>
 
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="https://images.unsplash.com/photo-1564013434775-f71db0030976?q=80&w=2000"
-                alt="Twilight exterior photography"
+                src="/images/photobank/30-gallery.webp"
+                alt="Small bathroom photography"
                 fill
-                className="object-cover transition-transform group-hover:scale-105"
+                className="object-cover transition-transform duration-500"
+                style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Twilight Exterior</p>
-                <p className="text-white/80 text-xs">Golden Hour Photography</p>
+              <Image
+                src="/images/photobank/31-gallery.webp"
+                alt="Small bathroom alternate view"
+                fill
+                className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ zIndex: 2, transition: 'opacity 0.5s', objectPosition: 'bottom' }}
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
+                <p className="text-white text-sm font-medium">Small Bathroom</p>
+                <p className="text-white/80 text-xs">Ultrawide Lenses</p>
               </div>
             </div>
-          </div>
-
-          <div className="text-center">
-            <Button asChild className="bg-secondary hover:bg-secondary/90 text-white">
-              <Link href="/portfolio">View Full Portfolio</Link>
-            </Button>
           </div>
         </div>
       </section>
@@ -463,9 +505,12 @@ export default function PhotographyServicePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {pricingTiers.map((tier, index) => (
-              <Card key={index} className={`relative ${tier.popular ? "border-secondary shadow-lg" : ""}`}>
+              <Card
+                key={index}
+                className={`relative ${tier.popular ? "border-secondary shadow-lg" : ""} ${tier.custom ? "md:col-span-3" : ""}`}
+              >
                 {tier.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <div className="bg-secondary text-white px-4 py-1 rounded-full text-sm font-medium">
@@ -493,13 +538,6 @@ export default function PhotographyServicePage() {
                 </CardContent>
               </Card>
             ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-4">Need a custom package for larger properties or special requirements?</p>
-            <Button asChild variant="outline">
-              <Link href="/contact">Contact Us for Custom Pricing</Link>
-            </Button>
           </div>
         </div>
       </section>
@@ -529,35 +567,38 @@ export default function PhotographyServicePage() {
       {/* Testimonial Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-4xl mx-auto bg-[#F8F5F0] p-8 md:p-12 rounded-xl shadow-sm">
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <div className="text-secondary">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className="text-2xl">
-                      ★
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <p className="text-xl text-gray-700 italic mb-6">
-                "RePhotos' photography has completely transformed how my listings perform online. The quality is
-                exceptional and the turnaround time is unbeatable. My clients are always impressed with the results."
-              </p>
-              <div className="flex items-center justify-center">
-                <Image
-                  src="https://ext.same-assets.com/148878086/2418568282.jpeg"
-                  alt="Sarah Chen"
-                  width={48}
-                  height={48}
-                  className="rounded-full mr-4"
-                />
-                <div>
-                  <p className="font-medium">Sarah Chen</p>
-                  <p className="text-sm text-gray-500">Top Producer, Royal LePage</p>
-                </div>
-              </div>
-            </div>
+          <div className="text-center mb-16">
+            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Client Success</h6>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">
+              Trusted by top real estate professionals
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Info Card 1 */}
+            <Card className="bg-[#F8F5F0] p-6 rounded-lg text-center">
+              <CardContent>
+                <div className="text-4xl mb-4">📸</div>
+                <h3 className="text-xl font-semibold mb-2">Variety of Homes Captured</h3>
+                <p className="text-gray-700">From condos to luxury estates, RePhotos delivers consistent quality across every listing type. Agents count on us for clean, modern visuals that sell.</p>
+              </CardContent>
+            </Card>
+            {/* Info Card 2 */}
+            <Card className="bg-[#F8F5F0] p-6 rounded-lg text-center">
+              <CardContent>
+                <div className="text-4xl mb-4">⚡</div>
+                <h3 className="text-xl font-semibold mb-2">24-Hour Turnaround</h3>
+                <p className="text-gray-700">Speed matters. We deliver edited photos within 24 hours—helping agents list faster and win over sellers with quick, professional media.</p>
+              </CardContent>
+            </Card>
+            {/* Info Card 3 */}
+            <Card className="bg-[#F8F5F0] p-6 rounded-lg text-center">
+              <CardContent>
+                <div className="text-4xl mb-4">🏡</div>
+                <h3 className="text-xl font-semibold mb-2">Trusted by Top Agents</h3>
+                <p className="text-gray-700">Agents from Royal LePage, Century 21, Remax, and more use RePhotos to stand out in competitive markets. You're in good company.</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

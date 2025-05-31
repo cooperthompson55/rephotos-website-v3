@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge"
 import { Search, ArrowRight, Calendar, User, Tag, ChevronRight, ChevronLeft } from "lucide-react"
 import Image from "next/image"
 import { CTASection } from "@/components/home/CTASection"
-import { Footer } from "@/components/layout/Footer"
 
 // Sample blog post data
 const blogPosts = [
@@ -195,8 +194,6 @@ export default function BlogComingSoonPage() {
           </CardContent>
         </Card>
       </section>
-
-      <Footer />
     </div>
   )
 }

@@ -24,9 +24,8 @@ export function Footer() {
             </p>
             <div className="text-sm text-gray-300">
               <p>Contact us:</p>
-              <p>(415) 592-5187</p>
-              <p>(408) 944-5289</p>
-              <p>(800) 647-8310</p>
+              <p>(905)299-9300</p>
+              <p>Cooper@rephotos.ca</p>
             </div>
           </div>
           <div>
@@ -43,23 +42,18 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/frequently-asked-questions" className="hover:underline">
-                  Frequently Asked Questions
-                </Link>
-              </li>
-              <li>
                 <Link href="/contact-us" className="hover:underline">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/photo-day" className="hover:underline">
-                  Photo Day
+                <Link href="/3d-matterport" className="hover:underline">
+                  3D Matterport
                 </Link>
               </li>
               <li>
-                <Link href="/3d-matterport" className="hover:underline">
-                  3D Matterport
+                <Link href="/book-now" className="hover:underline">
+                  Get Started
                 </Link>
               </li>
             </ul>

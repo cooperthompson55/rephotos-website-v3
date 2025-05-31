@@ -115,7 +115,7 @@ const videographyProcess = [
 const pricingTiers = [
   {
     size: "Property Highlights Video",
-    price: "$249.99",
+    price: "$319.99",
     duration: "1–2 minute horizontal video",
     features: [
       "Shot in 4K on iPhone",
@@ -128,7 +128,7 @@ const pricingTiers = [
   },
   {
     size: "Social Media Reel",
-    price: "$179.99",
+    price: "$229.99",
     duration: "30–60 second vertical video",
     features: [
       "Optimized for Instagram, TikTok, and Reels",
@@ -140,8 +140,8 @@ const pricingTiers = [
     ],
   },
   {
-    size: "Drone Video",
-    price: "$124.99",
+    size: "Drone Aerial Video",
+    price: "$159.99",
     duration: "30–60 seconds of aerial footage",
     features: [
       "High-resolution exterior shots",
@@ -306,7 +306,7 @@ export default function VideographyServicePage() {
                   </ul>
                   <div className="mt-6">
                     <Button asChild className="w-full">
-                      <Link href="/quote">Book Now</Link>
+                      <Link href="/book-now">Book Now</Link>
                     </Button>
                   </div>
                 </CardContent>
@@ -317,7 +317,7 @@ export default function VideographyServicePage() {
           <div className="text-center mt-12">
             <p className="text-gray-600 mb-4">Need a custom video package or have special requirements?</p>
             <Button asChild variant="outline">
-              <Link href="/contact">Contact Us for Custom Pricing</Link>
+              <Link href="/contact-us">Contact Us for Custom Pricing</Link>
             </Button>
           </div>
         </div>
@@ -411,35 +411,28 @@ export default function VideographyServicePage() {
       {/* Testimonial Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-4xl mx-auto bg-[#F8F5F0] p-8 md:p-12 rounded-xl shadow-sm">
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <div className="text-secondary">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className="text-2xl">
-                      ★
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <p className="text-xl text-gray-700 italic mb-6">
-                "The social media reels from RePhotos have completely transformed our online presence. Our listings now
-                get 10x more engagement, and we're seeing significantly more showings. The drone footage is absolutely
-                stunning!"
-              </p>
-              <div className="flex items-center justify-center">
-                <Image
-                  src="https://ext.same-assets.com/148878086/2418568282.jpeg"
-                  alt="Michael Rodriguez"
-                  width={48}
-                  height={48}
-                  className="rounded-full mr-4"
-                />
-                <div>
-                  <p className="font-medium">Michael Rodriguez</p>
-                  <p className="text-sm text-gray-500">Broker, Century 21</p>
-                </div>
-              </div>
+          <div className="text-center mb-12">
+            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Custom Video System</h6>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">3 Ways to Customize Your Video</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Our system lets you build the perfect video for every property and platform.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-[#F8F5F0] p-8 rounded-xl shadow-sm flex flex-col items-center text-center">
+              <Edit className="h-8 w-8 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Mix & Match Formats</h3>
+              <p className="text-gray-700">Choose from horizontal walkthroughs, vertical reels, and aerial drone shots. Build the perfect video for your listing and audience.</p>
+            </div>
+            <div className="bg-[#F8F5F0] p-8 rounded-xl shadow-sm flex flex-col items-center text-center">
+              <Smartphone className="h-8 w-8 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Personalized Branding</h3>
+              <p className="text-gray-700">Add your logo, agent info, and custom text overlays. Every video is tailored to your brand and marketing goals.</p>
+            </div>
+            <div className="bg-[#F8F5F0] p-8 rounded-xl shadow-sm flex flex-col items-center text-center">
+              <Zap className="h-8 w-8 text-secondary mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Flexible Add-Ons</h3>
+              <p className="text-gray-700">Enhance your video with extras like voiceover, advanced editing, or rush delivery—just select what you need.</p>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ export function ServiceAreasSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/home/map.jpg"
+              src="/images/home/map.webp"
               alt="RePhotos Service Areas Map"
               fill
               className="object-cover"
