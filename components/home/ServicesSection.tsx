@@ -5,50 +5,50 @@ import Image from "next/image"
 
 const services = [
   {
-    title: "Photography",
-    price: "$149.99 STARTING",
+    title: "HDR Photography",
+    price: "$189.99",
     image: "/images/home/s_1.webp",
     link: "/services/photography",
   },
   {
-    title: "Walkthrough Videos",
-    price: "$249.99 STARTING",
+    title: "Property Highlights Video",
+    price: "$319.99",
     image: "/images/home/s_2.webp",
     link: "/services/videography",
   },
   {
-    title: "Social Media Videos",
-    price: "$179.99 STARTING",
+    title: "Social Media Reel",
+    price: "$229.99",
     image: "/images/home/s_3.webp",
     link: "/services/videography",
   },
   {
-    title: "Aerial Photos & Video",
-    price: "$124.99 STARTING",
+    title: "Drone Aerial Photos",
+    price: "$159.99",
     image: "/images/home/s_4.webp",
     link: "/services/aerial",
   },
   {
-    title: "360° Virtual Tours",
-    price: "$159.99 STARTING",
+    title: "360° Virtual Tour",
+    price: "$199.99",
     image: "/images/home/s_5.webp",
     link: "/services/virtual-tours",
   },
   {
-    title: "Floor Plans & Models",
-    price: "$89.99 STARTING",
+    title: "2D Floor Plan",
+    price: "$119.99",
     image: "/images/home/s_6.png",
     link: "/services/floor-plans",
   },
   {
-    title: "Property Websites",
-    price: "$99.99 STARTING",
+    title: "Property Website",
+    price: "$129.99",
     image: "/images/home/s_7.png",
     link: "/services/websites",
   },
   {
     title: "Virtual Staging",
-    price: "$39.99 PER IMAGE",
+    price: "$39.99/image",
     image: "/images/home/s_8.png",
     link: "/services/virtual-staging",
   },
@@ -65,7 +65,7 @@ export function ServicesSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
             <Link
               key={index}
@@ -85,7 +85,10 @@ export function ServicesSection() {
               {/* Content */}
               <div className="absolute bottom-0 left-0 p-6 w-full">
                 <h3 className="text-white text-2xl font-mazzard mb-1">{service.title}</h3>
-                <p className="text-white text-sm font-medium">{service.price}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-white text-base font-semibold mb-0">{service.price}</p>
+                  <span className="text-xs uppercase text-white/80 tracking-wider ml-2">Starting</span>
+                </div>
               </div>
             </Link>
           ))}

@@ -691,6 +691,7 @@ export default function BookNowPage() {
                       <div className="relative flex justify-between w-full z-10 px-2">
                         {sizeOptions.map((opt, idx) => (
                           <button
+                            type="button"
                             key={opt.value}
                             onClick={() => {
                               setSelectedSize(opt.value);
@@ -878,7 +879,7 @@ export default function BookNowPage() {
                           const isVirtual = service.id === 'virtualStaging' || service.id === 'virtualTwilight';
                           const qty = serviceQuantities[service.id] || 0;
                           return (
-                            <label key={service.id} className={`flex items-center border rounded-lg p-3 md:p-4 cursor-pointer transition-all
+                            <label key={service.id} className={`relative flex items-center border rounded-lg p-3 md:p-4 cursor-pointer transition-all
                               ${selectedServices.includes(service.id) ? 'border-blue-600 ring-2 ring-blue-200' : 'border-gray-200'}
                               ${selectedPackage && (includedInPackage || coveredByCustomVideo) ? 'opacity-50 pointer-events-none' : ''}
                             `}
@@ -896,8 +897,16 @@ export default function BookNowPage() {
                                   }
                                 }}
                                 disabled={!!selectedPackage && (includedInPackage || coveredByCustomVideo)}
-                                className="mr-3 w-5 h-5 accent-blue-600"
+                                className="mr-3 w-5 h-5 accent-blue-600 relative z-10"
                               />
+                              {/* Custom checkmark for selected state */}
+                              {selectedServices.includes(service.id) && qty > 0 && (
+                                <span className="absolute left-2.5 top-1.5 pointer-events-none z-20">
+                                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                  </svg>
+                                </span>
+                              )}
                               <div className="flex-1 flex flex-col gap-1">
                                 <div className="flex items-center gap-2">
                                   <span className="font-medium text-sm md:text-base">{service.name}</span>
@@ -995,26 +1004,40 @@ export default function BookNowPage() {
 
                   {/* Unified Order Overview (always visible if there is a package or any services selected) */}
                   {(selectedPackage || selectedServices.length > 0) && (
-                    <div className="mt-8">
-                      <div className="bg-gray-100 rounded-lg shadow-sm w-full max-w-xl mx-auto p-4 sm:p-6">
-                        <h5 className="text-base font-semibold mb-3 text-[#262F3F]">Order Overview</h5>
-                        <ul className="text-base text-gray-800 space-y-2">
+                    <div className="mt-8 animate-fade-in-up">
+                      <div className="bg-gray-100 rounded-2xl shadow-lg w-full max-w-xl mx-auto p-6 relative overflow-hidden order-overview-card">
+                        {/* Dopamine confetti animation on add (optional, simple CSS pulse for now) */}
+                        <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-tr from-yellow-200 via-pink-200 to-blue-200 rounded-full opacity-40 blur-2xl animate-pulse pointer-events-none"></div>
+                        <h5 className="text-lg font-bold mb-4 text-[#262F3F] flex items-center gap-2">
+                          <svg className="w-5 h-5 text-[#d4a03a]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6" /></svg>
+                          Order Overview
+                        </h5>
+                        {/* Show address if available */}
+                        {form.watch("address") && (
+                          <div className="flex items-center gap-2 mb-4 p-3 bg-white rounded-lg shadow-sm border border-gray-200 animate-fade-in">
+                            <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            <span className="font-medium text-gray-700 truncate" title={form.watch("address")}>{form.watch("address")}</span>
+                          </div>
+                        )}
+                        <ul className="text-base text-gray-800 space-y-2 mb-2">
                           {selectedPackage && (() => {
                             const pkg = hardcodedPackages[selectedSize]?.find(p => p.name === selectedPackage);
                             return pkg ? (
-                              <li className="flex justify-between items-center border-b border-gray-200 pb-2 last:border-b-0 last:pb-0">
-                                <span className="font-medium flex items-center">{pkg.name}</span>
+                              <li className="flex justify-between items-center border-b border-gray-200 pb-2 last:border-b-0 last:pb-0 animate-fade-in">
+                                <span className="font-medium flex items-center gap-2">
+                                  <svg className="w-5 h-5 text-[#d4a03a]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M16 3v4M8 3v4" /></svg>
+                                  {pkg.name}
+                                </span>
                                 <span className="font-semibold">{pkg.price}</span>
                               </li>
                             ) : null;
                           })()}
-                          {selectedServices.map(id => {
+                          {selectedServices.map((id, idx) => {
                             const service = services.find(s => s.id === id);
                             if (!service) return null;
                             const sizeIdx = sizeOptions.findIndex(opt => opt.value === selectedSize);
                             const price = Array.isArray(service.prices) ? service.prices[sizeIdx] : service.prices;
                             const qty = serviceQuantities[id] || 1;
-                            // For per-image services, show /image
                             const isPerImage = typeof price === 'string' && price.includes('/image');
                             let priceNum = 0;
                             if (typeof price === 'number') priceNum = price;
@@ -1028,8 +1051,8 @@ export default function BookNowPage() {
                                 ? `$${priceNum.toFixed(2)} x${qty}`
                                 : `$${priceNum.toFixed(2)}`;
                             return (
-                              <li key={id} className="flex justify-between items-center border-b border-gray-200 pb-2 last:border-b-0 last:pb-0">
-                                <span className="font-medium flex items-center">
+                              <li key={id} className={`flex justify-between items-center border-b border-gray-200 pb-2 last:border-b-0 last:pb-0 transition-all duration-300 ${idx % 2 === 0 ? 'bg-white/40' : ''} rounded-lg group hover:bg-blue-50/60 animate-fade-in-up`}>
+                                <span className="font-medium flex items-center gap-2">
                                   {service.name}
                                   <span className="ml-3 flex items-center gap-1">
                                     <button
@@ -1057,7 +1080,7 @@ export default function BookNowPage() {
                             );
                           })}
                         </ul>
-                        <div className="flex justify-between text-xl font-semibold border-t pt-4 mt-4">
+                        <div className="flex justify-between text-xl font-semibold border-t pt-4 mt-4 animate-fade-in">
                           <span>Total</span>
                           <span>
                             {(() => {
@@ -1085,7 +1108,7 @@ export default function BookNowPage() {
                           </span>
                         </div>
                         <button
-                          className="w-full bg-[#262F3F] hover:bg-[#1a202c] text-white font-semibold rounded-lg py-3 mt-4 transition disabled:opacity-60"
+                          className="w-full bg-[#262F3F] hover:bg-[#1a202c] text-white font-semibold rounded-lg py-3 mt-4 transition disabled:opacity-60 animate-fade-in"
                           disabled={!(selectedPackage || selectedServices.length > 0)}
                           type="button"
                           onClick={() => setStep(4)}
@@ -1278,6 +1301,20 @@ export default function BookNowPage() {
             height: 0.9em;
             margin-right: 0.18em;
           }
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
       `}</style>
     </div>
