@@ -126,8 +126,12 @@ export function ServicesSection() {
 
               {/* Content */}
               <div className="absolute bottom-0 left-0 p-6 w-full">
-                <h3 className="text-white text-2xl font-mazzard mb-1">{service.title}</h3>
-                <p className="text-white text-sm font-medium">{service.price}</p>
+                <h3 className="text-white text-2xl md:text-2xl font-mazzard mb-1 truncate md:whitespace-normal md:truncate-none text-base sm:text-lg md:text-2xl lg:text-2xl xl:text-2xl">
+                  {service.title}
+                </h3>
+                <p className="text-white text-base md:text-base font-semibold mb-0 truncate text-sm sm:text-base md:text-base lg:text-base xl:text-base">
+                  {service.price}
+                </p>
               </div>
             </Link>
           ))}
