@@ -134,7 +134,7 @@ export default function VirtualStagingPage() {
               <div className="relative h-[400px] md:h-[600px]">
                 {/* Before Image */}
                 <Image
-                  src="/images/services/virtual-staging/after.jpg"
+                  src="/images/services/virtual-staging/after.webp"
                   alt="Room before virtual staging"
                   fill
                   className="object-cover"
@@ -145,7 +145,7 @@ export default function VirtualStagingPage() {
                   style={{ clipPath: `inset(0 ${100 - beforeAfterPosition}% 0 0)` }}
                 >
                   <Image
-                    src="/images/services/virtual-staging/before.jpg"
+                    src="/images/services/virtual-staging/before.webp"
                     alt="Room after virtual staging"
                     fill
                     className="object-cover"
