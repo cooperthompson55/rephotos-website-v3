@@ -24,6 +24,11 @@ import {
   ArrowRight,
   Sparkles,
   Palette,
+  ClipboardList,
+  Mail,
+  MapPin,
+  Share2,
+  Clock,
 } from "lucide-react"
 import { CTASection } from "@/components/home/CTASection"
 
@@ -331,29 +336,125 @@ export default function WebsitesPage() {
                 A modern, high-converting listing page—built for agents who want to stand out.
               </p>
             </div>
-            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Professionally designed single property website <span className="text-gray-500">– Clean, modern layout tailored to each listing</span></li>
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Mobile-responsive <span className="text-gray-500">– Looks great on phones, tablets, and desktops</span></li>
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Photo gallery <span className="text-gray-500">– High-resolution images displayed beautifully (up to 50 included)</span></li>
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Property details & features <span className="text-gray-500">– Showcase specs, highlights, and unique selling points</span></li>
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Agent branding <span className="text-gray-500">– Your name, photo, contact info, and logo included</span></li>
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Lead capture <span className="text-gray-500">– Built-in contact form so interested buyers can reach out directly</span></li>
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Google Maps integration <span className="text-gray-500">– Show property location with zoom and street view</span></li>
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />SSL-secured <span className="text-gray-500">– Safe and encrypted site</span></li>
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />1 year of reliable hosting <span className="text-gray-500">– Fast load times and no maintenance required</span></li>
-                <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Quick turnaround <span className="text-gray-500">– Sites are live within 24–48 hours of photo shoot</span></li>
-              </ul>
-              <div className="border-t pt-6 mt-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-8">
+              {/* Main Features */}
+              <div className="flex flex-col gap-6">
+                <div className="flex items-start gap-4">
+                  <Monitor className="h-8 w-8 text-blue-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Custom Design</h3>
+                    <p className="text-gray-600 text-sm">Professionally designed layout<br/>Tailored to each listing with a sleek, modern look</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Smartphone className="h-8 w-8 text-green-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Mobile Responsive</h3>
+                    <p className="text-gray-600 text-sm">Works on all devices<br/>Looks great on phones, tablets, and desktops</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Image className="h-8 w-8 text-purple-500 flex-shrink-0" src="/images/icons/gallery.svg" alt="Gallery" width={32} height={32} />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Photo Gallery</h3>
+                    <p className="text-gray-600 text-sm">Up to 50 images<br/>High-resolution display optimized for fast loading</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <ClipboardList className="h-8 w-8 text-yellow-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Property Info</h3>
+                    <p className="text-gray-600 text-sm">Detailed specs and highlights<br/>Showcase features, upgrades, and selling points</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Users className="h-8 w-8 text-pink-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Agent Branding</h3>
+                    <p className="text-gray-600 text-sm">Your face, name & logo<br/>Personalized contact section that builds trust</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Mail className="h-8 w-8 text-indigo-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Lead Capture Form</h3>
+                    <p className="text-gray-600 text-sm">Built-in contact form<br/>Let buyers reach out directly without leaving the page</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <MapPin className="h-8 w-8 text-red-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Google Maps Integration</h3>
+                    <p className="text-gray-600 text-sm">Location with zoom + street view<br/>Help buyers see exactly where the property is</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Shield className="h-8 w-8 text-gray-700 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">SSL Secure</h3>
+                    <p className="text-gray-600 text-sm">Safe & encrypted<br/>Ensures a trusted, professional experience</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Zap className="h-8 w-8 text-yellow-600 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">1-Year Hosting</h3>
+                    <p className="text-gray-600 text-sm">Fast & reliable<br/>Includes full hosting with no maintenance required</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Clock className="h-8 w-8 text-blue-700 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Fast Turnaround</h3>
+                    <p className="text-gray-600 text-sm">Live in 24–48 hours<br/>After the shoot, your site is ready fast</p>
+                  </div>
+                </div>
+              </div>
+              {/* Add-Ons */}
+              <div className="flex flex-col gap-6">
                 <h3 className="text-xl font-semibold mb-4 text-[#2d4654]">Optional Add-Ons</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Virtual Tour Integration <span className="text-gray-500">– Embed Matterport or 360° walkthroughs</span></li>
-                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Interactive Floor Plans <span className="text-gray-500">– Let buyers click through the layout</span></li>
-                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Advanced Analytics <span className="text-gray-500">– Know where traffic is coming from and what's performing</span></li>
-                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Social Media Integration <span className="text-gray-500">– Share-ready and optimized previews</span></li>
-                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Showing Calendar <span className="text-gray-500">– Display open house dates or private viewing times</span></li>
-                  <li className="flex items-center gap-2"><Check className="h-5 w-5 text-green-500 flex-shrink-0" />Custom Domain <span className="text-gray-500">– Branded subdomain or your own unique URL</span></li>
-                </ul>
+                <div className="flex items-start gap-4">
+                  <Globe className="h-8 w-8 text-blue-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Virtual Tour Integration</h3>
+                    <p className="text-gray-600 text-sm">Embed your Matterport or 360° walkthrough</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <BarChart3 className="h-8 w-8 text-green-700 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Advanced Analytics</h3>
+                    <p className="text-gray-600 text-sm">Track visits, sources, device types & more</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Calendar className="h-8 w-8 text-orange-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Showing Calendar</h3>
+                    <p className="text-gray-600 text-sm">Highlight open houses or viewing slots</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Share2 className="h-8 w-8 text-pink-600 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Social Media Integration</h3>
+                    <p className="text-gray-600 text-sm">Preview optimized and share-ready</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <ClipboardList className="h-8 w-8 text-purple-600 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Interactive Floor Plans</h3>
+                    <p className="text-gray-600 text-sm">Clickable layouts for easy buyer navigation</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Globe className="h-8 w-8 text-blue-700 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Custom Domain</h3>
+                    <p className="text-gray-600 text-sm">Branded subdomain or use your own URL</p>
+                  </div>
+                </div>
               </div>
             </div>
             {/* Pricing Section */}

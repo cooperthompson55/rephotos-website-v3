@@ -163,7 +163,10 @@ export default function WhyUsPage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-16 sm:pt-18 md:pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80 z-0"></div>
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] bg-no-repeat bg-cover opacity-10 z-0"></div>
+        <div
+          className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] bg-no-repeat bg-cover opacity-10 z-0"
+          style={{ backgroundColor: '#F8F5F0' }}
+        ></div>
 
         <div className="container mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10">
           <div className="max-w-4xl mx-auto text-center">

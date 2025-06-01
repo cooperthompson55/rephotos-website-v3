@@ -14,7 +14,10 @@ export default function OurStoryPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80 z-0"></div>
 
         {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] bg-no-repeat bg-cover opacity-10 z-0"></div>
+        <div
+          className="absolute inset-0 bg-[url('/images/waves-pattern.svg')] bg-no-repeat bg-cover opacity-10 z-0"
+          style={{ backgroundColor: '#F8F5F0' }}
+        ></div>
 
         {/* Decorative elements */}
         <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-secondary/20 blur-2xl"></div>
