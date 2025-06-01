@@ -32,7 +32,7 @@ export default function Home() {
                 under 24 hours.
               </p>
               <a
-                href="/why-rephotos"
+                href="/why-us"
                 className="inline-flex items-center justify-center px-6 py-3 bg-[#262F3F] text-white font-medium rounded-md hover:bg-[#1d3644] transition-colors"
               >
                 Why RePhotos

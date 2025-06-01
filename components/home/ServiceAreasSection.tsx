@@ -79,7 +79,7 @@ export function ServiceAreasSection() {
             </div>
 
             <Button asChild className="bg-secondary hover:bg-secondary/90 text-white">
-              <Link href="/contact">Check availability in your area</Link>
+              <Link href="/contact-us">Check availability in your area</Link>
             </Button>
           </div>
         </div>

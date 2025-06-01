@@ -8,11 +8,13 @@ export function HeroSection() {
       {/* Background Image - Dark with car and reflections */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DSC_7527.jpg-xELH8nHRV0nGDfs4145FVeLQDiQ9WW.jpeg"
-          alt="Historic Stone House"
+          src="/images/home/cover.jpg"
+          alt="Gallery Cover"
           fill
-          className="object-cover brightness-75"
+          className="object-cover"
           priority
+          unoptimized
+          quality={100}
         />
       </div>
 
@@ -26,10 +28,10 @@ export function HeroSection() {
 
         <div className="mt-10">
           <Link
-            href="/quote"
+            href="/pricing"
             className="inline-flex items-center justify-center rounded-md text-white bg-transparent hover:bg-white hover:text-black border-2 border-white px-6 py-2 text-base font-medium tracking-wide transition-all duration-300"
           >
-            Get a quote
+            View Services
           </Link>
         </div>
       </div>

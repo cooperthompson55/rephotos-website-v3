@@ -8,24 +8,24 @@ import Image from "next/image"
 const testimonials = [
   {
     quote:
-      "I just LOVE RePhotos — the quality of what you do, the ease of use of you user-friendly website, the amazing level of customer service you all provide — All OUTSTANDING! Thank you SO MUCH for helping me to better serve my clients with the extraordinary support you provide for me. So happy to be your very satisfied customer!",
-    author: "Karen Starr",
-    company: "Grubb Co",
-    avatar: "https://ext.same-assets.com/148878086/2418568282.jpeg",
+      "RePhotos exceeded every expectation! From booking to final delivery, everything was seamless. The photos transformed my listings completely and I've never had such incredible response from buyers. The drone shots especially showcase properties beautifully. Can't imagine working with anyone else!",
+    author: "Michael Chen",
+    company: "Toronto Agent",
+    avatar: "",
   },
   {
     quote:
-      "RePhotos Photography is SIMPLY. THE. BEST! I would never go anywhere else — the convenience, quality, quick turnaround and flexible packages are just what I need to produce top quality marketing for my clients.",
-    author: "Tracy Pisenti",
-    company: "Compass",
-    avatar: "https://ext.same-assets.com/148878086/4192820443.jpeg",
+      "As someone who's worked with multiple photography services, RePhotos stands out for their reliability and stunning results. Their team understands real estate marketing perfectly. The quick turnaround means I can get listings live fast, and the quality speaks for itself. Absolutely fantastic!",
+    author: "Sarah Williams",
+    company: "Toronto Agent",
+    avatar: "",
   },
   {
     quote:
-      "Great personalized service from RePhotos. Our photographer, Denis was flexible with weather conditions, rescheduling for the following day. His work is thoughtful and skilled. He took still photos, video and drone with great results. Altogether a great experience. Professional service and photos etc returned on time. Highly recommend.",
-    author: "Jane Poppelreiter",
-    company: "Compass",
-    avatar: "https://ext.same-assets.com/148878086/1302349157.jpeg",
+      "RePhotos has been a game changer for my business! The combination of professional photography, virtual tours, and drone footage gives my clients' homes the premium presentation they deserve. Plus, their customer service is top notch, always responsive and accommodating with scheduling.",
+    author: "David Rodriguez",
+    company: "Mississauga Agent",
+    avatar: "",
   },
 ]
 
@@ -64,15 +64,9 @@ export function TestimonialsSection() {
                       <p className="text-gray-700 italic">"{testimonial.quote}"</p>
                     </CardContent>
                     <CardFooter className="pt-2 border-t">
-                      <div className="flex items-center">
-                        <Avatar className="h-10 w-10 mr-3">
-                          <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.author} />
-                          <AvatarFallback>{testimonial.author.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="font-medium text-primary">{testimonial.author}</p>
-                          <p className="text-sm text-gray-500">{testimonial.company}</p>
-                        </div>
+                      <div>
+                        <p className="font-medium text-primary">{testimonial.author}</p>
+                        <p className="text-sm text-gray-500">{testimonial.company}</p>
                       </div>
                     </CardFooter>
                   </Card>

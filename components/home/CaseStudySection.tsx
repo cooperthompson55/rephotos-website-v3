@@ -16,7 +16,7 @@ export function CaseStudySection() {
               </p>
               <div>
                 <Link
-                  href="/portfolio/the-art-of-the-eichler"
+                  href="/services/photography"
                   className="inline-block bg-white text-[#262F3F] px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors"
                 >
                   Learn more

@@ -45,31 +45,45 @@ export default function ContactPage() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     console.log(values)
 
-    // Simulate API call
-    setTimeout(() => {
+    // Send form data to our API route
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(values)
+      })
+      if (!res.ok) throw new Error("Failed to send message")
+    } catch (err) {
       setIsSubmitting(false)
-      setIsSuccess(true)
-    }, 2000)
+      return
+    }
+
+    setIsSubmitting(false)
+    setIsSuccess(true)
   }
 
   if (isSuccess) {
     return (
-      <div className="container max-w-4xl mx-auto py-12 px-4">
-        <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-          <h1 className="text-3xl font-bold text-green-600 mb-4">Message Sent!</h1>
-          <p className="text-lg mb-6">Thank you for contacting us. We'll get back to you as soon as possible.</p>
-          <Button onClick={() => (window.location.href = "/")}>Return to Home</Button>
+      <div className="bg-[#262F3F] min-h-screen">
+        <div className="container max-w-4xl mx-auto py-12 px-4">
+          <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+            <h1 className="text-3xl font-bold text-green-600 mb-4">Message Sent!</h1>
+            <p className="text-lg mb-6">Thank you for contacting us. We'll get back to you as soon as possible.</p>
+            <Button onClick={() => (window.location.href = "/")}>Return to Home</Button>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <>
+    <div className="bg-[#262F3F] min-h-screen">
       {/* Hero/Banner Section */}
       <section className="relative min-h-[320px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -130,7 +144,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-medium">Phone</h3>
-                    <p className="text-gray-600">(123) 456-7890</p>
+                    <p className="text-gray-600">905-299-9300</p>
                   </div>
                 </div>
 
@@ -153,45 +167,16 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-medium">Email</h3>
-                    <p className="text-gray-600">info@rephotos.com</p>
+                    <p className="text-gray-600">cooper@rephotos.ca</p>
                   </div>
                 </div>
 
-                <div className="flex items-start">
-                  <div className="bg-blue-100 p-2 rounded-full mr-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-blue-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-medium">Address</h3>
-                    <p className="text-gray-600">123 Photography St, Toronto, ON</p>
-                  </div>
+                <div className="mt-8">
+                  <h3 className="font-medium mb-2">Business Hours</h3>
+                  <p className="text-gray-600">Monday - Friday: 8am - 9pm</p>
+                  <p className="text-gray-600">Saturday: 9am - 5pm</p>
+                  <p className="text-gray-600">Sunday: 9am - 9pm</p>
                 </div>
-              </div>
-
-              <div className="mt-8">
-                <h3 className="font-medium mb-2">Business Hours</h3>
-                <p className="text-gray-600">Monday - Friday: 9am - 5pm</p>
-                <p className="text-gray-600">Saturday: 10am - 4pm</p>
-                <p className="text-gray-600">Sunday: Closed</p>
               </div>
             </div>
 
@@ -289,6 +274,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
