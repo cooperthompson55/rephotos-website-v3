@@ -79,14 +79,14 @@ const services = [
     description: "Beautifully stage your listings without the heavy lifting using impressive CGI.",
     image: "https://ext.same-assets.com/2498839276/3872760327.jpeg",
     price: "$39.99/image",
-    link: "/virtual-staging",
+    link: "/virtual-services",
   },
   {
     title: "Virtual Twilight",
     description: "Transform your property photos with stunning twilight effects.",
     image: "https://ext.same-assets.com/2498839276/3872760327.jpeg",
     price: "$49.99/image",
-    link: "/virtual-staging",
+    link: "/virtual-services",
   },
 ]
 

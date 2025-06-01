@@ -17,7 +17,7 @@ const serviceDropdownItems = [
   { name: "3D Virtual Tours", href: "/services/virtual-tours" },
   { name: "Floor Plans", href: "/services/floor-plans" },
   { name: "Property Websites", href: "/services/websites" },
-  { name: "Virtual Staging", href: "/services/virtual-services" },
+  { name: "Virtual Services", href: "/services/virtual-services" },
 ]
 
 const aboutDropdownItems = [
@@ -91,21 +91,21 @@ export function MainNav() {
       <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
-            <div className="w-44 h-14 relative">
+            <div className="w-32 h-10 md:w-44 md:h-14 relative">
               {scrolled ? (
                 <Image
                   src="/images/rephotos-logo-dark.png"
                   alt="RePhotos"
-                  width={260}
-                  height={80}
+                  width={200}
+                  height={60}
                   className="w-full h-full object-contain transition-opacity duration-300"
                 />
               ) : (
                 <Image
                   src="/images/re-logo.png"
                   alt="RePhotos"
-                  width={260}
-                  height={80}
+                  width={200}
+                  height={60}
                   className="w-full h-full object-contain transition-opacity duration-300"
                 />
               )}

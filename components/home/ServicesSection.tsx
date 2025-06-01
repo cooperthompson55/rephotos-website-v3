@@ -85,9 +85,9 @@ export function ServicesSection() {
               {/* Content */}
               <div className="absolute bottom-0 left-0 p-6 w-full">
                 <h3 className="text-white text-2xl font-mazzard mb-1">{service.title}</h3>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2">
                   <p className="text-white text-base font-semibold mb-0">{service.price}</p>
-                  <span className="text-xs uppercase text-white/80 tracking-wider ml-2">Starting</span>
+                  <span className="text-xs uppercase text-white/80 tracking-wider md:ml-2 mt-1 md:mt-0">Starting</span>
                 </div>
               </div>
             </Link>

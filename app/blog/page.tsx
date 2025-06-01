@@ -105,9 +105,9 @@ const blogPosts = [
     image: "/placeholder.svg?height=600&width=800&query=virtual+staging+real+estate",
     date: "March 25, 2024",
     author: "Cooper",
-    category: "virtual-staging",
+    category: "virtual-services",
     featured: false,
-    tags: ["virtual-staging", "interior-design", "technology"],
+    tags: ["virtual-services", "interior-design", "technology"],
   },
 ]
 

@@ -8,12 +8,12 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center mb-4">
-              <div className="w-48 h-14 relative">
+              <div className="w-24 h-8 md:w-44 md:h-14 relative">
                 <Image
                   src="/images/re-logo.png"
                   alt="Re"
-                  width={240}
-                  height={70}
+                  width={150}
+                  height={40}
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -47,7 +47,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/3d-matterport" className="hover:underline">
+                <Link href="/services/virtual-services" className="hover:underline">
                   3D Matterport
                 </Link>
               </li>
@@ -62,7 +62,7 @@ export function Footer() {
             <h3 className="text-xl font-medium mb-4">Tags</h3>
             <div className="flex flex-wrap gap-2">
               <Link
-                href="/blog/tag/3d-matterport"
+                href="/services/virtual-tours"
                 className="text-xs bg-gray-700 hover:bg-secondary px-2 py-1 rounded text-white"
               >
                 3D Matterport

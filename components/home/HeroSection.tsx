@@ -29,7 +29,7 @@ export function HeroSection() {
         <div className="mt-10">
           <Link
             href="/pricing"
-            className="inline-flex items-center justify-center rounded-md text-white bg-transparent hover:bg-white hover:text-black border-2 border-white px-6 py-2 text-base font-medium tracking-wide transition-all duration-300"
+            className="inline-flex items-center justify-center rounded-md text-white bg-transparent hover:bg-white hover:text-black border-2 border-white px-3 py-1.5 text-sm md:px-6 md:py-2 md:text-base font-medium tracking-wide transition-all duration-300"
           >
             View Services
           </Link>

@@ -18,6 +18,7 @@ export default function Home() {
               'url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-nJB5dJPAniGmTcGVusia1P783cIiZM.svg")',
             backgroundSize: "cover",
             backgroundPosition: "center",
+            backgroundColor: "#F8F5F0",
           }}
         ></div>
         <div className="container mx-auto px-4 md:px-6">

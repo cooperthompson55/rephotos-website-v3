@@ -11,3 +11,8 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  from = "/services/virtual-staging"
+  to = "/services/virtual-services"
+  status = 301
