@@ -266,6 +266,20 @@ export default function BookNowPage() {
         setSubmitAnim('error');
         setTimeout(() => setSubmitAnim('idle'), 1200);
       } else {
+        // Trigger Supabase Edge Function after successful booking
+        try {
+          await fetch('https://jshnsfvvsmjlxlbdpehf.supabase.co/functions/v1/sendBookingEmailjshnsfvvsmjlxlbdpehf', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              // 'Authorization': 'Bearer ' + <your-secret>, // Uncomment and set if your edge function requires auth
+            },
+            body: JSON.stringify(payload),
+          });
+        } catch (e) {
+          // Optionally handle/log edge function errors, but don't block user
+          console.error('Edge function call failed:', e);
+        }
         setIsSuccess(true);
         setSubmitStatus('success');
         setSubmitAnim('success');
