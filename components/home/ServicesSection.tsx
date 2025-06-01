@@ -50,7 +50,7 @@ const services = [
     title: "Virtual Staging",
     price: "$39.99/image",
     image: "/images/home/s_8.png",
-    link: "/services/virtual-staging",
+    link: "/services/virtual-services",
   },
 ]
 

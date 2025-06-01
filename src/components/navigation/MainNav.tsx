@@ -17,7 +17,7 @@ const serviceDropdownItems = [
   { name: "3D Virtual Tours", href: "/services/virtual-tours" },
   { name: "Floor Plans", href: "/services/floor-plans" },
   { name: "Property Websites", href: "/services/websites" },
-  { name: "Virtual Staging", href: "/services/virtual-staging" },
+  { name: "Virtual Staging", href: "/services/virtual-services" },
 ]
 
 const aboutDropdownItems = [

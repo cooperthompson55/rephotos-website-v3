@@ -1182,7 +1182,7 @@ export default function PricingPage() {
                     <div className="mt-auto">
                       <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Virtual Services</h3>
                       <p className="text-white text-base font-normal mb-4">Beautifully stage, declutter, or even remodel any space with Virtual Service magic—no moving truck required</p>
-                      <BookButton href="/services/virtual-staging" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+                      <BookButton href="/services/virtual-services" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
                     </div>
                   </div>
                 </div>

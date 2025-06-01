@@ -26,6 +26,7 @@ import {
   Zap,
   TrendingUp,
   Users,
+  CloudSun,
 } from "lucide-react"
 import { CTASection } from "@/components/home/CTASection"
 
@@ -107,19 +108,19 @@ export default function VirtualStagingPage() {
             <span className="mx-1">/</span>
             <Link href="/services" className="hover:underline">Services</Link>
             <span className="mx-1">/</span>
-            <span className="text-white">Virtual Staging</span>
+            <span className="text-white">Virtual Services</span>
           </nav>
           {/* Badge */}
           <div className="mb-4">
-            <span className="inline-block bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-full px-5 py-2 tracking-wide">VIRTUAL STAGING</span>
+            <span className="inline-block bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-full px-5 py-2 tracking-wide">VIRTUAL SERVICES</span>
           </div>
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-4 text-white max-w-4xl leading-tight text-left">
-            Transform Empty Spaces Into<br />Dream Homes
+            Enhance Every Listing with Virtual Upgrades
           </h1>
           {/* Supporting Paragraph */}
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-4 text-left">
-            Professional virtual staging that sells properties faster at a fraction of traditional staging costs. Showcase the true potential of any space.
+            From virtual twilight edits to sky replacements and 3D house models, our digital enhancements help your listings stand out and sell faster—no matter the weather or condition.
           </p>
         </div>
       </section>
@@ -133,8 +134,8 @@ export default function VirtualStagingPage() {
               <div className="relative h-[400px] md:h-[600px]">
                 {/* Before Image */}
                 <Image
-                  src="/placeholder.svg?height=600&width=800&query=empty+living+room"
-                  alt="Empty room before staging"
+                  src="/images/services/virtual-staging/after.jpg"
+                  alt="Room before virtual staging"
                   fill
                   className="object-cover"
                 />
@@ -144,7 +145,7 @@ export default function VirtualStagingPage() {
                   style={{ clipPath: `inset(0 ${100 - beforeAfterPosition}% 0 0)` }}
                 >
                   <Image
-                    src="/placeholder.svg?height=600&width=800&query=staged+modern+living+room"
+                    src="/images/services/virtual-staging/before.jpg"
                     alt="Room after virtual staging"
                     fill
                     className="object-cover"
@@ -178,87 +179,55 @@ export default function VirtualStagingPage() {
         </div>
       </section>
 
-      {/* Animated Stats Section */}
+      {/* Stats Section */}
       <section id="stats-section" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#2d4654] mb-2">Up to 3x</div>
-              <p className="text-gray-600">More online views when listings include virtual tours and floor plans</p>
+              <TrendingUp className="w-8 h-8 mx-auto mb-2 text-[#2d4654]" />
+              <h4 className="text-2xl md:text-3xl font-bold text-[#2d4654] mb-2">Up to 2x</h4>
+              <p className="text-gray-600">More buyer engagement on listings with bright, visually appealing skies</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#2d4654] mb-2">90%</div>
-              <p className="text-gray-600">Of buyers say virtual tours help them make faster decisions</p>
+              <CloudSun className="w-8 h-8 mx-auto mb-2 text-[#2d4654]" />
+              <h4 className="text-2xl md:text-3xl font-bold text-[#2d4654] mb-2">100% Weather-Proof</h4>
+              <p className="text-gray-600">Transform gloomy or overcast days into perfect blue skies or twilight scenes</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#2d4654] mb-2">67%</div>
-              <p className="text-gray-600">Of listings with virtual media sell faster than those without</p>
+              <Clock className="w-8 h-8 mx-auto mb-2 text-[#2d4654]" />
+              <h4 className="text-2xl md:text-3xl font-bold text-[#2d4654] mb-2">Next-Day Delivery</h4>
+              <p className="text-gray-600">Sky replacements and day-to-night edits delivered within 24 hours</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Style Selector Section */}
+      {/* Choose Your Sky Section (replaces style selector) */}
       <section className="py-16 md:py-24 bg-[#F8F5F0]">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif text-center mb-4">Choose Your Style</h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-center mb-4">Choose Your Sky</h2>
             <p className="text-xl text-gray-600 text-center mb-12">
-              Select from our curated collection of professional staging styles
+              Transform your exterior shots with custom sky replacements to match the mood of the listing.
             </p>
-
-            {/* Style Tabs */}
-            <Tabs value={selectedStyle} onValueChange={setSelectedStyle} className="w-full">
-              <TabsList className="grid grid-cols-3 md:grid-cols-5 w-full mb-8">
-                {styles.map((style) => (
-                  <TabsTrigger key={style.id} value={style.id} className="flex flex-col gap-1">
-                    <style.icon className="w-5 h-5" />
-                    <span className="text-xs md:text-sm">{style.name}</span>
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-
-              {styles.map((style) => (
-                <TabsContent key={style.id} value={style.id}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden shadow-lg">
-                      <Image
-                        src={`/placeholder.svg?height=400&width=600&query=${style.id}+staged+living+room`}
-                        alt={`${style.name} style staging`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="flex flex-col justify-center">
-                      <h3 className="text-2xl font-serif mb-4">{style.name} Style</h3>
-                      <p className="text-gray-600 mb-6">
-                        {style.id === "modern" &&
-                          "Clean lines, neutral colors, and contemporary furniture create a fresh, sophisticated look that appeals to today's buyers."}
-                        {style.id === "traditional" &&
-                          "Classic furniture pieces, warm colors, and timeless design elements create a welcoming, familiar atmosphere."}
-                        {style.id === "scandinavian" &&
-                          "Minimalist design with light woods, cozy textiles, and a bright, airy feel that maximizes space and light."}
-                        {style.id === "industrial" &&
-                          "Raw materials, exposed elements, and urban-inspired furniture create a trendy, metropolitan vibe."}
-                        {style.id === "luxury" &&
-                          "High-end furniture, rich textures, and elegant accessories create an aspirational, premium living experience."}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 bg-[#2d4654]/10 text-[#2d4654] rounded-full text-sm">
-                          Most Popular
-                        </span>
-                        <span className="px-3 py-1 bg-[#2d4654]/10 text-[#2d4654] rounded-full text-sm">
-                          Quick Turnaround
-                        </span>
-                        <span className="px-3 py-1 bg-[#2d4654]/10 text-[#2d4654] rounded-full text-sm">
-                          Customizable
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-              ))}
-            </Tabs>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-2">
+                <h3 className="text-2xl font-bold mb-2">Sunny Day</h3>
+                <p className="text-gray-600 text-base mb-2">Bright blue skies with soft clouds—perfect for creating a fresh, cheerful atmosphere.</p>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-2">
+                <h3 className="text-2xl font-bold mb-2">Golden Hour</h3>
+                <p className="text-gray-600 text-base mb-2">Warm tones and a sunset glow add charm and highlight exterior features beautifully.</p>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-2">
+                <h3 className="text-2xl font-bold mb-2">Twilight/Night</h3>
+                <p className="text-gray-600 text-base mb-2">Dramatic dusk skies with soft lighting give listings a luxury, high-end feel. Ideal for evening ambiance.</p>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-2">
+                <h3 className="text-2xl font-bold mb-2">No More Gloomy Days</h3>
+                <p className="text-gray-600 text-base mb-2">Dull, gray skies are replaced with vibrant skies to ensure every listing looks its best—rain or shine.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -388,38 +357,27 @@ export default function VirtualStagingPage() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif text-center mb-12">Simple 4-Step Process</h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-center mb-12">How It Works</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="text-center">
-                <div className="w-16 h-16 bg-[#2d4654] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                  1
-                </div>
-                <h3 className="font-semibold mb-2">Upload Photos</h3>
-                <p className="text-gray-600 text-sm">Send us high-quality photos of empty or cluttered rooms</p>
+                <div className="w-16 h-16 bg-[#2d4654] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+                <h3 className="font-semibold mb-2">We Shoot the Property</h3>
+                <p className="text-gray-600 text-sm">Our team captures high-resolution interior photos optimized for virtual staging.</p>
               </div>
-
               <div className="text-center">
-                <div className="w-16 h-16 bg-[#2d4654] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                  2
-                </div>
-                <h3 className="font-semibold mb-2">Choose Style</h3>
-                <p className="text-gray-600 text-sm">Select from our design styles or let us recommend</p>
+                <div className="w-16 h-16 bg-[#2d4654] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+                <h3 className="font-semibold mb-2">You Pick the Style</h3>
+                <p className="text-gray-600 text-sm">Choose a preferred design style or let us recommend one based on the property.</p>
               </div>
-
               <div className="text-center">
-                <div className="w-16 h-16 bg-[#2d4654] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                  3
-                </div>
-                <h3 className="font-semibold mb-2">We Stage</h3>
-                <p className="text-gray-600 text-sm">Our designers virtually furnish and decorate the space</p>
+                <div className="w-16 h-16 bg-[#2d4654] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+                <h3 className="font-semibold mb-2">We Virtually Stage</h3>
+                <p className="text-gray-600 text-sm">Our editors furnish each space with realistic, market-ready visuals.</p>
               </div>
-
               <div className="text-center">
-                <div className="w-16 h-16 bg-[#2d4654] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                  4
-                </div>
-                <h3 className="font-semibold mb-2">Download & List</h3>
-                <p className="text-gray-600 text-sm">Receive staged photos ready for MLS and marketing</p>
+                <div className="w-16 h-16 bg-[#2d4654] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
+                <h3 className="font-semibold mb-2">You Get MLS-Ready Images</h3>
+                <p className="text-gray-600 text-sm">Receive staged photos within 24–48 hours, ready to list and impress buyers.</p>
               </div>
             </div>
           </div>
