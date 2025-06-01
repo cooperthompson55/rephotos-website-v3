@@ -226,7 +226,8 @@ export default function BookNowPage() {
       totalAmount = servicesArr.reduce((sum: number, s: any) => sum + s.total, 0);
     }
 
-    const street = values.address;
+    const safe = (val: string | undefined | null) => (val && val.trim() !== '' ? val : 'Unknown');
+    const street = safe(values.address);
     const street2 = '';
     const city = '';
     const province = '';
@@ -237,22 +238,22 @@ export default function BookNowPage() {
       services: servicesArr,
       total_amount: parseFloat(totalAmount.toFixed(2)),
       address: {
-        street,
-        street2,
-        city,
-        province,
-        zipCode,
+        street: safe(street),
+        street2: safe(street2),
+        city: safe(city),
+        province: safe(province),
+        zipCode: safe(zipCode),
       },
-      notes: values.additionalInfo || null,
-      preferred_date: values.date,
-      time: values.time,
+      notes: safe(values.additionalInfo || ''),
+      preferred_date: safe(values.date),
+      time: safe(values.time),
       property_status: 'Vacant',
       status: 'pending',
       user_id: null,
-      agent_name: values.name,
-      agent_email: values.email,
-      agent_phone: values.phone,
-      agent_company: '',
+      agent_name: safe(values.name),
+      agent_email: safe(values.email),
+      agent_phone: safe(values.phone),
+      agent_company: 'Unknown',
     };
 
     try {
@@ -268,11 +269,11 @@ export default function BookNowPage() {
       } else {
         // Trigger Supabase Edge Function after successful booking
         try {
-          await fetch('https://jshnsfvvsmjlxlbdpehf.supabase.co/functions/v1/sendBookingEmailjshnsfvvsmjlxlbdpehf', {
+          await fetch('https://jshnsfvvsmjlxlbdpehf.functions.supabase.co/index', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              // 'Authorization': 'Bearer ' + <your-secret>, // Uncomment and set if your edge function requires auth
+              'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''}`,
             },
             body: JSON.stringify(payload),
           });
@@ -294,24 +295,31 @@ export default function BookNowPage() {
     }
   }
 
-  const nextStep = async () => {
-    let fieldsToValidate: string[] = [];
-    if (step === 1) {
-      fieldsToValidate = ["name", "email", "phone"];
-    } else if (step === 2) {
-      fieldsToValidate = ["address", "propertyType", "squareFootage", "date", "time"];
-    } else if (step === 3) {
-      // No form fields to validate, just require a package or service
-      if (!selectedPackage && selectedServices.length === 0) {
-        return;
-      }
+  // Add a function to handle step navigation with validation
+  const handleStepNavigation = async (targetStep: number) => {
+    if (targetStep === step) return;
+    // Only allow jumping forward if all previous steps are valid
+    if (targetStep < step) {
+      setStep(targetStep);
+      return;
     }
-    if (fieldsToValidate.length > 0) {
-      const isValid = await form.trigger(fieldsToValidate as any);
-      if (isValid) setStep(step + 1);
-    } else {
-      setStep(step + 1);
+    // Validate all steps up to targetStep
+    let valid = true;
+    if (targetStep >= 2) {
+      // Step 1 fields
+      valid = await form.trigger(["name", "email", "phone"]);
+      if (!valid) return;
     }
+    if (targetStep >= 3) {
+      // Step 2 fields
+      valid = await form.trigger(["address", "propertyType", "squareFootage", "date", "time"]);
+      if (!valid) return;
+    }
+    if (targetStep >= 4) {
+      // Step 3: must have package or service
+      if (!selectedPackage && selectedServices.length === 0) return;
+    }
+    setStep(targetStep);
   };
 
   const prevStep = () => {
@@ -402,16 +410,43 @@ export default function BookNowPage() {
 
           <div className="mb-8">
             <div className="flex items-center justify-between mb-2">
-              <div className={`h-1 w-1/4 ${step >= 1 ? "bg-blue-600" : "bg-gray-300"}`}></div>
-              <div className={`h-1 w-1/4 ${step >= 2 ? "bg-blue-600" : "bg-gray-300"}`}></div>
-              <div className={`h-1 w-1/4 ${step >= 3 ? "bg-blue-600" : "bg-gray-300"}`}></div>
-              <div className={`h-1 w-1/4 ${step >= 4 ? "bg-blue-600" : "bg-gray-300"}`}></div>
+              {[1, 2, 3, 4].map((s, idx) => (
+                <div
+                  key={s}
+                  className={`h-1 w-1/4 transition-colors duration-200 ${step >= s ? "bg-blue-600" : "bg-gray-300"}`}
+                ></div>
+              ))}
             </div>
             <div className="flex justify-between text-sm">
-              <span className={step >= 1 ? "text-blue-600 font-medium" : "text-gray-500"}>Personal Info</span>
-              <span className={step >= 2 ? "text-blue-600 font-medium" : "text-gray-500"}>Property Details</span>
-              <span className={step >= 3 ? "text-blue-600 font-medium" : "text-gray-500"}>Choose Services</span>
-              <span className={step >= 4 ? "text-blue-600 font-medium" : "text-gray-500"}>Confirmation</span>
+              {[
+                { label: "Personal Info", stepNum: 1 },
+                { label: "Property Details", stepNum: 2 },
+                { label: "Choose Services", stepNum: 3 },
+                { label: "Confirmation", stepNum: 4 },
+              ].map(({ label, stepNum }, idx) => {
+                const isActive = step === stepNum;
+                // Allow navigation to any step, but only if all previous steps are valid
+                const isAvailable = step >= stepNum || stepNum === 1;
+                return (
+                  <button
+                    key={label}
+                    type="button"
+                    className={`transition-colors font-medium px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-400
+                      ${isActive ? "text-blue-600" : isAvailable ? "text-blue-500 hover:text-blue-700" : "text-gray-400"}
+                      ${isActive ? "underline underline-offset-4" : ""}
+                      ${!isAvailable ? "cursor-default" : ""}
+                    `}
+                    aria-current={isActive ? "step" : undefined}
+                    aria-disabled={!isAvailable}
+                    tabIndex={isAvailable ? 0 : -1}
+                    onClick={() => handleStepNavigation(stepNum)}
+                    disabled={!isAvailable && stepNum !== 1}
+                    style={isActive ? { border: 'none', boxShadow: 'none' } : {}}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -459,7 +494,7 @@ export default function BookNowPage() {
                     )}
                   />
                   <div className="pt-4 flex justify-end">
-                    <Button type="button" onClick={nextStep}>
+                    <Button type="button" onClick={() => handleStepNavigation(step + 1)}>
                       Next
                     </Button>
                   </div>
@@ -665,10 +700,10 @@ export default function BookNowPage() {
                     />
                   </div>
                   <div className="pt-4 flex justify-between">
-                    <Button type="button" variant="outline" onClick={prevStep}>
+                    <Button type="button" variant="outline" onClick={() => handleStepNavigation(step - 1)}>
                       Previous
                     </Button>
-                    <Button type="button" onClick={nextStep}>
+                    <Button type="button" onClick={() => handleStepNavigation(step + 1)}>
                       Next
                     </Button>
                   </div>
@@ -680,6 +715,7 @@ export default function BookNowPage() {
                   {/* Packages/Services Selector */}
                   <div className="flex justify-center mb-6 gap-2">
                     <button
+                      type="button"
                       className={`px-5 py-2 rounded-full font-semibold transition-all border-2 focus:outline-none text-base md:text-lg ${viewMode === 'packages' ? 'bg-[#262F3F] text-white border-[#262F3F]' : 'bg-white text-[#262F3F] border-gray-300 hover:bg-[#f5efe0]'}`}
                       onClick={() => setViewMode(viewMode === 'packages' ? 'both' : 'packages')}
                       aria-pressed={viewMode === 'packages'}
@@ -687,6 +723,7 @@ export default function BookNowPage() {
                       Packages
                     </button>
                     <button
+                      type="button"
                       className={`px-5 py-2 rounded-full font-semibold transition-all border-2 focus:outline-none text-base md:text-lg ${viewMode === 'services' ? 'bg-[#262F3F] text-white border-[#262F3F]' : 'bg-white text-[#262F3F] border-gray-300 hover:bg-[#f5efe0]'}`}
                       onClick={() => setViewMode(viewMode === 'services' ? 'both' : 'services')}
                       aria-pressed={viewMode === 'services'}
@@ -892,35 +929,47 @@ export default function BookNowPage() {
                           }
                           const isVirtual = service.id === 'virtualStaging' || service.id === 'virtualTwilight';
                           const qty = serviceQuantities[service.id] || 0;
+                          const isChecked = isVirtual ? (selectedServices.includes(service.id) && qty > 0) : selectedServices.includes(service.id);
                           return (
                             <label key={service.id} className={`relative flex items-center border rounded-lg p-3 md:p-4 cursor-pointer transition-all
-                              ${selectedServices.includes(service.id) ? 'border-blue-600 ring-2 ring-blue-200' : 'border-gray-200'}
+                              ${selectedServices.includes(service.id) ? '' : 'border-gray-200'}
                               ${selectedPackage && (includedInPackage || coveredByCustomVideo) ? 'opacity-50 pointer-events-none' : ''}
                             `}
                             >
-                              <input
-                                type="checkbox"
-                                checked={selectedServices.includes(service.id) && qty > 0}
-                                onChange={() => {
-                                  if (selectedServices.includes(service.id)) {
-                                    setSelectedServices(selectedServices.filter(id => id !== service.id));
-                                    if (isVirtual) setServiceQuantities(prev => ({ ...prev, [service.id]: 0 }));
-                                  } else {
-                                    setSelectedServices([...selectedServices, service.id]);
-                                    if (isVirtual && (!serviceQuantities[service.id] || serviceQuantities[service.id] < 1)) setServiceQuantities(prev => ({ ...prev, [service.id]: 1 }));
-                                  }
-                                }}
-                                disabled={!!selectedPackage && (includedInPackage || coveredByCustomVideo)}
-                                className="mr-3 w-5 h-5 accent-blue-600 relative z-10"
-                              />
-                              {/* Custom checkmark for selected state */}
-                              {selectedServices.includes(service.id) && qty > 0 && (
-                                <span className="absolute left-2.5 top-1.5 pointer-events-none z-20">
-                                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                  </svg>
-                                </span>
-                              )}
+                              <span className="relative mr-3 w-6 h-6 flex items-center justify-center">
+                                <input
+                                  type="checkbox"
+                                  checked={isChecked}
+                                  onChange={() => {
+                                    if (selectedServices.includes(service.id)) {
+                                      setSelectedServices(selectedServices.filter(id => id !== service.id));
+                                      if (isVirtual) setServiceQuantities(prev => ({ ...prev, [service.id]: 0 }));
+                                    } else {
+                                      setSelectedServices([...selectedServices, service.id]);
+                                      if (isVirtual && (!serviceQuantities[service.id] || serviceQuantities[service.id] < 1)) setServiceQuantities(prev => ({ ...prev, [service.id]: 1 }));
+                                    }
+                                  }}
+                                  disabled={!!selectedPackage && (includedInPackage || coveredByCustomVideo)}
+                                  className="absolute w-6 h-6 opacity-0 cursor-pointer z-10"
+                                  tabIndex={0}
+                                  aria-checked={isChecked}
+                                />
+                                <span className={`block w-6 h-6 rounded border transition-all duration-200
+                                  ${isChecked ? 'bg-blue-600 border-blue-600 shadow-lg' : 'bg-white border-gray-300'}
+                                  ${!!selectedPackage && (includedInPackage || coveredByCustomVideo) ? 'opacity-50' : ''}
+                                `} />
+                                <svg
+                                  className={`absolute left-0 top-0 w-6 h-6 pointer-events-none transition-transform transition-opacity duration-200
+                                    ${isChecked ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="3"
+                                  viewBox="0 0 24 24"
+                                  style={{ color: 'white' }}
+                                >
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                              </span>
                               <div className="flex-1 flex flex-col gap-1">
                                 <div className="flex items-center gap-2">
                                   <span className="font-medium text-sm md:text-base">{service.name}</span>
@@ -1125,7 +1174,7 @@ export default function BookNowPage() {
                           className="w-full bg-[#262F3F] hover:bg-[#1a202c] text-white font-semibold rounded-lg py-3 mt-4 transition disabled:opacity-60 animate-fade-in"
                           disabled={!(selectedPackage || selectedServices.length > 0)}
                           type="button"
-                          onClick={() => setStep(4)}
+                          onClick={() => handleStepNavigation(4)}
                         >
                           Proceed to Checkout
                         </button>
@@ -1195,7 +1244,7 @@ export default function BookNowPage() {
                   </div>
 
                   <div className="pt-4 flex justify-between">
-                    <Button type="button" variant="outline" onClick={prevStep}>
+                    <Button type="button" variant="outline" onClick={() => handleStepNavigation(step - 1)}>
                       Previous
                     </Button>
                     <Button type="submit" disabled={isSubmitting || submitAnim === 'loading' || submitStatus === 'loading'}>
@@ -1329,6 +1378,9 @@ export default function BookNowPage() {
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
+        }
+        .custom-checkbox-anim {
+          transition: box-shadow 0.2s, background 0.2s, border 0.2s;
         }
       `}</style>
     </div>
