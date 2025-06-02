@@ -113,8 +113,8 @@ const photographyProcess = [
 
 const pricingTiers = [
   {
-    label: "Small Homes",
-    price: "$189.99",
+    label: "Condo",
+    price: "$189.99 to $249.99",
     size: "Up to 1,999 sq ft",
     features: [
       "Full interior + exterior coverage",
@@ -126,7 +126,7 @@ const pricingTiers = [
   },
   {
     label: "Medium Homes",
-    price: "$249.99",
+    price: "$249.99 to $349.99",
     size: "2,000–3,999 sq ft",
     features: [
       "Full interior + exterior coverage",
@@ -139,7 +139,7 @@ const pricingTiers = [
   },
   {
     label: "Large Homes",
-    price: "$349.99",
+    price: "$349.99 to $449.99",
     size: "4,000–4,999 sq ft",
     features: [
       "Full interior + exterior coverage",

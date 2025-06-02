@@ -20,8 +20,59 @@ import {
   Building,
   Globe,
   PenTool,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react"
 import { QuoteModuleSection } from "@/components/home/QuoteModuleSection"
+
+// BeforeAfterSlider Component
+const BeforeAfterSlider = ({ beforeSrc, afterSrc, alt }: { beforeSrc: string; afterSrc: string; alt: string }) => {
+  const [sliderPosition, setSliderPosition] = useState(50)
+
+  return (
+    <div className="relative rounded-lg overflow-hidden" style={{ aspectRatio: '3/2' }}>
+      {/* Before Image */}
+      <img
+        src={beforeSrc}
+        alt={`${alt} - Before`}
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      {/* After Image with Clip */}
+      <div
+        className="absolute inset-0 overflow-hidden"
+        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+      >
+        <img
+          src={afterSrc}
+          alt={`${alt} - After`}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+      {/* Slider */}
+      <div
+        className="absolute top-0 bottom-0 w-0.5 bg-white cursor-ew-resize"
+        style={{ left: `${sliderPosition}%` }}
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
+          <ChevronLeft className="w-3 h-3 text-gray-600 absolute -left-0.5" />
+          <ChevronRight className="w-3 h-3 text-gray-600 absolute -right-0.5" />
+        </div>
+      </div>
+      {/* Slider Control */}
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value={sliderPosition}
+        onChange={(e) => setSliderPosition(Number(e.target.value))}
+        className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize"
+      />
+      {/* Labels */}
+      <div className="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">Before</div>
+      <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">After</div>
+    </div>
+  )
+}
 
 // Pricing data
 const pricingData = {
@@ -38,6 +89,7 @@ const pricingData = {
     customDomainName: 39.99,
     virtualStaging: "39.99/image",
     virtualTwilight: "49.99/image",
+    virtualDeclutter: "29.99/image",
   },
   "1000-2000": {
     hdrPhotography: 249.99,
@@ -52,6 +104,7 @@ const pricingData = {
     customDomainName: 39.99,
     virtualStaging: "39.99/image",
     virtualTwilight: "49.99/image",
+    virtualDeclutter: "29.99/image",
   },
   "2000-3000": {
     hdrPhotography: 319.99,
@@ -66,6 +119,7 @@ const pricingData = {
     customDomainName: 39.99,
     virtualStaging: "39.99/image",
     virtualTwilight: "49.99/image",
+    virtualDeclutter: "29.99/image",
   },
   "3000-4000": {
     hdrPhotography: 379.99,
@@ -80,6 +134,7 @@ const pricingData = {
     customDomainName: 39.99,
     virtualStaging: "39.99/image",
     virtualTwilight: "49.99/image",
+    virtualDeclutter: "29.99/image",
   },
   "4000-5000": {
     hdrPhotography: 439.99,
@@ -94,6 +149,7 @@ const pricingData = {
     customDomainName: 39.99,
     virtualStaging: "39.99/image",
     virtualTwilight: "49.99/image",
+    virtualDeclutter: "29.99/image",
   },
 } as const;
 
@@ -184,6 +240,13 @@ const services = [
     description: "Transform daytime photos into stunning twilight scenes",
     icon: <PenTool className="h-5 w-5" />,
     image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2000",
+  },
+  {
+    id: "virtualDeclutter",
+    name: "Virtual Declutter",
+    description: "Remove unwanted items and clean up spaces digitally",
+    icon: <PenTool className="h-5 w-5" />,
+    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000",
   },
 ]
 
@@ -948,7 +1011,7 @@ export default function PricingPage() {
                   </div>
                   <div className={`mb-2 text-sm font-mazzard font-semibold ${pkg.discountColor}`}>{pkg.discount}</div>
                   <BookButton href="/book-now" size="lg" className={`w-full mb-4 mt-2 font-mazzard font-semibold ${pkg.buttonColor}`}>Get Started</BookButton>
-                  <ul className="flex-1 mb-0 space-y-1 text-sm">
+                  <ul className="flex-1 mb-4 space-y-1 text-sm">
                     {pkg.features.map((feature: PackageFeature, i: number) => (
                       <li key={i} className={`flex items-center gap-2 ${feature.included ? "text-[#262F3F]" : "text-[#B0B7C3] line-through"}`}>
                         {feature.included ? (
@@ -960,6 +1023,24 @@ export default function PricingPage() {
                       </li>
                     ))}
                   </ul>
+                  {/* Included with every package section */}
+                  <div className="bg-[#f8f9fa] rounded-lg px-4 py-3 -mx-2 border-t border-gray-100">
+                    <div className="text-[10px] font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-2">INCLUDED WITH EVERY PACKAGE</div>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-xs">
+                        <span className="inline-block w-4 h-4 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0">✓</span>
+                        <span className="text-[#262F3F] font-medium">Next-Day Turnaround</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs">
+                        <span className="inline-block w-4 h-4 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0">✓</span>
+                        <span className="text-[#262F3F] font-medium">Quality Guarantee</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs">
+                        <span className="inline-block w-4 h-4 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0">✓</span>
+                        <span className="text-[#262F3F] font-medium">Secure Cloud Backup</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1042,6 +1123,17 @@ export default function PricingPage() {
                 {/* Property Highlights Video Card */}
                 <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[360px] border border-gray-200 overflow-hidden">
                   <div>
+                    <video
+                      src="/horizontal.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      poster="/images/photobank/s_2.webp"
+                      className="w-full rounded-lg mb-4 object-cover max-h-56"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
                     <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center">Property Highlights Video</h3>
                     <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].propertyHighlightsVideo)}</div>
                     <div className="text-center text-[#6B7A86] mb-4">1–2 minute horizontal video</div>
@@ -1059,6 +1151,17 @@ export default function PricingPage() {
                 {/* Social Media Reel Card */}
                 <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[360px] border border-gray-200 overflow-hidden">
                   <div>
+                    <video
+                      src="/vertical.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      poster="/images/photobank/s_3-thumb.webp"
+                      className="w-full rounded-lg mb-4 object-cover max-h-56"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
                     <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center">Social Media Reel</h3>
                     <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].socialMediaReel)}</div>
                     <div className="text-center text-[#6B7A86] mb-4">30–60 second vertical video</div>
@@ -1076,6 +1179,17 @@ export default function PricingPage() {
                 {/* Drone Aerial Video Card */}
                 <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[360px] border border-gray-200 overflow-hidden">
                   <div>
+                    <video
+                      src="/aerial.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      poster="/images/services/videography/lot_lines.gif"
+                      className="w-full rounded-lg mb-4 object-cover max-h-56"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
                     <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center">Drone Aerial Video</h3>
                     <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].droneAerialVideo)}</div>
                     <div className="text-center text-[#6B7A86] mb-4">30–60 seconds of aerial footage</div>
@@ -1213,6 +1327,38 @@ export default function PricingPage() {
                 </div>
               </div>
 
+              {/* Virtual Twilight & Virtual Declutter Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch mb-10">
+                {/* Virtual Twilight Card */}
+                <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[360px] border border-gray-200 overflow-hidden">
+                  <div>
+                    <BeforeAfterSlider
+                      beforeSrc="/images/photobank/after-gallery.webp"
+                      afterSrc="/images/photobank/before-gallery.webp"
+                      alt="Virtual Twilight"
+                    />
+                    <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-4">Virtual Twilight</h3>
+                    <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].virtualTwilight)}</div>
+                    <p className="text-sm text-[#262F3F] font-mazzard text-center mb-6">Transform day to twilight</p>
+                  </div>
+                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
+                </div>
+                {/* Virtual Declutter Card */}
+                <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[360px] border border-gray-200 overflow-hidden">
+                  <div>
+                    <BeforeAfterSlider
+                      beforeSrc="/images/photobank/declutter-after-gallery.webp"
+                      afterSrc="/images/photobank/DSC_7594-gallery.webp"
+                      alt="Virtual Declutter"
+                    />
+                    <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-4">Virtual Declutter</h3>
+                    <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].virtualDeclutter)}</div>
+                    <p className="text-sm text-[#262F3F] font-mazzard text-center mb-6">Remove personal items</p>
+                  </div>
+                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
+                </div>
+              </div>
+
               {/* Property Websites */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 {/* Image and Get quote card: hidden on mobile, visible on desktop */}
@@ -1324,7 +1470,7 @@ export default function PricingPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {services.map((service) => {
                   const price = pricingData[selectedSize as SizeKey][service.id as keyof (typeof pricingData)["<1000"]]
-                  const isQty = service.id === "virtualStaging" || service.id === "virtualTwilight";
+                  const isQty = service.id === "virtualStaging" || service.id === "virtualTwilight" || service.id === "virtualDeclutter";
                   const qty = serviceQuantities[service.id] || 1;
                   return (
                     <div key={service.id} className="flex items-start space-x-3 p-3 sm:p-4 border rounded-lg">

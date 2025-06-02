@@ -32,7 +32,7 @@ export function QuoteModuleSection() {
             <div className="md:w-1/2 relative bg-[#262F3F] flex items-center justify-center hidden md:block">
               <div className="h-full w-full flex items-center justify-center p-10 group">
                 <Image
-                  src="/images/photobank/s_3-thumb.webp"
+                  src="/images/photobank/dj-gallery.webp"
                   alt="Quote process screenshot"
                   width={600}
                   height={500}

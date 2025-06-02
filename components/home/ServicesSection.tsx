@@ -86,13 +86,13 @@ export function ServicesSection() {
               {/* Content */}
               <div className="absolute bottom-0 left-0 p-6 w-full z-20">
                 <h3
-                  className="text-white text-xl sm:text-2xl font-mazzard mb-1 truncate text-center md:text-left break-words max-w-full"
+                  className="text-white text-xl sm:text-2xl font-mazzard mb-1 text-center md:text-left break-words max-w-full"
                   style={{ wordBreak: 'break-word' }}
                 >
                   {service.title}
                 </h3>
                 <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2 text-center md:text-left">
-                  <p className="text-white text-base font-semibold mb-0 truncate max-w-full">{service.price}</p>
+                  <p className="text-white text-base font-semibold mb-0 max-w-full">{service.price}</p>
                   <span className="text-xs uppercase text-white/80 tracking-wider md:ml-2 mt-1 md:mt-0">Starting</span>
                 </div>
               </div>

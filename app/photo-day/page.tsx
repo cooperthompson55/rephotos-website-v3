@@ -15,14 +15,28 @@ export default function PhotoDayPage() {
   return (
     <main className="flex min-h-screen flex-col">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary to-primary/80 py-20 md:py-28">
-        <div className="absolute inset-0 bg-black/50 z-0"></div>
-        <div className="container relative z-10 mx-auto px-4 text-center text-white">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Preparing Your Home for Photo Day</h1>
-          <p className="text-lg md:text-xl max-w-3xl mx-auto mb-8">
+      <section className="relative min-h-[420px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/header-texture.svg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/70" />
+        </div>
+        <div className="container relative z-10 pt-36 pb-16 md:pt-44 md:pb-24 flex flex-col items-center justify-center h-full">
+          <div className="mb-4">
+            <span className="inline-block bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-full px-5 py-2 tracking-wide">PHOTO DAY PREP</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-4 text-white text-center max-w-4xl leading-tight">
+            Preparing Your Home for Photo Day
+          </h1>
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-4 text-center">
             A comprehensive guide to help you get your property ready for professional real estate photography
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
             <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
               <Printer className="mr-2 h-5 w-5" />
               Print Checklist

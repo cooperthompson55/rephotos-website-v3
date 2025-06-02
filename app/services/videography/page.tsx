@@ -269,17 +269,6 @@ export default function VideographyServicePage() {
               <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="text-secondary mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-medium mb-3">{feature.title}</h3>
-                {index === 0 && (
-                  <video
-                    src="/cg-824-gazley-circle.mp4"
-                    controls
-                    className="w-full rounded mb-4"
-                    poster="/images/photobank/s_2.webp"
-                    style={{ maxHeight: 240 }}
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                )}
                 <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}
@@ -302,6 +291,33 @@ export default function VideographyServicePage() {
             {pricingTiers.map((tier, index) => (
               <Card key={index} className="relative">
                 <CardHeader className="text-center">
+                  {/* All videos use the same aspect ratio and max height for consistency */}
+                  {(index === 0 || index === 1 || index === 2) && (
+                    <video
+                      src={
+                        index === 0
+                          ? "/horizontal.mp4"
+                          : index === 1
+                          ? "/vertical.mp4"
+                          : "/aerial.mp4"
+                      }
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      poster={
+                        index === 0
+                          ? "/images/photobank/s_2.webp"
+                          : index === 1
+                          ? "/images/photobank/s_3-thumb.webp"
+                          : "/images/services/videography/lot_lines.gif"
+                      }
+                      className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
+                      style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
                   <CardTitle className="text-lg">{tier.size}</CardTitle>
                   <div className="text-3xl font-light">{tier.price}</div>
                   <CardDescription>{tier.duration}</CardDescription>

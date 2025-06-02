@@ -5,6 +5,52 @@ import { CaseStudySection } from "@/components/home/CaseStudySection"
 import { CTASection } from "@/components/home/CTASection"
 import { GalleryDisplay } from "@/components/home/GalleryDisplay"
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { CheckCircle } from "lucide-react"
+import Link from "next/link"
+
+const pricingTiers = [
+  {
+    size: "Property Highlights Video",
+    price: "$319.99",
+    duration: "1–2 minute horizontal video",
+    features: [
+      "Shot in 4K on iPhone",
+      "Interior walk-through",
+      "Professional editing",
+      "Royalty-free background music",
+      "Delivered MLS-ready",
+      "48-72 hour turnaround",
+    ],
+  },
+  {
+    size: "Social Media Reel",
+    price: "$229.99",
+    duration: "30–60 second vertical video",
+    features: [
+      "Optimized for Instagram, TikTok, and Reels",
+      "Fast-paced and engagement-driven",
+      "Interior footage formatted for mobile",
+      "Royalty-free trending music",
+      "Social-ready delivery",
+      "48-72 hour turnaround",
+    ],
+  },
+  {
+    size: "Drone Aerial Video",
+    price: "$159.99",
+    duration: "30–60 seconds of aerial footage",
+    features: [
+      "High-resolution exterior shots",
+      "Captures the property and surroundings",
+      "Smooth motion edits",
+      "Royalty-free music included",
+      "Delivered in multiple formats",
+      "Next day turnaround",
+    ],
+  },
+]
 
 export default function Home() {
   return (
@@ -84,6 +130,81 @@ export default function Home() {
 
       <ServicesSection />
       <CaseStudySection />
+      
+      {/* Video Pricing Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-16">
+            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Video Pricing</h6>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Video Pricing</h2>
+            <p className="text-gray-600 max-w-3xl mx-auto">
+              Choose the perfect video service to showcase your listing. All packages include professional editing, royalty-free music, and quick delivery.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {pricingTiers.map((tier, index) => (
+              <Card key={index} className="relative">
+                <CardHeader className="text-center">
+                  {/* All videos use the same aspect ratio and max height for consistency */}
+                  {(index === 0 || index === 1 || index === 2) && (
+                    <video
+                      src={
+                        index === 0
+                          ? "/horizontal.mp4"
+                          : index === 1
+                          ? "/vertical.mp4"
+                          : "/aerial.mp4"
+                      }
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      poster={
+                        index === 0
+                          ? "/images/photobank/s_2.webp"
+                          : index === 1
+                          ? "/images/photobank/s_3-thumb.webp"
+                          : "/images/services/videography/lot_lines.gif"
+                      }
+                      className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
+                      style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                  <CardTitle className="text-lg">{tier.size}</CardTitle>
+                  <div className="text-3xl font-light">{tier.price}</div>
+                  <CardDescription>{tier.duration}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {tier.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center text-sm">
+                        <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6">
+                    <Button asChild className="w-full">
+                      <Link href="/book-now">Book Now</Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-4">Need a custom video package or have special requirements?</p>
+            <Button asChild variant="outline">
+              <Link href="/contact-us">Contact Us for Custom Pricing</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       <TestimonialsSection />
       <ServiceAreasSection />
       <CTASection />
