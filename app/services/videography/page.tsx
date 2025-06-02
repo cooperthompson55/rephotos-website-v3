@@ -269,6 +269,17 @@ export default function VideographyServicePage() {
               <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="text-secondary mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-medium mb-3">{feature.title}</h3>
+                {index === 0 && (
+                  <video
+                    src="/cg-824-gazley-circle.mp4"
+                    controls
+                    className="w-full rounded mb-4"
+                    poster="/images/photobank/s_2.webp"
+                    style={{ maxHeight: 240 }}
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                )}
                 <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}

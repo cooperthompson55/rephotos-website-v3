@@ -81,12 +81,18 @@ export function ServicesSection() {
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
-
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 z-10 pointer-events-none" style={{background: 'linear-gradient(to top, rgba(38,47,63,0.85) 60%, rgba(38,47,63,0.25) 100%, rgba(38,47,63,0) 100%)'}}></div>
               {/* Content */}
-              <div className="absolute bottom-0 left-0 p-6 w-full">
-                <h3 className="text-white text-2xl font-mazzard mb-1">{service.title}</h3>
-                <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2">
-                  <p className="text-white text-base font-semibold mb-0">{service.price}</p>
+              <div className="absolute bottom-0 left-0 p-6 w-full z-20">
+                <h3
+                  className="text-white text-xl sm:text-2xl font-mazzard mb-1 truncate text-center md:text-left break-words max-w-full"
+                  style={{ wordBreak: 'break-word' }}
+                >
+                  {service.title}
+                </h3>
+                <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2 text-center md:text-left">
+                  <p className="text-white text-base font-semibold mb-0 truncate max-w-full">{service.price}</p>
                   <span className="text-xs uppercase text-white/80 tracking-wider md:ml-2 mt-1 md:mt-0">Starting</span>
                 </div>
               </div>

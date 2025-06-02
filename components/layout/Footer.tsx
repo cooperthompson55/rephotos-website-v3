@@ -85,7 +85,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
-          &copy; {new Date().getFullYear()} Re. All rights reserved.
+          &copy; 2025 RePhotos. All rights reserved.
         </div>
       </div>
     </footer>

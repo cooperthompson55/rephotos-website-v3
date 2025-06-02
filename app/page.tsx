@@ -14,11 +14,11 @@ export default function Home() {
         <div
           className="absolute inset-0 w-full h-full z-0"
           style={{
-            backgroundImage:
-              'url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-nJB5dJPAniGmTcGVusia1P783cIiZM.svg")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundColor: "#F8F5F0",
+            backgroundImage: 'url(/images/waves-pattern.svg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: '#F8F5F0', // fallback offwhite
           }}
         ></div>
         <div className="container mx-auto px-4 md:px-6">
