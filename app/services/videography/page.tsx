@@ -115,21 +115,23 @@ const videographyProcess = [
 
 const pricingTiers = [
   {
-    size: "Property Showcase Video",
-    price: "$319.99",
+    size: "Property Highlights Video",
+    price: "$289.99",
+    starting: true,
     duration: "1–2 minute horizontal video",
     features: [
       "Shot in 4K on iPhone",
       "Complete interior walk-through",
+      "Delivered MLS-ready",
       "Professional editing and color correction",
       "Royalty-free background music",
-      "Delivered MLS-ready",
       "48-72 hour turnaround",
     ],
   },
   {
-    size: "Social Media Content",
+    size: "Social Media Reel",
     price: "$229.99",
+    starting: true,
     duration: "30–60 second vertical video",
     features: [
       "Optimized for Instagram, TikTok, and Reels",
@@ -142,7 +144,8 @@ const pricingTiers = [
   },
   {
     size: "Slideshow Video Tour",
-    price: "$229.99",
+    price: "$99.99",
+    starting: false,
     duration: "1–2 minute slideshow video",
     features: [
       "Professional photo selection",
@@ -154,8 +157,9 @@ const pricingTiers = [
     ],
   },
   {
-    size: "Aerial Cinematography",
+    size: "Drone Aerial Video",
     price: "$159.99",
+    starting: false,
     duration: "30–60 seconds of aerial footage",
     features: [
       "High-resolution exterior shots",
@@ -406,7 +410,12 @@ export default function VideographyServicePage() {
                     </video>
                   )}
                   <CardTitle className="text-lg">{tier.size}</CardTitle>
-                  <div className="text-3xl font-light">{tier.price}</div>
+                  <div className="text-3xl font-light flex items-center justify-center gap-2">
+                    {tier.price}
+                    {tier.starting && (
+                      <span className="text-xs bg-secondary/10 text-secondary px-2 py-1 rounded-full ml-2">Starting</span>
+                    )}
+                  </div>
                   <CardDescription>{tier.duration}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col justify-between">

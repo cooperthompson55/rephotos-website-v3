@@ -199,7 +199,7 @@ export default function Home() {
                   <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Next-day delivery</li>
                   <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />MLS + Web versions</li>
                 </ul>
-                <Button asChild className="w-full"><Link href="/book-now">Book Now</Link></Button>
+                <Button asChild className="w-full"><Link href="/portfolio">View Gallery</Link></Button>
               </CardContent>
             </Card>
             {/* Medium Homes (Most Popular) */}
@@ -219,7 +219,7 @@ export default function Home() {
                   <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />High-res and web-optimized</li>
                   <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />MLS ready images</li>
                 </ul>
-                <Button asChild className="w-full"><Link href="/book-now">Book Now</Link></Button>
+                <Button asChild className="w-full"><Link href="/portfolio">View Gallery</Link></Button>
               </CardContent>
             </Card>
             {/* Large Homes */}
@@ -236,7 +236,7 @@ export default function Home() {
                   <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Fast turnaround</li>
                   <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />All file formats included</li>
                 </ul>
-                <Button asChild className="w-full"><Link href="/book-now">Book Now</Link></Button>
+                <Button asChild className="w-full"><Link href="/portfolio">View Gallery</Link></Button>
               </CardContent>
             </Card>
           </div>

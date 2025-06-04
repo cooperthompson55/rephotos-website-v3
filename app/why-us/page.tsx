@@ -182,7 +182,7 @@ export default function WhyUsPage() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link href="/book-now">Get Started Today</Link>
+                <Link href="/portfolio">See Our Work</Link>
               </Button>
               <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
                 <Link href="/pricing">View Pricing</Link>

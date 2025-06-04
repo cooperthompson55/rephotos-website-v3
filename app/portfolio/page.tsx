@@ -14,18 +14,34 @@ const portfolioProperties = [
     address: "2272 Mowat Avenue",
     town: "Oakville",
     coverImage: "/images/portfolio/2272 Mowat Avenue, Oakville/1-gallery.webp",
-    totalImages: 41,
-    images: Array.from({ length: 41 }, (_, i) => 
+    totalImages: 42,
+    images: Array.from({ length: 42 }, (_, i) => 
       `/images/portfolio/2272 Mowat Avenue, Oakville/${i + 1}-gallery.webp`
-    )
+    ),
+    slideshowVideo: "/images/portfolio/2272 Mowat Avenue, Oakville/2272-mowat-1080p.mp4"
+  },
+  {
+    id: "824-gazley-milton",
+    address: "824 Gazley Circle",
+    town: "Milton",
+    coverImage: "/images/portfolio/824 Gazley Circle, Milton/1-exterior-gallery.webp",
+    totalImages: 45,
+    images: [
+      "/images/portfolio/824 Gazley Circle, Milton/1-exterior-gallery.webp",
+      "/images/portfolio/824 Gazley Circle, Milton/2-exterior-gallery.webp",
+      ...Array.from({ length: 43 }, (_, i) =>
+        `/images/portfolio/824 Gazley Circle, Milton/${i + 3}-gallery.webp`
+      )
+    ],
+    slideshowVideo: "/images/portfolio/824 Gazley Circle, Milton/1080p-824-gazley-circle.mp4"
   }
-  // Add more properties here as they become available
 ]
 
 export default function PortfolioPage() {
   const [selectedProperty, setSelectedProperty] = useState<typeof portfolioProperties[0] | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [showSlideshow, setShowSlideshow] = useState(false);
   const mainImageRef = useRef<HTMLDivElement>(null);
 
   // Prevent background scroll when modal is open
@@ -59,8 +75,10 @@ export default function PortfolioPage() {
     };
   }, []);
 
-  const openGallery = (property: typeof portfolioProperties[0]) => {
+  // Open gallery with optional slideshow video as first media
+  const openGallery = (property: typeof portfolioProperties[0], slideshow = false) => {
     setSelectedProperty(property)
+    setShowSlideshow(slideshow)
     setCurrentImageIndex(0)
   }
 
@@ -117,6 +135,17 @@ export default function PortfolioPage() {
     }
   };
 
+  // Handler for fullscreen button click with event propagation prevention
+  const handleFullscreenClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (isFullscreen) {
+      exitFullscreen();
+    } else {
+      handleFullscreen();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Hero Section */}
@@ -145,9 +174,9 @@ export default function PortfolioPage() {
       <section className="py-16 md:py-24 bg-[#F8F5F0]">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-light mb-6 text-primary">Featured Properties</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-light mb-6 text-primary">Recent Projects</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Explore complete property galleries showcasing our photography and marketing work
+              View our latest work and explore complete galleries from recent real estate projects.
             </p>
           </div>
 
@@ -156,9 +185,8 @@ export default function PortfolioPage() {
               <div
                 key={property.id}
                 className="group cursor-pointer"
-                onClick={() => openGallery(property)}
               >
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2">
+                <div onClick={() => openGallery(property)} className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2">
                   <div className="relative aspect-[3/2] overflow-hidden">
                     <Image
                       src={property.coverImage}
@@ -171,11 +199,19 @@ export default function PortfolioPage() {
                       <p className="text-sm font-medium">View Gallery ({property.totalImages} photos)</p>
                     </div>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col gap-2">
                     <h3 className="text-xl font-semibold text-primary mb-2 group-hover:text-secondary transition-colors duration-300">
                       {property.address}
                     </h3>
                     <p className="text-gray-600 text-lg">{property.town}</p>
+                    {/* Slideshow video button */}
+                    <button
+                      className="text-primary underline text-sm w-fit hover:text-secondary focus:outline-none"
+                      onClick={e => { e.stopPropagation(); openGallery(property, true); }}
+                      type="button"
+                    >
+                      View Slideshow Video
+                    </button>
                   </div>
                 </div>
               </div>
@@ -195,67 +231,86 @@ export default function PortfolioPage() {
 
       {/* Image Gallery Modal */}
       {selectedProperty && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="w-full max-w-6xl mx-auto flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+          <div className="w-full max-w-6xl mx-auto flex flex-col max-h-[95vh] sm:max-h-[90vh]">
             {/* Header */}
-            <div className="flex justify-between items-center mb-6 shrink-0">
+            <div className="flex justify-between items-center mb-4 sm:mb-6 shrink-0 px-2 sm:px-0">
               <div className="text-white">
-                <h3 className="text-2xl font-semibold">{selectedProperty.address}</h3>
-                <p className="text-gray-300">{selectedProperty.town}</p>
+                <h3 className="text-lg sm:text-2xl font-semibold">{selectedProperty.address}</h3>
+                <p className="text-gray-300 text-sm sm:text-base">{selectedProperty.town}</p>
               </div>
               <button
                 onClick={closeGallery}
                 className="text-white hover:text-gray-300 transition-colors"
               >
-                <X className="h-8 w-8" />
+                <X className="h-6 w-6 sm:h-8 sm:w-8" />
               </button>
             </div>
 
-            {/* Main Image */}
-            <div ref={mainImageRef} className="relative aspect-[4/3] mb-6 bg-black rounded-lg overflow-hidden grow flex items-center justify-center">
-              <Image
-                src={selectedProperty.images[currentImageIndex]}
-                alt={`${selectedProperty.address} - Image ${currentImageIndex + 1}`}
-                fill
-                className="object-contain"
-              />
-              
+            {/* Main Media (Video or Image) */}
+            <div ref={mainImageRef} className="relative aspect-[4/3] mb-4 sm:mb-6 bg-black rounded-lg overflow-hidden grow flex items-center justify-center">
+              {/* If slideshow, first media is video */}
+              {showSlideshow && currentImageIndex === 0 ? (
+                <video
+                  src={selectedProperty.slideshowVideo}
+                  controls
+                  autoPlay
+                  className="object-contain w-full h-full"
+                  poster={selectedProperty.coverImage}
+                />
+              ) : (
+                <Image
+                  src={showSlideshow ? selectedProperty.images[currentImageIndex - (showSlideshow ? 1 : 0)] : selectedProperty.images[currentImageIndex]}
+                  alt={`${selectedProperty.address} - Image ${showSlideshow ? currentImageIndex : currentImageIndex + 1}`}
+                  fill
+                  className="object-contain"
+                />
+              )}
               {/* Fullscreen/Exit Fullscreen Icon */}
               <button
-                onClick={isFullscreen ? exitFullscreen : handleFullscreen}
-                className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/75 rounded-full p-2 z-10"
+                onClick={handleFullscreenClick}
+                className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white bg-black/50 hover:bg-black/75 rounded-full p-1.5 sm:p-2 z-50 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
                 title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
               >
-                {isFullscreen ? <Minimize className="h-6 w-6" /> : <Fullscreen className="h-6 w-6" />}
+                {isFullscreen ? <Minimize className="h-4 w-4 sm:h-6 sm:w-6" /> : <Fullscreen className="h-4 w-4 sm:h-6 sm:w-6" />}
               </button>
-
               {/* Navigation Arrows */}
               <button
                 onClick={prevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 hover:bg-black/75 rounded-full p-2"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 hover:bg-black/75 rounded-full p-1.5 sm:p-2"
               >
-                <ChevronLeft className="h-6 w-6" />
+                <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
               </button>
               <button
                 onClick={nextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 hover:bg-black/75 rounded-full p-2"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 hover:bg-black/75 rounded-full p-1.5 sm:p-2"
               >
-                <ChevronRight className="h-6 w-6" />
+                <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
               </button>
-              {/* Image Counter */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-3 py-1 rounded-full text-sm">
-                {currentImageIndex + 1} / {selectedProperty.images.length}
+              {/* Image/Video Counter */}
+              <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
+                {showSlideshow ? currentImageIndex + 1 : currentImageIndex + 1} / {showSlideshow ? selectedProperty.images.length + 1 : selectedProperty.images.length}
               </div>
             </div>
-
             {/* Thumbnail Grid */}
-            <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2 max-h-32 overflow-y-auto shrink-0">
+            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 sm:gap-3 max-h-24 sm:max-h-32 overflow-y-auto shrink-0 px-1">
+              {showSlideshow && (
+                <button
+                  key="video-thumb"
+                  onClick={() => setCurrentImageIndex(0)}
+                  className={`relative aspect-square overflow-hidden rounded transition-all duration-200 ${currentImageIndex === 0 ? 'ring-2 ring-white' : 'hover:ring-1 hover:ring-gray-400'}`}
+                >
+                  <div className="w-full h-full flex items-center justify-center bg-black">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="32" height="32"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </button>
+              )}
               {selectedProperty.images.map((image, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentImageIndex(index)}
+                  onClick={() => setCurrentImageIndex(showSlideshow ? index + 1 : index)}
                   className={`relative aspect-square overflow-hidden rounded transition-all duration-200 ${
-                    index === currentImageIndex
+                    currentImageIndex === (showSlideshow ? index + 1 : index)
                       ? 'ring-2 ring-white'
                       : 'hover:ring-1 hover:ring-gray-400'
                   }`}
