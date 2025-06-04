@@ -9,7 +9,6 @@ import { GalleryDisplay } from "@/components/home/GalleryDisplay"
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { OptimizedVideo } from "@/components/ui/optimized-video"
 import { CheckCircle, Video, Instagram, Plane, Images, Volume2, VolumeX } from "lucide-react"
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
@@ -276,7 +275,7 @@ export default function Home() {
                 <CardHeader className="text-center">
                   {/* All videos use the same aspect ratio and max height for consistency */}
                   {(index === 0 || index === 1 || index === 2) && (
-                    <OptimizedVideo
+                    <video
                       src={
                         index === 0
                           ? "/horizontal.mp4"
@@ -284,6 +283,13 @@ export default function Home() {
                           ? "/vertical.mp4"
                           : "/aerial.mp4"
                       }
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                      disableRemotePlayback
+                      controlsList="nodownload noremoteplayback"
                       poster={
                         index === 0
                           ? "/images/photobank/s_2.webp"
@@ -293,26 +299,37 @@ export default function Home() {
                       }
                       className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
                       style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
-                    />
+                    >
+                      Your browser does not support the video tag.
+                    </video>
                   )}
                   {index === 3 && (
                     <div className="relative">
-                      <OptimizedVideo
+                      <video
+                        ref={slideshowVideoRef}
                         src="/images/services/videography/824-gazley-slideshow.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        disableRemotePlayback
+                        controlsList="nodownload noremoteplayback"
                         className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
                         style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
                       >
-                        <button
-                          onClick={toggleMute}
-                          className="absolute bottom-2 right-2 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
-                        >
-                          {isMuted ? (
-                            <VolumeX className="w-4 h-4 text-white" />
-                          ) : (
-                            <Volume2 className="w-4 h-4 text-white" />
-                          )}
-                        </button>
-                      </OptimizedVideo>
+                        Your browser does not support the video tag.
+                      </video>
+                      <button
+                        onClick={toggleMute}
+                        className="absolute bottom-2 right-2 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+                      >
+                        {isMuted ? (
+                          <VolumeX className="w-4 h-4 text-white" />
+                        ) : (
+                          <Volume2 className="w-4 h-4 text-white" />
+                        )}
+                      </button>
                     </div>
                   )}
                   <div className="flex items-center justify-center mb-4">
