@@ -293,7 +293,7 @@ export default function PortfolioPage() {
               </div>
             </div>
             {/* Thumbnail Grid */}
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 sm:gap-3 max-h-24 sm:max-h-32 overflow-y-auto shrink-0 px-1">
+            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 sm:gap-3 overflow-y-auto p-1 pb-4">
               {showSlideshow && (
                 <button
                   key="video-thumb"
