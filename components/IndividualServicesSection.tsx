@@ -101,7 +101,7 @@ export function IndividualServicesSection() {
   }
 
   return (
-    <div className="mb-24" id="individual-services">
+    <div className="" id="individual-services">
       <h2 className="text-3xl font-serif font-bold mb-2 text-[#262F3F]">What we Offer</h2>
       <p className="text-lg text-[#262F3F] mb-8">Professional real estate marketing services designed to showcase your property at its best. From stunning photography to cutting-edge virtual tours, we have everything you need to make your listing stand out.</p>
       
@@ -112,9 +112,8 @@ export function IndividualServicesSection() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
           <div className="relative z-20 p-8 flex flex-col justify-end h-full">
             <div className="mt-auto">
-              <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Premium Photography</h3>
-              <p className="text-white text-base font-normal mb-4">Help any property stand out on the MLS, social media, and more with stunning photography by our award-winning Visual Artists</p>
-              <BookButton href="/services/photography" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-mazzard font-semibold text-white mb-4">Premium Photography</h3>
+              <BookButton href="/services/photography" size="lg" className="bg-white text-[#262F3F] font-mazzard font-semibold hover:bg-gray-100">Learn more</BookButton>
             </div>
           </div>
         </div>
@@ -125,9 +124,8 @@ export function IndividualServicesSection() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
           <div className="relative z-20 p-8 flex flex-col justify-end h-full">
             <div className="mt-auto">
-              <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Matterport 3D Virtual Tours</h3>
-              <p className="text-white text-base font-normal mb-4">Hand clients and buyers the keys from anywhere in the world with industry-leading Matterport 3D Virtual Tours</p>
-              <BookButton href="/services/virtual-tours" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-mazzard font-semibold text-white mb-4">Matterport 3D Virtual Tours</h3>
+              <BookButton href="/services/virtual-tours" size="lg" className="bg-white text-[#262F3F] font-mazzard font-semibold hover:bg-gray-100">Learn more</BookButton>
             </div>
           </div>
         </div>
@@ -145,9 +143,8 @@ export function IndividualServicesSection() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
           <div className="relative z-20 p-8 flex flex-col justify-end h-full">
             <div className="mt-auto">
-              <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Slideshow Video Tour</h3>
-              <p className="text-white text-base font-normal mb-4">Create engaging visual flow with professionally edited slideshow videos set to music that showcase your property's best features</p>
-              <BookButton href="/services/videography" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-mazzard font-semibold text-white mb-4">Slideshow Video Tour</h3>
+              <BookButton href="/services/videography" size="lg" className="bg-white text-[#262F3F] font-mazzard font-semibold hover:bg-gray-100">Learn more</BookButton>
             </div>
           </div>
         </div>
@@ -158,9 +155,8 @@ export function IndividualServicesSection() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
           <div className="relative z-20 p-8 flex flex-col justify-end h-full">
             <div className="mt-auto">
-              <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Aerial Photos & Video</h3>
-              <p className="text-white text-base font-normal mb-4">Elevate any home or property above the rest with incredible drone footage captured by our FAA-certified Visual Artists</p>
-              <BookButton href="/services/aerial" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-mazzard font-semibold text-white mb-4">Aerial Photos & Video</h3>
+              <BookButton href="/services/aerial" size="lg" className="bg-white text-[#262F3F] font-mazzard font-semibold hover:bg-gray-100">Learn more</BookButton>
             </div>
           </div>
         </div>
@@ -171,9 +167,8 @@ export function IndividualServicesSection() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
           <div className="relative z-20 p-8 flex flex-col justify-end h-full">
             <div className="mt-auto">
-              <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Premium Property Websites</h3>
-              <p className="text-white text-base font-normal mb-4">Control the narrative of your listing or project and showcase all of your beautiful content in one place</p>
-              <BookButton href="/services/websites" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-mazzard font-semibold text-white mb-4">Premium Property Websites</h3>
+              <BookButton href="/services/websites" size="lg" className="bg-white text-[#262F3F] font-mazzard font-semibold hover:bg-gray-100">Learn more</BookButton>
             </div>
           </div>
         </div>
@@ -184,9 +179,8 @@ export function IndividualServicesSection() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
           <div className="relative z-20 p-8 flex flex-col justify-end h-full">
             <div className="mt-auto">
-              <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Professional Floor Plans & Model</h3>
-              <p className="text-white text-base font-normal mb-4">Land more qualified buyers and clients by showing them the layout of the property before they show up</p>
-              <BookButton href="/services/floor-plans" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-mazzard font-semibold text-white mb-4">Professional Floor Plans & Model</h3>
+              <BookButton href="/services/floor-plans" size="lg" className="bg-white text-[#262F3F] font-mazzard font-semibold hover:bg-gray-100">Learn more</BookButton>
             </div>
           </div>
         </div>
@@ -199,11 +193,10 @@ export function IndividualServicesSection() {
               afterSrc="/images/photobank/before-gallery.webp"
               alt="Virtual Twilight"
             />
-            <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-4">Virtual Twilight</h3>
-            <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].virtualTwilight)}</div>
-            <p className="text-sm text-[#262F3F] font-mazzard text-center mb-6">Transform day to twilight</p>
+            <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-2">Virtual Twilight</h3>
+            <p className="text-sm text-[#262F3F] font-mazzard text-center mb-4">Transform day to twilight</p>
           </div>
-          <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
+          <BookButton href="/services/virtual-services" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Learn more</BookButton>
         </div>
 
         {/* Virtual Staging Card */}
@@ -216,11 +209,10 @@ export function IndividualServicesSection() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
-            <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-4">Virtual Staging</h3>
-            <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">$39.99/image</div>
-            <p className="text-sm text-[#262F3F] font-mazzard text-center mb-6">Furnish empty spaces digitally</p>
+            <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-2">Virtual Staging</h3>
+            <p className="text-sm text-[#262F3F] font-mazzard text-center mb-4">Furnish empty spaces digitally</p>
           </div>
-          <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
+          <BookButton href="/services/virtual-services" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Learn more</BookButton>
         </div>
 
         {/* Virtual Declutter Card */}
@@ -231,11 +223,10 @@ export function IndividualServicesSection() {
               afterSrc="/images/photobank/DSC_7594-gallery.webp"
               alt="Virtual Declutter"
             />
-            <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-4">Virtual Declutter</h3>
-            <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].virtualDeclutter)}</div>
-            <p className="text-sm text-[#262F3F] font-mazzard text-center mb-6">Remove personal items</p>
+            <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-2">Virtual Declutter</h3>
+            <p className="text-sm text-[#262F3F] font-mazzard text-center mb-4">Remove personal items</p>
           </div>
-          <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
+          <BookButton href="/services/virtual-services" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Learn more</BookButton>
         </div>
       </div>
     </div>

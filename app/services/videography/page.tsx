@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
 import Link from "next/link"
-import { Video, CheckCircle, Smartphone, Plane, Music, Zap, Edit, VolumeX, Volume2 } from "lucide-react"
+import { Video, CheckCircle, Smartphone, Plane, Music, Zap, Edit, VolumeX, Volume2, PlaySquare } from "lucide-react"
 import { CTASection } from "@/components/home/CTASection"
-import CustomVideoBuilder from "@/components/services/videography/CustomVideoBuilder";
+import CustomizeVideoForm from "@/components/services/videography/CustomizeVideoForm";
 import { useState } from "react"
 
 const videographyFeatures = [
@@ -14,150 +14,155 @@ const videographyFeatures = [
     icon: <Video className="h-6 w-6" />,
     title: "Property Highlights Video",
     description:
-      "A horizontal video walkthrough shot on iPhone that showcases the key selling points of the home. Delivered in 4K and MLS-ready.",
+      "A 4K horizontal walkthrough showcasing key rooms and features. Professionally shot and ideal for your MLS listing.",
   },
   {
     icon: <Smartphone className="h-6 w-6" />,
-    title: "Social Media Video Tours",
+    title: "Social Media Reel",
     description:
-      "Vertical walk-throughs filmed in 9:16 format, optimized for Instagram, TikTok, and Facebook Reels. Fast-paced and built for social engagement.",
+      "Vertical 9:16 format built for TikTok, Instagram, and Facebook. Quick cuts, trending style, and attention-grabbing edits.",
+  },
+  {
+    icon: <PlaySquare className="h-6 w-6" />,
+    title: "Slideshow Video Tour",
+    description:
+      "Smooth, cinematic slideshow set to music. A simple way to showcase photos with motion and energy.",
   },
   {
     icon: <Plane className="h-6 w-6" />,
-    title: "Drone Video",
+    title: "Drone Aerial Video",
     description:
-      "Smooth, high-res aerial footage showcasing the home, property lines, and surrounding neighborhood. Captured with precision to elevate listing appeal.",
-  },
-  {
-    icon: <Music className="h-6 w-6" />,
-    title: "Royalty-Free Music",
-    description:
-      "All videos include background music selected to match the property vibe, fully licensed for online use.",
+      "High-resolution drone footage showing the home's exterior, property lines, and neighborhood. Clean and stable clips.",
   },
   {
     icon: <Edit className="h-6 w-6" />,
-    title: "Professional Editing",
+    title: "Clean, Professional Editing",
     description:
-      "Clean transitions, natural color grading, and fast turnaround. Delivered polished and ready to post.",
+      "Every video includes color correction, seamless transitions, and royalty-free music selected to match the vibe of the home.",
   },
   {
     icon: <Zap className="h-6 w-6" />,
-    title: "48–72 Hour Delivery",
+    title: "Delivered in 48–72 Hours",
     description:
-      "Most videos are delivered within 2–3 business days, so you can start marketing the listing fast.",
+      "Fast turnaround—your video is delivered in 2–3 business days, ready for MLS or social media.",
   },
 ]
 
 const videographyBenefits = [
   {
-    stat: "4x",
+    stat: "12x",
     label: "More Shares",
-    description: "Video listings get shared 4x more often than photo-only listings",
+    description: "Video content generates 1200% more shares than text and images combined across social media platforms",
   },
   {
-    stat: "87%",
-    label: "Higher Engagement",
-    description: "Video content leads to significantly more interaction on social media",
+    stat: "403%",
+    label: "More Inquiries",
+    description: "Listings with video get 403% more inquiries compared to photo-only listings",
   },
   {
-    stat: "73%",
-    label: "Faster Sales",
-    description: "Listings with video often move faster than those without",
+    stat: "49%",
+    label: "More Qualified Leads",
+    description: "Listings with video get 49% more qualified leads than traditional marketing approaches",
   },
 ]
 
 const videographyProcess = [
   {
     step: "01",
-    title: "Pre-Production Planning",
+    title: "Shoot Day Setup",
     description:
-      "We collaborate with you to understand the property's unique selling points and plan the perfect video strategy.",
+      "We plan the flow of each shoot to make sure we capture the home properly.",
     details: [
-      "Property walkthrough and shot planning",
-      "Storyboard creation for optimal flow",
-      "Drone flight path planning",
-      "Social media format optimization",
+      "We walk through the space and decide on key angles",
+      "Plan drone paths and interior video flow",
+      "Match shots to the type of video ordered (MLS, Reels, etc)",
     ],
   },
   {
     step: "02",
-    title: "Professional Filming",
+    title: "On-Site Filming",
     description:
-      "Our certified videographers capture stunning footage using professional equipment and drone technology.",
+      "We film quickly and professionally using stabilized 4K gear and licensed drones.",
     details: [
-      "4K video recording",
-      "Stabilized camera movements",
-      "Licensed drone operations",
-      "Multiple angle coverage",
+      "Smooth camera work with gimbal stabilization",
+      "Cinematic drone clips of the property and neighborhood",
+      "Footage captured in both vertical and horizontal formats as needed",
     ],
   },
   {
     step: "03",
-    title: "Expert Post-Production",
-    description: "Professional editing brings your property to life with cinematic quality and engaging storytelling.",
+    title: "Professional Editing",
+    description: 
+      "We handle all post-production in-house for consistent quality and fast turnaround.",
     details: [
-      "Color grading and correction",
-      "Smooth transitions and pacing",
-      "Royalty-free music integration",
-      "Multiple format delivery",
+      "Clean cuts, natural color grading, and audio balancing",
+      "Licensed royalty-free music matched to the listing vibe",
+      "Final videos exported for MLS and social platforms",
     ],
   },
   {
     step: "04",
-    title: "Multi-Format Delivery",
-    description: "Receive your videos in multiple formats optimized for different platforms and marketing needs.",
+    title: "Fast Delivery",
+    description: 
+      "Videos are turned around quickly and sent in multiple formats, ready to use.",
     details: [
-      "Landscape format for websites",
-      "9:16 vertical for social media",
-      "Square format for Instagram",
-      "Raw footage available",
+      "Horizontal (16:9) for MLS and websites",
+      "Vertical (9:16) for Reels and TikTok",
+      "Delivery within 48–72 hours of the shoot",
     ],
   },
 ]
 
 const pricingTiers = [
   {
-    size: "Property Highlights Video",
+    size: "Property Showcase Video",
     price: "$319.99",
     duration: "1–2 minute horizontal video",
     features: [
       "Shot in 4K on iPhone",
-      "Interior walk-through",
-      "Professional editing",
+      "Complete interior walk-through",
+      "Professional editing and color correction",
+      "Royalty-free background music",
       "Delivered MLS-ready",
       "48-72 hour turnaround",
     ],
   },
   {
-    size: "Social Media Reel",
+    size: "Social Media Content",
     price: "$229.99",
     duration: "30–60 second vertical video",
     features: [
       "Optimized for Instagram, TikTok, and Reels",
-      "Interior footage formatted for mobile",
+      "Fast-paced and engagement-driven",
+      "Interior footage formatted for mobile viewing",
       "Royalty-free trending music",
+      "Social-ready delivery",
       "48-72 hour turnaround",
     ],
   },
   {
     size: "Slideshow Video Tour",
-    price: "$99.99", 
-    duration: "1–2 minute slideshow tour",
+    price: "$229.99",
+    duration: "1–2 minute slideshow video",
     features: [
-      "Dynamic photo transitions, movements, and edits",
-      "Delivered in MLS and marketing formats",
-      "Royalty-free trending music",
-      "Next day turnaround",
+      "Professional photo selection",
+      "Smooth transitions and effects",
+      "Royalty-free background music",
+      "Text overlays for key features",
+      "Multi-platform delivery",
+      "48-72 hour turnaround",
     ],
   },
   {
-    size: "Drone Aerial Video",
+    size: "Aerial Cinematography",
     price: "$159.99",
-    duration: "30–60 second aerial video",
+    duration: "30–60 seconds of aerial footage",
     features: [
       "High-resolution exterior shots",
-      "Captures the property and surroundings",
+      "Captures the property and surrounding area",
+      "Smooth motion edits and transitions",
       "Royalty-free music included",
+      "Delivered in multiple formats",
       "Next day turnaround",
     ],
   },
@@ -323,11 +328,11 @@ export default function VideographyServicePage() {
       {/* Pricing Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Video Pricing</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Video Pricing</h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Choose the perfect video service to showcase your listing. All packages include professional editing, royalty-free music, and quick delivery.
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Professional Video Services</h6>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Professional Video Services</h2>
+            <p className="text-lg text-muted-foreground">
+              Elevate your property marketing with our comprehensive video production services. All packages include professional editing, royalty-free music, and quick delivery.
             </p>
           </div>
 
@@ -368,7 +373,22 @@ export default function VideographyServicePage() {
                       Your browser does not support the video tag.
                     </video>
                   )}
-                  {index === 2 && <SlideshowVideoCard />}
+                  {index === 2 && (
+                    <video
+                      src="/images/services/videography/824-gazley-slideshow.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      poster="/images/photobank/s_2.webp"
+                      className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
+                      style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
+                      disableRemotePlayback
+                      controlsList="nodownload noremoteplayback"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
                   {index === 3 && (
                     <video
                       src="/aerial.mp4"
@@ -422,10 +442,9 @@ export default function VideographyServicePage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Our Process</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">From concept to compelling video</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Simple, fast, and built for real estate</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              Our proven video production process ensures every property is showcased with cinematic quality and
-              engaging storytelling that resonates with potential buyers.
+              We handle everything from filming to editing, so you get polished video content that's ready to post or list.
             </p>
           </div>
 
@@ -476,7 +495,7 @@ export default function VideographyServicePage() {
       {/* Custom Video Builder Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-            <CustomVideoBuilder />
+            <CustomizeVideoForm />
         </div>
       </section>
 

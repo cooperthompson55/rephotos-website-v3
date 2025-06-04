@@ -3,7 +3,7 @@ import Image from "next/image"
 
 export function CaseStudySection() {
   return (
-    <section className="py-16 md:py-24 bg-[#F8F5F0]">
+    <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="rounded-xl overflow-hidden shadow-xl flex flex-col md:flex-row">

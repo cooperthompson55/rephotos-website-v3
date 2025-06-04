@@ -493,7 +493,7 @@ export default function PricingPage() {
                       <p className="text-white text-base font-normal mb-4">Help any property stand out on the MLS, social media, and more with stunning photography by our award-winning Visual Artists</p>
                       <button
                         type="button"
-                        className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D] rounded-md transition-colors px-6 py-3 mt-4"
+                        className="bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE] rounded-md transition-colors px-6 py-3 mt-4"
                         onClick={() => {
                           window.location.href = '/book-now';
                         }}
@@ -531,7 +531,7 @@ export default function PricingPage() {
                       </div>
                       <button
                         type="button"
-                        className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D] rounded-md transition-colors px-6 py-3 mt-4"
+                        className="bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE] rounded-md transition-colors px-6 py-3 mt-4"
                         onClick={() => {
                           window.location.href = '/book-now';
                         }}
@@ -560,7 +560,10 @@ export default function PricingPage() {
                       Your browser does not support the video tag.
                     </video>
                     <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center">Property Highlights Video</h3>
-                    <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].propertyHighlightsVideo)}</div>
+                    <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">
+                      {formatPrice(pricingData["<1000"].propertyHighlightsVideo)}
+                      <span className="text-base text-[#6B7A86] font-mazzard font-normal ml-2 align-middle">starting</span>
+                    </div>
                     <div className="text-center text-[#6B7A86] mb-4">1–2 minute horizontal video</div>
                     <ul className="mb-6 text-sm text-[#262F3F] font-mazzard space-y-1 text-center">
                       <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>Smooth cinematic video</li>
@@ -571,7 +574,7 @@ export default function PricingPage() {
                       <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>48–72 hour turnaround</li>
                     </ul>
                   </div>
-                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
+                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
                 </div>
                 {/* Social Media Reel Card */}
                 <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[360px] border border-gray-200 overflow-hidden">
@@ -588,7 +591,10 @@ export default function PricingPage() {
                       Your browser does not support the video tag.
                     </video>
                     <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center">Social Media Reel</h3>
-                    <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].socialMediaReel)}</div>
+                    <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">
+                      {formatPrice(pricingData["<1000"].socialMediaReel)}
+                      <span className="text-base text-[#6B7A86] font-mazzard font-normal ml-2 align-middle">starting</span>
+                    </div>
                     <div className="text-center text-[#6B7A86] mb-4">30–60 second vertical video</div>
                     <ul className="mb-6 text-sm text-[#262F3F] font-mazzard space-y-1 text-center">
                       <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>Optimized for Instagram, TikTok, and Reels</li>
@@ -599,7 +605,7 @@ export default function PricingPage() {
                       <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>48–72 hour turnaround</li>
                     </ul>
                   </div>
-                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
+                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
                 </div>
                 {/* Drone Aerial Video Card */}
                 <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[360px] border border-gray-200 overflow-hidden">
@@ -627,7 +633,7 @@ export default function PricingPage() {
                       <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>Next day turnaround</li>
                     </ul>
                   </div>
-                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
+                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
                 </div>
               </div>
 
@@ -641,7 +647,7 @@ export default function PricingPage() {
                     <div className="mt-auto">
                       <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Matterport 3D Virtual Tours</h3>
                       <p className="text-white text-base font-normal mb-4">Hand clients and buyers the keys from anywhere in the world with industry-leading Matterport 3D Virtual Tours</p>
-                      <BookButton href="/services/virtual-tours" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+                      <BookButton href="/services/virtual-tours" size="lg" className="bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE]">Learn more</BookButton>
                     </div>
                   </div>
                 </div>
@@ -669,7 +675,7 @@ export default function PricingPage() {
                           <li className="flex justify-between"><span>5000+ sq ft</span><span className="font-semibold"><a href="/contact-us" className="text-primary underline hover:text-[#B42222]">Contact us</a></span></li>
                         </ul>
                       </div>
-                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Get Started</BookButton>
+                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#1C4596] hover:text-white mt-2 w-full">Get Started</BookButton>
                     </div>
                   </div>
                 </div>
@@ -685,7 +691,7 @@ export default function PricingPage() {
                     <div className="mt-auto">
                       <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Aerial Photos & Video</h3>
                       <p className="text-white text-base font-normal mb-4">Elevate any home or property above the rest with incredible drone footage captured by our FAA-certified Visual Artists</p>
-                      <BookButton href="/services/aerial" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+                      <BookButton href="/services/aerial" size="lg" className="bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE]">Learn more</BookButton>
                     </div>
                   </div>
                 </div>
@@ -708,7 +714,7 @@ export default function PricingPage() {
                         </ul>
                         <div className="bg-[#E5E7EB] text-[#262F3F] text-xs rounded-md px-3 py-2 mb-4 flex items-center gap-2 justify-center"><span>ⓘ</span>Smaller aerial photo options are available for properties that require 1-10 aerial images</div>
                       </div>
-                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full mx-auto">Get Started</BookButton>
+                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#1C4596] hover:text-white mt-2 w-full mx-auto">Get Started</BookButton>
                     </div>
                   </div>
                 </div>
@@ -718,13 +724,13 @@ export default function PricingPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 {/* Image and Get quote card: hidden on mobile, visible on desktop */}
                 <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F]">
-                  <img src="/images/photobank/s_8-thumb.webp" alt="Virtual Services" className="absolute inset-0 w-full h-full object-cover" />
+                  <img src="/images/photobank/s_8-thumb.webp" alt="Virtual Staging" className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
                   <div className="relative z-20 p-8 flex flex-col justify-end h-full">
                     <div className="mt-auto">
-                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Virtual Services</h3>
-                      <p className="text-white text-base font-normal mb-4">Beautifully stage, declutter, or even remodel any space with Virtual Service magic—no moving truck required</p>
-                      <BookButton href="/services/virtual-services" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Virtual Staging</h3>
+                      <p className="text-white text-base font-normal mb-4">Turn empty rooms into styled spaces with realistic furniture and decor, matched to your room's layout and lighting.</p>
+                      <BookButton href="/services/virtual-services" size="lg" className="bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE]">Learn more</BookButton>
                     </div>
                   </div>
                 </div>
@@ -732,69 +738,39 @@ export default function PricingPage() {
                 <div className="col-span-1 md:col-span-1">
                   <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
                     <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
-                      <img src="/images/photobank/s_8-thumb.webp" alt="Virtual Services" className="w-full h-48 object-cover" />
+                      <img src="/images/photobank/s_8-thumb.webp" alt="Virtual Staging" className="w-full h-48 object-cover" />
                     </div>
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
-                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">VIRTUAL SERVICES</div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">VIRTUAL STAGING</div>
                         <div className="flex items-end gap-2 mb-1">
                           <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">{formatPrice(pricingData["<1000"].virtualStaging)}</span>
-                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">per image</span>
                         </div>
                         <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
-                          <li className="flex justify-between"><span>Virtual Twilight</span><span className="font-semibold">{formatPrice(pricingData["<1000"].virtualTwilight)}</span></li>
-                          <li className="flex justify-between"><span>Virtual Staging</span><span className="font-semibold">{formatPrice(pricingData["<1000"].virtualStaging)}</span></li>
+                          <li className="flex justify-between"><span>Turn empty rooms into styled spaces</span></li>
+                          <li className="flex justify-between"><span>Realistic furniture placement</span></li>
+                          <li className="flex justify-between"><span>Matches room layout and lighting</span></li>
+                          <li className="flex justify-between"><span>Professionally staged by editors</span></li>
                         </ul>
                       </div>
-                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Get Started</BookButton>
+                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#1C4596] hover:text-white mt-2 w-full">Get Started</BookButton>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Virtual Twilight & Virtual Declutter Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch mb-10">
-                {/* Virtual Twilight Card */}
-                <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[360px] border border-gray-200 overflow-hidden">
-                  <div>
-                    <BeforeAfterSlider
-                      beforeSrc="/images/photobank/after-gallery.webp"
-                      afterSrc="/images/photobank/before-gallery.webp"
-                      alt="Virtual Twilight"
-                    />
-                    <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-4">Virtual Twilight</h3>
-                    <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].virtualTwilight)}</div>
-                    <p className="text-sm text-[#262F3F] font-mazzard text-center mb-6">Transform day to twilight</p>
-                  </div>
-                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
-                </div>
-                {/* Virtual Declutter Card */}
-                <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[360px] border border-gray-200 overflow-hidden">
-                  <div>
-                    <BeforeAfterSlider
-                      beforeSrc="/images/photobank/declutter-after-gallery.webp"
-                      afterSrc="/images/photobank/DSC_7594-gallery.webp"
-                      alt="Virtual Declutter"
-                    />
-                    <h3 className="text-xl font-mazzard font-semibold text-[#262F3F] mb-2 text-center mt-4">Virtual Declutter</h3>
-                    <div className="text-3xl font-mazzard font-semibold text-[#262F3F] text-center mb-1">{formatPrice(pricingData["<1000"].virtualDeclutter)}</div>
-                    <p className="text-sm text-[#262F3F] font-mazzard text-center mb-6">Remove personal items</p>
-                  </div>
-                  <BookButton href="/book-now" size="lg" className="mx-auto block bg-[#262F3F] text-white font-mazzard font-semibold hover:bg-[#2853AE] active:bg-[#2853AE] mt-auto">Book Now</BookButton>
-                </div>
-              </div>
-
-              {/* Property Websites */}
+              {/* Virtual Twilight */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 {/* Image and Get quote card: hidden on mobile, visible on desktop */}
                 <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F] order-1 md:order-2">
-                  <img src="/images/photobank/s_7-thumb.webp" alt="Premium Property Websites" className="absolute inset-0 w-full h-full object-cover" />
+                  <img src="/images/photobank/after-gallery.webp" alt="Virtual Twilight" className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
                   <div className="relative z-20 p-8 flex flex-col justify-end h-full">
                     <div className="mt-auto">
-                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Premium Property Websites</h3>
-                      <p className="text-white text-base font-normal mb-4">Control the narrative of your listing or project and showcase all of your beautiful content in one place</p>
-                      <BookButton href="/services/websites" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Virtual Twilight</h3>
+                      <p className="text-white text-base font-normal mb-4">Transform your daytime photos into stunning twilight scenes with dramatic skies and warm lighting</p>
+                      <BookButton href="/services/virtual-services" size="lg" className="bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE]">Learn more</BookButton>
                     </div>
                   </div>
                 </div>
@@ -802,37 +778,39 @@ export default function PricingPage() {
                 <div className="col-span-1 md:col-span-1">
                   <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
                     <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
-                      <img src="/images/photobank/s_7-thumb.webp" alt="Premium Property Websites" className="w-full h-48 object-cover" />
+                      <img src="/images/photobank/after-gallery.webp" alt="Virtual Twilight" className="w-full h-48 object-cover" />
                     </div>
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
-                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">PROPERTY WEBSITES</div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">VIRTUAL TWILIGHT</div>
                         <div className="flex items-end gap-2 mb-1">
-                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">{formatPrice(pricingData["<1000"].propertyWebsite)}</span>
-                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">{formatPrice(pricingData["<1000"].virtualTwilight)}</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">per image</span>
                         </div>
                         <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
-                          <li className="flex justify-between"><span>Custom Domain for 1 Year</span><span className="font-semibold">{formatPrice(pricingData["<1000"].customDomainName)}</span></li>
-                          <li className="flex justify-between"><span>Live in 24-48 hours</span></li>
+                          <li className="flex justify-between"><span>Transform day to twilight</span></li>
+                          <li className="flex justify-between"><span>Dramatic sky enhancement</span></li>
+                          <li className="flex justify-between"><span>Warm interior lighting</span></li>
+                          <li className="flex justify-between"><span>Professional editing</span></li>
                         </ul>
                       </div>
-                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Get Started</BookButton>
+                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#1C4596] hover:text-white mt-2 w-full">Get Started</BookButton>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Floor Plans */}
+              {/* Virtual Declutter */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 {/* Image and Get quote card: hidden on mobile, visible on desktop */}
                 <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F]">
-                  <img src="/images/photobank/s_6-thumb.webp" alt="Professional Floor & Site Plans" className="absolute inset-0 w-full h-full object-cover" />
+                  <img src="/images/photobank/declutter-after-gallery.webp" alt="Virtual Declutter" className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
                   <div className="relative z-20 p-8 flex flex-col justify-end h-full">
                     <div className="mt-auto">
-                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Professional Floor Plans & Model</h3>
-                      <p className="text-white text-base font-normal mb-4">Land more qualified buyers and clients by showing them the layout of the property before they show up</p>
-                      <BookButton href="/services/floor-plans" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Virtual Declutter</h3>
+                      <p className="text-white text-base font-normal mb-4">Remove personal items, clutter, and distractions to create clean, appealing spaces that buyers love</p>
+                      <BookButton href="/services/virtual-services" size="lg" className="bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE]">Learn more</BookButton>
                     </div>
                   </div>
                 </div>
@@ -840,22 +818,24 @@ export default function PricingPage() {
                 <div className="col-span-1 md:col-span-1">
                   <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
                     <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
-                      <img src="/images/photobank/s_6-thumb.webp" alt="Professional Floor & Site Plans" className="w-full h-48 object-cover" />
+                      <img src="/images/photobank/declutter-after-gallery.webp" alt="Virtual Declutter" className="w-full h-48 object-cover" />
                     </div>
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
-                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">FLOOR PLANS</div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">VIRTUAL DECLUTTER</div>
                         <div className="flex items-end gap-2 mb-1">
-                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">{formatPrice(pricingData["<1000"].floorPlan2d)}</span>
-                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">{formatPrice(pricingData["<1000"].virtualDeclutter)}</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">per image</span>
                         </div>
                         <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
-                          <li className="flex justify-between"><span>2D Floor Plan</span><span className="font-semibold">{formatPrice(pricingData["<1000"].floorPlan2d)}</span></li>
-                          <li className="flex justify-between"><span>3D House Model</span><span className="font-semibold">{formatPrice(pricingData["<1000"].houseModel3d)}</span></li>
+                          <li className="flex justify-between"><span>Remove personal items</span></li>
+                          <li className="flex justify-between"><span>Clean up clutter</span></li>
+                          <li className="flex justify-between"><span>Create appealing spaces</span></li>
+                          <li className="flex justify-between"><span>Professional retouching</span></li>
                         </ul>
-                          </div>
-                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Get Started</BookButton>
-                            </div>
+                      </div>
+                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#1C4596] hover:text-white mt-2 w-full">Get Started</BookButton>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -877,7 +857,7 @@ export default function PricingPage() {
                     <div className="mt-auto">
                       <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Slideshow Video Tour</h3>
                       <p className="text-white text-base font-normal mb-4">Create engaging visual flow with professionally edited slideshow videos set to music that showcase your property's best features</p>
-                      <BookButton href="/services/videography" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+                      <BookButton href="/services/videography" size="lg" className="bg-[#1C4596] text-white font-mazzard font-semibold hover:bg-[#2853AE]">Learn more</BookButton>
                     </div>
                   </div>
                 </div>
@@ -906,7 +886,7 @@ export default function PricingPage() {
                           <li className="flex justify-between"><span>Edited to Music</span></li>
                         </ul>
                       </div>
-                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Get Started</BookButton>
+                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#1C4596] hover:text-white mt-2 w-full">Get Started</BookButton>
                     </div>
                   </div>
                 </div>
@@ -914,7 +894,8 @@ export default function PricingPage() {
             </div>
           </div>
 
-          {/* Build Your Own Package */}
+          {/* Build Your Own Package - REMOVED */}
+          {/* 
           <div className="bg-white rounded-xl p-4 sm:p-8 shadow-md" id="build-your-own-package">
             <h3 className="text-xl sm:text-2xl font-serif mb-6 sm:mb-8 text-center">Build Your Own Package</h3>
 
@@ -998,7 +979,6 @@ export default function PricingPage() {
                 <p className="text-sm text-gray-600">
                   {selectedServices.length} service{selectedServices.length !== 1 ? "s" : ""} selected
                 </p>
-                {/* Order Overview */}
                 {selectedServices.length > 0 && (
                   <div className="mt-5 mb-4 p-4 bg-gray-100 rounded-lg shadow-sm w-full">
                     <h5 className="text-base font-semibold mb-3 text-[#262F3F]">Order Overview</h5>
@@ -1051,6 +1031,7 @@ export default function PricingPage() {
               </div>
             </div>
           </div>
+          */}
         </div>
       </section>
 
@@ -1087,7 +1068,7 @@ export default function PricingPage() {
               <div>
                 <h4 className="text-base sm:text-lg font-medium mb-1 sm:mb-2">Can I customize the packages?</h4>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Use our "Build Your Own Package" tool to select exactly the services you need.
+                  Yes, you can choose any combination of our individual services to create a custom package that meets your specific needs.
                 </p>
               </div>
               <div>

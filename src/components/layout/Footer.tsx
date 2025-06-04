@@ -24,8 +24,8 @@ export function Footer() {
             </p>
             <div className="text-sm text-gray-300">
               <p>Contact us:</p>
-              <p>(905)299-9300</p>
-              <p>Cooper@rephotos.ca</p>
+              <p>(905) 299-9300</p>
+              <p>cooper@rephotos.ca</p>
             </div>
           </div>
           <div>

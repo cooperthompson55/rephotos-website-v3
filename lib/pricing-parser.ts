@@ -180,13 +180,12 @@ function parsePackages(htmlContent: string): PackagesData {
 
     // Parse includes to determine features
     const includedServices = includes.split(',').map(s => s.trim());
-    const isEssentials = packageName.toLowerCase().includes('essentials');
     const features: PackageFeature[] = [
       { label: 'HDR Photography', included: includedServices.some(s => s.toLowerCase().includes('hdr')) },
       { label: includedServices.some(s => s.includes('3–5')) ? '3–5 Drone Shots' : includedServices.some(s => s.includes('2–3')) ? '2–3 Drone Shots' : '1–2 Drone Shots', included: includedServices.some(s => s.toLowerCase().includes('drone')) },
       { label: 'Property Website', included: true },
       { label: 'Slideshow Video Tour', included: true },
-      { label: 'Custom Domain Name', included: !isEssentials && includedServices.some(s => s.toLowerCase().includes('custom domain')) },
+      { label: 'Custom Domain Name', included: includedServices.some(s => s.toLowerCase().includes('custom domain')) },
       { label: '360° Virtual Tour', included: includedServices.some(s => s.toLowerCase().includes('virtual tour')) },
       { label: '2D Floor Plan', included: includedServices.some(s => s.toLowerCase().includes('floor plan')) },
       { label: 'Custom Video (Built with Your Preferences)', included: includedServices.some(s => s.toLowerCase().includes('video') && !s.toLowerCase().includes('slideshow')) },

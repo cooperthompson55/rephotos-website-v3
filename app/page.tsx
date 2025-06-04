@@ -1,3 +1,5 @@
+"use client"
+
 import { HeroSection } from "@/components/home/HeroSection"
 import { IndividualServicesSection } from "@/components/IndividualServicesSection"
 import { TestimonialsSection } from "@/components/home/TestimonialsSection"
@@ -7,52 +9,64 @@ import { GalleryDisplay } from "@/components/home/GalleryDisplay"
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { CheckCircle } from "lucide-react"
+import { CheckCircle, Video, Instagram, Plane, Images, Volume2, VolumeX } from "lucide-react"
 import Link from "next/link"
+import { useState, useRef } from "react"
 
 const pricingTiers = [
   {
     size: "Property Highlights Video",
-    price: "$319.99",
     duration: "1–2 minute horizontal video",
+    icon: Video,
     features: [
       "Shot in 4K on iPhone",
-      "Interior walk-through",
-      "Professional editing",
-      "Royalty-free background music",
+      "Complete interior walk-through",
       "Delivered MLS-ready",
-      "48-72 hour turnaround",
     ],
   },
   {
     size: "Social Media Reel",
-    price: "$229.99",
     duration: "30–60 second vertical video",
+    icon: Instagram,
     features: [
       "Optimized for Instagram, TikTok, and Reels",
       "Fast-paced and engagement-driven",
       "Interior footage formatted for mobile",
-      "Royalty-free trending music",
-      "Social-ready delivery",
-      "48-72 hour turnaround",
     ],
   },
   {
     size: "Drone Aerial Video",
-    price: "$159.99",
     duration: "30–60 seconds of aerial footage",
+    icon: Plane,
     features: [
       "High-resolution exterior shots",
       "Captures the property and surroundings",
-      "Smooth motion edits",
-      "Royalty-free music included",
-      "Delivered in multiple formats",
       "Next day turnaround",
+    ],
+  },
+  {
+    size: "Slideshow Video Tour",
+    duration: "Engaging visual flow of property photos",
+    icon: Images,
+    features: [
+      "Edited to music",
+      "Professional transitions",
+      "Quick delivery",
     ],
   },
 ]
 
 export default function Home() {
+  const [isMuted, setIsMuted] = useState(true)
+  const slideshowVideoRef = useRef<HTMLVideoElement>(null)
+
+  const toggleMute = () => {
+    if (slideshowVideoRef.current) {
+      slideshowVideoRef.current.muted = !slideshowVideoRef.current.muted
+      setIsMuted(!isMuted)
+    }
+  }
+
   return (
     <div>
       <HeroSection />
@@ -137,20 +151,104 @@ export default function Home() {
 
       <CaseStudySection />
 
+      {/* Photography Pricing Section (copied from /services/photography) */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-16">
+            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Photography Pricing</h6>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Transparent, value-driven pricing</h2>
+            <p className="text-gray-600 max-w-3xl mx-auto">
+              Our photography packages are designed to provide exceptional value while delivering the quality your listings deserve.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Condo */}
+            <Card className="relative">
+              <CardHeader className="text-center">
+                <CardTitle className="text-lg">Condo</CardTitle>
+                <div className="text-3xl font-light">$189.99 to $249.99</div>
+                <CardDescription>Up to 1,999 sq ft</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Full interior + exterior coverage</li>
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Professional editing</li>
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Next-day delivery</li>
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />MLS + Web versions</li>
+                </ul>
+                <Button asChild className="w-full"><Link href="/book-now">Book Now</Link></Button>
+              </CardContent>
+            </Card>
+            {/* Medium Homes (Most Popular) */}
+            <Card className="relative border-secondary shadow-lg">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <div className="bg-secondary text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</div>
+              </div>
+              <CardHeader className="text-center">
+                <CardTitle className="text-lg">Medium Homes</CardTitle>
+                <div className="text-3xl font-light">$319.99–$379.99</div>
+                <CardDescription>2,000–3,999 sq ft</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Full interior + exterior coverage</li>
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Delivered next business day</li>
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />High-res and web-optimized</li>
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />MLS ready images</li>
+                </ul>
+                <Button asChild className="w-full"><Link href="/book-now">Book Now</Link></Button>
+              </CardContent>
+            </Card>
+            {/* Large Homes */}
+            <Card className="relative">
+              <CardHeader className="text-center">
+                <CardTitle className="text-lg">Large Homes</CardTitle>
+                <div className="text-3xl font-light">$439.99+</div>
+                <CardDescription>4,000–4,999 sq ft</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Full interior + exterior coverage</li>
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Custom shot list if needed</li>
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Fast turnaround</li>
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />All file formats included</li>
+                </ul>
+                <Button asChild className="w-full"><Link href="/book-now">Book Now</Link></Button>
+              </CardContent>
+            </Card>
+          </div>
+          {/* 5,000+ sq ft Contact for Quote */}
+          <div className="mt-10 max-w-2xl mx-auto">
+            <Card className="md:col-span-3">
+              <CardHeader className="text-center">
+                <CardTitle className="text-lg">5,000+ sq ft?</CardTitle>
+                <div className="text-3xl font-light">Contact for Quote</div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />We'll build a custom plan based on your layout and needs. Quick turnaround guaranteed.</li>
+                </ul>
+                <Button asChild className="w-full" variant="outline"><Link href="/contact-us">Get in Touch</Link></Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Video Pricing Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Video Pricing</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Video Pricing</h2>
+            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Professional Video Services</h6>
+            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Professional Video Services</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              Choose the perfect video service to showcase your listing. All packages include professional editing, royalty-free music, and quick delivery.
+              Elevate your property marketing with our comprehensive video production services. All packages include professional editing, royalty-free music, and quick delivery.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {pricingTiers.map((tier, index) => (
-              <Card key={index} className="relative">
+              <Card key={index} className="relative flex flex-col">
                 <CardHeader className="text-center">
                   {/* All videos use the same aspect ratio and max height for consistency */}
                   {(index === 0 || index === 1 || index === 2) && (
@@ -166,6 +264,8 @@ export default function Home() {
                       loop
                       muted
                       playsInline
+                      disableRemotePlayback
+                      controlsList="nodownload noremoteplayback"
                       poster={
                         index === 0
                           ? "/images/photobank/s_2.webp"
@@ -179,12 +279,42 @@ export default function Home() {
                       Your browser does not support the video tag.
                     </video>
                   )}
+                  {index === 3 && (
+                    <div className="relative">
+                      <video
+                        ref={slideshowVideoRef}
+                        src="/images/services/videography/824-gazley-slideshow.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        disableRemotePlayback
+                        controlsList="nodownload noremoteplayback"
+                        className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
+                        style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                      <button
+                        onClick={toggleMute}
+                        className="absolute bottom-2 right-2 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+                      >
+                        {isMuted ? (
+                          <VolumeX className="w-4 h-4 text-white" />
+                        ) : (
+                          <Volume2 className="w-4 h-4 text-white" />
+                        )}
+                      </button>
+                    </div>
+                  )}
+                  <div className="flex items-center justify-center mb-4">
+                    {tier.icon && <tier.icon className="w-8 h-8 text-secondary" />}
+                  </div>
                   <CardTitle className="text-lg">{tier.size}</CardTitle>
-                  <div className="text-3xl font-light">{tier.price}</div>
                   <CardDescription>{tier.duration}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
+                <CardContent className="flex flex-col flex-1">
+                  <ul className="space-y-2 mb-6">
                     {tier.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center text-sm">
                         <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
@@ -192,9 +322,9 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-6">
+                  <div className="mt-auto">
                     <Button asChild className="w-full">
-                      <Link href="/book-now">Book Now</Link>
+                      <Link href="/services/videography">Learn more</Link>
                     </Button>
                   </div>
                 </CardContent>

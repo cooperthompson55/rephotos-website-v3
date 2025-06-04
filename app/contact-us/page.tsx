@@ -25,9 +25,7 @@ const formSchema = z.object({
   subject: z.string().min(1, {
     message: "Please select a subject.",
   }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
-  }),
+  message: z.string(),
 })
 
 export default function ContactPage() {
@@ -83,35 +81,14 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="bg-[#262F3F] min-h-screen">
-      {/* Hero/Banner Section */}
-      <section className="relative min-h-[320px] flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/header-texture.svg"
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-90" />
-        </div>
-        <div className="container relative z-10 pt-36 pb-16 md:pt-44 md:pb-24 flex flex-col items-center justify-center h-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-2xl mx-auto text-center text-white"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-            <p className="text-lg md:text-xl mb-2">
-              We're here to help. Reach out for questions, quotes, or to book your next shoot!
-            </p>
-          </motion.div>
-        </div>
-      </section>
-      {/* Main Contact Content */}
-      <div className="container max-w-4xl mx-auto py-12 px-4">
+    <div className="relative bg-[#262F3F] min-h-screen pt-24">
+      <img
+        src="/book-texture.svg"
+        alt="Header texture"
+        className="absolute top-0 left-0 w-full h-auto min-h-[200px] object-cover z-0 pointer-events-none select-none"
+        aria-hidden="true"
+      />
+      <div className="container max-w-4xl mx-auto py-12 px-4 relative z-10">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <h1 className="text-3xl font-bold text-center mb-2">Contact Us</h1>
           <p className="text-center text-gray-600 mb-8">We'd love to hear from you. Please fill out the form below.</p>
@@ -243,6 +220,7 @@ export default function ContactPage() {
                             <SelectItem value="pricing">Pricing Question</SelectItem>
                             <SelectItem value="support">Technical Support</SelectItem>
                             <SelectItem value="feedback">Feedback</SelectItem>
+                            <SelectItem value="large-project">Larger Project (5,000+ sq ft or commercial)</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />

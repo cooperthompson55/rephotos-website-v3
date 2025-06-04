@@ -88,7 +88,7 @@ export function MainNav() {
         scrolled ? "bg-white text-primary shadow-md" : "bg-transparent text-white"
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
+      <div className="container-default flex items-center justify-between">
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
             <div className="w-32 h-10 md:w-44 md:h-14 relative">

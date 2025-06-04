@@ -57,7 +57,7 @@ const services = [
 export function ServicesSection() {
   return (
     <section className="py-16 md:py-24 bg-[#F8F5F0]">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container-wide">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h6 className="text-[#B42222] uppercase tracking-wider text-sm font-medium mb-2">OUR SERVICES</h6>
