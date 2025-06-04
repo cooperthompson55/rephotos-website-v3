@@ -168,7 +168,7 @@ export function MainNav() {
         </div>
 
         {/* Book Now button on the far right */}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <BookButton
             href="/book-now"
             size="default"

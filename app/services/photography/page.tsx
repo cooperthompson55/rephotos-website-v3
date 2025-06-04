@@ -126,7 +126,7 @@ const pricingTiers = [
   },
   {
     label: "Medium Homes",
-    price: "$249.99 to $349.99",
+    price: "$319.99–$379.99",
     size: "2,000–3,999 sq ft",
     features: [
       "Full interior + exterior coverage",
@@ -139,7 +139,7 @@ const pricingTiers = [
   },
   {
     label: "Large Homes",
-    price: "$349.99 to $449.99",
+    price: "$439.99+",
     size: "4,000–4,999 sq ft",
     features: [
       "Full interior + exterior coverage",
@@ -216,7 +216,7 @@ export default function PhotographyServicePage() {
           <nav className="mb-4 text-sm text-white/80 flex items-center gap-1">
             <Link href="/" className="hover:underline">Home</Link>
             <span className="mx-1">/</span>
-            <Link href="/services" className="hover:underline">Services</Link>
+            <span className="text-white/80">Services</span>
             <span className="mx-1">/</span>
             <span className="text-white">Photography</span>
           </nav>
@@ -310,14 +310,14 @@ export default function PhotographyServicePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="/images/photobank/15-gallery.webp"
+                src="/images/services/photography/15 - Copy.jpg"
                 alt="Modern kitchen photography"
                 fill
                 className="object-cover transition-transform duration-500"
                 style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
               <Image
-                src="/images/photobank/18-gallery.webp"
+                src="/images/services/photography/12 - Copy.jpg"
                 alt="Modern kitchen alternate view"
                 fill
                 className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -331,14 +331,14 @@ export default function PhotographyServicePage() {
 
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="/images/photobank/5-gallery.webp"
+                src="/images/services/photography/6 - Copy.jpg"
                 alt="Luxury dining area photography"
                 fill
                 className="object-cover transition-transform duration-500"
                 style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
               <Image
-                src="/images/photobank/6-gallery.webp"
+                src="/images/services/photography/5 - Copy.jpg"
                 alt="Luxury dining area alternate view"
                 fill
                 className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -352,14 +352,14 @@ export default function PhotographyServicePage() {
 
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="/images/photobank/20-gallery.webp"
+                src="/images/services/photography/DSC_8341-gallery.webp"
                 alt="Master bedroom photography"
                 fill
                 className="object-cover transition-transform duration-500"
                 style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
               <Image
-                src="/images/photobank/21-gallery.webp"
+                src="/images/services/photography/30-gallery.webp"
                 alt="Master bedroom alternate view"
                 fill
                 className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -373,14 +373,14 @@ export default function PhotographyServicePage() {
 
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="/images/photobank/40-gallery.webp"
+                src="/images/services/photography/44 - Copy.jpg"
                 alt="Large lot photography"
                 fill
                 className="object-cover transition-transform duration-500"
                 style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
               <Image
-                src="/images/photobank/DSC_8243-gallery.webp"
+                src="/images/services/photography/40 - Copy.jpg"
                 alt="Large lot alternate view"
                 fill
                 className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -394,35 +394,14 @@ export default function PhotographyServicePage() {
 
             <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="/images/photobank/12_backyard-gallery.webp"
-                alt="Bright backyard photography"
-                fill
-                className="object-cover transition-transform duration-500"
-                style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
-              />
-              <Image
-                src="/images/photobank/11_backyard-gallery.webp"
-                alt="Bright backyard alternate view"
-                fill
-                className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ zIndex: 2, transition: 'opacity 0.5s', objectPosition: 'bottom' }}
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
-                <p className="text-white text-sm font-medium">Bright Backyard</p>
-                <p className="text-white/80 text-xs">Natural Color Enhancement</p>
-              </div>
-            </div>
-
-            <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
-              <Image
-                src="/images/photobank/30-gallery.webp"
+                src="/images/services/photography/30 - Copy.jpg"
                 alt="Small bathroom photography"
                 fill
                 className="object-cover transition-transform duration-500"
                 style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
               />
               <Image
-                src="/images/photobank/31-gallery.webp"
+                src="/images/services/photography/25-gallery.webp"
                 alt="Small bathroom alternate view"
                 fill
                 className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -431,6 +410,27 @@ export default function PhotographyServicePage() {
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
                 <p className="text-white text-sm font-medium">Small Bathroom</p>
                 <p className="text-white/80 text-xs">Ultrawide Lenses</p>
+              </div>
+            </div>
+
+            <div className="relative h-64 rounded-lg overflow-hidden shadow-md group">
+              <Image
+                src="/images/photobank/after-gallery.webp"
+                alt="Twilight Images"
+                fill
+                className="object-cover transition-transform duration-500"
+                style={{ transition: 'opacity 0.5s', objectPosition: 'bottom' }}
+              />
+              <Image
+                src="/images/photobank/dj-gallery.webp"
+                alt="Twilight Images alternate view"
+                fill
+                className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ zIndex: 2, transition: 'opacity 0.5s', objectPosition: 'bottom' }}
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
+                <p className="text-white text-sm font-medium">Twilight Images</p>
+                <p className="text-white/80 text-xs">Virtual Twilight</p>
               </div>
             </div>
           </div>

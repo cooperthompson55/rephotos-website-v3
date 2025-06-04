@@ -32,7 +32,7 @@ export default function AerialPage() {
           <nav className="mb-4 text-sm text-white/80 flex items-center gap-1">
             <Link href="/" className="hover:underline">Home</Link>
             <span className="mx-1">/</span>
-            <Link href="/services" className="hover:underline">Services</Link>
+            <span className="text-white/80">Services</span>
             <span className="mx-1">/</span>
             <span className="text-white">Aerial Photos & Video</span>
           </nav>

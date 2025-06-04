@@ -56,14 +56,16 @@ const formSchema = z.object({
 const services = [
   { id: "hdrPhotography", name: "HDR Photography", prices: [189.99, 249.99, 319.99, 379.99, 439.99] },
   { id: "virtualTour", name: "360° Virtual Tour", prices: [199.99, 239.99, 279.99, 319.99, 349.99] },
-  { id: "propertyHighlightsVideo", name: "Property Highlights Video", prices: [319.99, 349.99, 389.99, 429.99, 469.99] },
+  { id: "propertyHighlightsVideo", name: "Property Highlights Video", prices: [289.99, 309.99, 349.99, 379.99, 409.99] },
   { id: "socialMediaReel", name: "Social Media Reel", prices: [229.99, 249.99, 279.99, 299.99, 329.99] },
+  { id: "slideshowVideoTour", name: "Slideshow Video Tour", prices: [99.99, 99.99, 99.99, 99.99, 99.99] },
   { id: "droneAerialPhotos", name: "Drone Aerial Photos", prices: [159.99, 159.99, 159.99, 159.99, 159.99] },
   { id: "droneAerialVideo", name: "Drone Aerial Video", prices: [159.99, 159.99, 159.99, 159.99, 159.99] },
   { id: "floorPlan2d", name: "2D Floor Plan", prices: [119.99, 149.99, 189.99, 229.99, 269.99] },
   { id: "houseModel3d", name: "3D House Model", prices: [189.99, 229.99, 269.99, 299.99, 339.99] },
   { id: "propertyWebsite", name: "Property Website", prices: [129.99, 129.99, 129.99, 129.99, 129.99] },
   { id: "customDomainName", name: "Custom Domain Name", prices: [39.99, 39.99, 39.99, 39.99, 39.99] },
+  { id: "virtualDeclutter", name: "Virtual Declutter", prices: ["29.99/image", "29.99/image", "29.99/image", "29.99/image", "29.99/image"] },
   { id: "virtualStaging", name: "Virtual Staging", prices: ["39.99/image", "39.99/image", "39.99/image", "39.99/image", "39.99/image"] },
   { id: "virtualTwilight", name: "Virtual Twilight", prices: ["49.99/image", "49.99/image", "49.99/image", "49.99/image", "49.99/image"] },
 ];

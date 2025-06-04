@@ -1,10 +1,13 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
 import Link from "next/link"
-import { Video, CheckCircle, Smartphone, Plane, Music, Zap, Edit } from "lucide-react"
+import { Video, CheckCircle, Smartphone, Plane, Music, Zap, Edit, VolumeX, Volume2 } from "lucide-react"
 import { CTASection } from "@/components/home/CTASection"
 import CustomVideoBuilder from "@/components/services/videography/CustomVideoBuilder";
+import { useState } from "react"
 
 const videographyFeatures = [
   {
@@ -121,7 +124,6 @@ const pricingTiers = [
       "Shot in 4K on iPhone",
       "Interior walk-through",
       "Professional editing",
-      "Royalty-free background music",
       "Delivered MLS-ready",
       "48-72 hour turnaround",
     ],
@@ -132,23 +134,30 @@ const pricingTiers = [
     duration: "30–60 second vertical video",
     features: [
       "Optimized for Instagram, TikTok, and Reels",
-      "Fast-paced and engagement-driven",
       "Interior footage formatted for mobile",
       "Royalty-free trending music",
-      "Social-ready delivery",
       "48-72 hour turnaround",
+    ],
+  },
+  {
+    size: "Slideshow Video Tour",
+    price: "$99.99", 
+    duration: "1–2 minute slideshow tour",
+    features: [
+      "Dynamic photo transitions, movements, and edits",
+      "Delivered in MLS and marketing formats",
+      "Royalty-free trending music",
+      "Next day turnaround",
     ],
   },
   {
     size: "Drone Aerial Video",
     price: "$159.99",
-    duration: "30–60 seconds of aerial footage",
+    duration: "30–60 second aerial video",
     features: [
       "High-resolution exterior shots",
       "Captures the property and surroundings",
-      "Smooth motion edits",
       "Royalty-free music included",
-      "Delivered in multiple formats",
       "Next day turnaround",
     ],
   },
@@ -187,6 +196,41 @@ const faqItems = [
   },
 ]
 
+// Custom video card component for slideshow with audio controls
+function SlideshowVideoCard() {
+  const [isMuted, setIsMuted] = useState(true);
+
+  return (
+    <div className="relative">
+      <video
+        src="/images/services/videography/824-gazley-slideshow.mp4"
+        autoPlay
+        loop
+        muted={isMuted}
+        playsInline
+        className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
+        style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
+        disableRemotePlayback
+        controlsList="nodownload noremoteplayback"
+      >
+        Your browser does not support the video tag.
+      </video>
+      {/* Large audio control button */}
+      <button
+        onClick={() => setIsMuted(!isMuted)}
+        className="absolute top-4 right-4 bg-black/70 hover:bg-black/90 text-white p-3 rounded-full transition-all duration-200 backdrop-blur-sm"
+        aria-label={isMuted ? "Unmute video" : "Mute video"}
+      >
+        {isMuted ? (
+          <VolumeX className="h-6 w-6" />
+        ) : (
+          <Volume2 className="h-6 w-6" />
+        )}
+      </button>
+    </div>
+  );
+}
+
 export default function VideographyServicePage() {
   return (
     <div>
@@ -209,7 +253,7 @@ export default function VideographyServicePage() {
           <nav className="mb-4 text-sm text-white/80 flex items-center gap-1">
             <Link href="/" className="hover:underline">Home</Link>
             <span className="mx-1">/</span>
-            <Link href="/services" className="hover:underline">Services</Link>
+            <span className="text-white/80">Services</span>
             <span className="mx-1">/</span>
             <span className="text-white">Videography</span>
           </nav>
@@ -287,33 +331,56 @@ export default function VideographyServicePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {pricingTiers.map((tier, index) => (
-              <Card key={index} className="relative">
+              <Card key={index} className="relative flex flex-col h-full">
                 <CardHeader className="text-center">
                   {/* All videos use the same aspect ratio and max height for consistency */}
-                  {(index === 0 || index === 1 || index === 2) && (
+                  {index === 0 && (
                     <video
-                      src={
-                        index === 0
-                          ? "/horizontal.mp4"
-                          : index === 1
-                          ? "/vertical.mp4"
-                          : "/aerial.mp4"
-                      }
+                      src="/horizontal.mp4"
                       autoPlay
                       loop
                       muted
                       playsInline
-                      poster={
-                        index === 0
-                          ? "/images/photobank/s_2.webp"
-                          : index === 1
-                          ? "/images/photobank/s_3-thumb.webp"
-                          : "/images/services/videography/lot_lines.gif"
-                      }
+                      poster="/images/photobank/s_2.webp"
                       className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
                       style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
+                      disableRemotePlayback
+                      controlsList="nodownload noremoteplayback"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                  {index === 1 && (
+                    <video
+                      src="/vertical.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      poster="/images/photobank/s_3-thumb.webp"
+                      className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
+                      style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
+                      disableRemotePlayback
+                      controlsList="nodownload noremoteplayback"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                  {index === 2 && <SlideshowVideoCard />}
+                  {index === 3 && (
+                    <video
+                      src="/aerial.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      poster="/images/services/videography/lot_lines.gif"
+                      className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
+                      style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
+                      disableRemotePlayback
+                      controlsList="nodownload noremoteplayback"
                     >
                       Your browser does not support the video tag.
                     </video>
@@ -322,8 +389,8 @@ export default function VideographyServicePage() {
                   <div className="text-3xl font-light">{tier.price}</div>
                   <CardDescription>{tier.duration}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
+                <CardContent className="flex-1 flex flex-col justify-between">
+                  <ul className="space-y-2 mb-6">
                     {tier.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center text-sm">
                         <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
@@ -331,7 +398,7 @@ export default function VideographyServicePage() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-6">
+                  <div className="mt-auto pt-2">
                     <Button asChild className="w-full">
                       <Link href="/book-now">Book Now</Link>
                     </Button>

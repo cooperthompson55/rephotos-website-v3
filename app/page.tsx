@@ -1,5 +1,5 @@
 import { HeroSection } from "@/components/home/HeroSection"
-import { ServicesSection } from "@/components/home/ServicesSection"
+import { IndividualServicesSection } from "@/components/IndividualServicesSection"
 import { TestimonialsSection } from "@/components/home/TestimonialsSection"
 import { CaseStudySection } from "@/components/home/CaseStudySection"
 import { CTASection } from "@/components/home/CTASection"
@@ -128,9 +128,15 @@ export default function Home() {
       {/* Gallery Display */}
       <GalleryDisplay />
 
-      <ServicesSection />
+      {/* Individual Services Section */}
+      <section className="py-16 md:py-24 bg-[#F8F5F0]">
+        <div className="container mx-auto px-4 md:px-6">
+          <IndividualServicesSection />
+        </div>
+      </section>
+
       <CaseStudySection />
-      
+
       {/* Video Pricing Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">

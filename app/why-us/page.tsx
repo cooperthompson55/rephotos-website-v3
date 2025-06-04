@@ -432,7 +432,7 @@ export default function WhyUsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] rounded-lg overflow-hidden">
               <Image
-                src="/images/photobank/15-gallery.webp"
+                src="/images/why-us/p-gallery.webp"
                 alt="Professional photography equipment"
                 fill
                 className="object-cover"

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -24,6 +24,7 @@ import {
   ChevronRight,
 } from "lucide-react"
 import { QuoteModuleSection } from "@/components/home/QuoteModuleSection"
+import { loadPricingData, type SizeKey, type PricingData, type PackagesData, type PackageFeature, type PackageCard } from "@/lib/pricing-parser"
 
 // BeforeAfterSlider Component
 const BeforeAfterSlider = ({ beforeSrc, afterSrc, alt }: { beforeSrc: string; afterSrc: string; alt: string }) => {
@@ -74,87 +75,6 @@ const BeforeAfterSlider = ({ beforeSrc, afterSrc, alt }: { beforeSrc: string; af
   )
 }
 
-// Pricing data
-const pricingData = {
-  "<1000": {
-    hdrPhotography: 189.99,
-    virtualTour: 199.99,
-    propertyHighlightsVideo: 319.99,
-    socialMediaReel: 229.99,
-    droneAerialPhotos: 159.99,
-    droneAerialVideo: 159.99,
-    floorPlan2d: 119.99,
-    houseModel3d: 189.99,
-    propertyWebsite: 129.99,
-    customDomainName: 39.99,
-    virtualStaging: "39.99/image",
-    virtualTwilight: "49.99/image",
-    virtualDeclutter: "29.99/image",
-  },
-  "1000-2000": {
-    hdrPhotography: 249.99,
-    virtualTour: 239.99,
-    propertyHighlightsVideo: 349.99,
-    socialMediaReel: 249.99,
-    droneAerialPhotos: 159.99,
-    droneAerialVideo: 159.99,
-    floorPlan2d: 149.99,
-    houseModel3d: 229.99,
-    propertyWebsite: 129.99,
-    customDomainName: 39.99,
-    virtualStaging: "39.99/image",
-    virtualTwilight: "49.99/image",
-    virtualDeclutter: "29.99/image",
-  },
-  "2000-3000": {
-    hdrPhotography: 319.99,
-    virtualTour: 279.99,
-    propertyHighlightsVideo: 389.99,
-    socialMediaReel: 279.99,
-    droneAerialPhotos: 159.99,
-    droneAerialVideo: 159.99,
-    floorPlan2d: 189.99,
-    houseModel3d: 269.99,
-    propertyWebsite: 129.99,
-    customDomainName: 39.99,
-    virtualStaging: "39.99/image",
-    virtualTwilight: "49.99/image",
-    virtualDeclutter: "29.99/image",
-  },
-  "3000-4000": {
-    hdrPhotography: 379.99,
-    virtualTour: 319.99,
-    propertyHighlightsVideo: 429.99,
-    socialMediaReel: 299.99,
-    droneAerialPhotos: 159.99,
-    droneAerialVideo: 159.99,
-    floorPlan2d: 229.99,
-    houseModel3d: 299.99,
-    propertyWebsite: 129.99,
-    customDomainName: 39.99,
-    virtualStaging: "39.99/image",
-    virtualTwilight: "49.99/image",
-    virtualDeclutter: "29.99/image",
-  },
-  "4000-5000": {
-    hdrPhotography: 439.99,
-    virtualTour: 349.99,
-    propertyHighlightsVideo: 469.99,
-    socialMediaReel: 329.99,
-    droneAerialPhotos: 159.99,
-    droneAerialVideo: 159.99,
-    floorPlan2d: 269.99,
-    houseModel3d: 339.99,
-    propertyWebsite: 129.99,
-    customDomainName: 39.99,
-    virtualStaging: "39.99/image",
-    virtualTwilight: "49.99/image",
-    virtualDeclutter: "29.99/image",
-  },
-} as const;
-
-type SizeKey = keyof typeof pricingData;
-
 // Service details with icons and descriptions
 const services = [
   {
@@ -184,6 +104,13 @@ const services = [
     description: "Engaging short-form video content optimized for social media platforms",
     icon: <Instagram className="h-5 w-5" />,
     image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=2000",
+  },
+  {
+    id: "slideshowVideoTour",
+    name: "Slideshow Video Tour",
+    description: "Create engaging visual flow with professionally edited slideshow videos set to music",
+    icon: <Video className="h-5 w-5" />,
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000",
   },
   {
     id: "droneAerialPhotos",
@@ -244,487 +171,11 @@ const services = [
   {
     id: "virtualDeclutter",
     name: "Virtual Declutter",
-    description: "Remove unwanted items and clean up spaces digitally",
+    description: "Remove personal items and clutter to create clean, appealing spaces",
     icon: <PenTool className="h-5 w-5" />,
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000",
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2000",
   },
 ]
-
-// Replace dynamic package logic with hardcoded content for each size and package
-const hardcodedPackages: Record<SizeKey, PackageCard[]> = {
-  '<1000': [
-    {
-      name: 'ESSENTIALS PACKAGE',
-      price: '$229.99',
-      subtitle: '',
-      sqft: '0–999 sq ft',
-      discount: 'Save $20',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '1–2 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: false },
-        { label: '2D Floor Plan', included: false },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'DELUXE TOUR PACKAGE',
-      price: '$489.99',
-      subtitle: '',
-      sqft: '0–999 sq ft',
-      discount: 'Save $80',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'MARKETING PRO PACKAGE',
-      price: '$829.99',
-      subtitle: '',
-      sqft: '0–999 sq ft',
-      discount: 'Save $130',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'PREMIUM SELLER EXPERIENCE',
-      price: '$1069.99',
-      subtitle: '',
-      sqft: '0–999 sq ft',
-      discount: 'Save $420',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '3–5 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: '3D House Model', included: true },
-        { label: 'Virtual Twilight', included: true },
-        { label: 'Virtual Staging', included: false },
-      ],
-      image: '',
-    },
-  ],
-  '1000-2000': [
-    {
-      name: 'ESSENTIALS PACKAGE',
-      price: '$289.99',
-      subtitle: '',
-      sqft: '1000–1999 sq ft',
-      discount: 'Save $30',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '1–2 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: false },
-        { label: '2D Floor Plan', included: false },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'DELUXE TOUR PACKAGE',
-      price: '$579.99',
-      subtitle: '',
-      sqft: '1000–1999 sq ft',
-      discount: 'Save $120',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'MARKETING PRO PACKAGE',
-      price: '$959.99',
-      subtitle: '',
-      sqft: '1000–1999 sq ft',
-      discount: 'Save $160',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'PREMIUM SELLER EXPERIENCE',
-      price: '$1199.99',
-      subtitle: '',
-      sqft: '1000–1999 sq ft',
-      discount: 'Save $450',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '3–5 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: '3D House Model', included: true },
-        { label: 'Virtual Twilight', included: true },
-        { label: 'Virtual Staging', included: false },
-      ],
-      image: '',
-    },
-  ],
-  '2000-3000': [
-    {
-      name: 'ESSENTIALS PACKAGE',
-      price: '$349.99',
-      subtitle: '',
-      sqft: '2000–2999 sq ft',
-      discount: 'Save $30',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '1–2 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: false },
-        { label: '2D Floor Plan', included: false },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'DELUXE TOUR PACKAGE',
-      price: '$649.99',
-      subtitle: '',
-      sqft: '2000–2999 sq ft',
-      discount: 'Save $190',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'MARKETING PRO PACKAGE',
-      price: '$1079.99',
-      subtitle: '',
-      sqft: '2000–2999 sq ft',
-      discount: 'Save $200',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'PREMIUM SELLER EXPERIENCE',
-      price: '$1319.99',
-      subtitle: '',
-      sqft: '2000–2999 sq ft',
-      discount: 'Save $490',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '3–5 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: '3D House Model', included: true },
-        { label: 'Virtual Twilight', included: true },
-        { label: 'Virtual Staging', included: false },
-      ],
-      image: '',
-    },
-  ],
-  '3000-4000': [
-    {
-      name: 'ESSENTIALS PACKAGE',
-      price: '$389.99',
-      subtitle: '',
-      sqft: '3000–3999 sq ft',
-      discount: 'Save $50',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '1–2 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: false },
-        { label: '2D Floor Plan', included: false },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'DELUXE TOUR PACKAGE',
-      price: '$719.99',
-      subtitle: '',
-      sqft: '3000–3999 sq ft',
-      discount: 'Save $260',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'MARKETING PRO PACKAGE',
-      price: '$1179.99',
-      subtitle: '',
-      sqft: '3000–3999 sq ft',
-      discount: 'Save $260',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'PREMIUM SELLER EXPERIENCE',
-      price: '$1419.99',
-      subtitle: '',
-      sqft: '3000–3999 sq ft',
-      discount: 'Save $550',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '3–5 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: '3D House Model', included: true },
-        { label: 'Virtual Twilight', included: true },
-        { label: 'Virtual Staging', included: false },
-      ],
-      image: '',
-    },
-  ],
-  '4000-5000': [
-    {
-      name: 'ESSENTIALS PACKAGE',
-      price: '$449.99',
-      subtitle: '',
-      sqft: '4000–4999 sq ft',
-      discount: 'Save $50',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '1–2 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: false },
-        { label: '2D Floor Plan', included: false },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'DELUXE TOUR PACKAGE',
-      price: '$799.99',
-      subtitle: '',
-      sqft: '4000–4999 sq ft',
-      discount: 'Save $320',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: false },
-        { label: 'Property Website', included: false },
-        { label: 'Custom Domain', included: false },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'MARKETING PRO PACKAGE',
-      price: '$1299.99',
-      subtitle: '',
-      sqft: '4000–4999 sq ft',
-      discount: 'Save $310',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#e6a100] hover:bg-[#ffd24d] text-[#262F3F]',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '2–3 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: 'Virtual Twilight', included: false },
-        { label: 'Virtual Staging', included: false },
-        { label: '3D House Model', included: false },
-      ],
-      image: '',
-    },
-    {
-      name: 'PREMIUM SELLER EXPERIENCE',
-      price: '$1539.99',
-      subtitle: '',
-      sqft: '4000–4999 sq ft',
-      discount: 'Save $600',
-      discountColor: 'text-[#B42222]',
-      buttonColor: 'bg-[#262F3F] text-white',
-      features: [
-        { label: 'HDR Photography', included: true },
-        { label: '3–5 Drone Shots', included: true },
-        { label: '360° Virtual Tour', included: true },
-        { label: '2D Floor Plan', included: true },
-        { label: 'Custom Video (Built with Your Preferences)', included: true },
-        { label: 'Property Website', included: true },
-        { label: 'Custom Domain', included: true },
-        { label: '3D House Model', included: true },
-        { label: 'Virtual Twilight', included: true },
-        { label: 'Virtual Staging', included: false },
-      ],
-      image: '',
-    },
-  ],
-};
-
-// Move type definitions above hardcodedPackages and outside the component
-
-  type PackageFeature = {
-    label: string;
-    included: boolean;
-    gold?: boolean;
-    bold?: boolean;
-  };
-
-  type PackageCard = {
-    name: string;
-    price: string;
-    subtitle: string;
-    sqft: string;
-    discount: string;
-    discountColor: string;
-    buttonColor: string;
-    borderColor?: string;
-    features: PackageFeature[];
-    image: string;
-  };
 
 export default function PricingPage() {
   const [selectedSize, setSelectedSize] = useState<SizeKey>("<1000")
@@ -732,6 +183,33 @@ export default function PricingPage() {
   const [totalPrice, setTotalPrice] = useState(0)
   // Track quantity for each service
   const [serviceQuantities, setServiceQuantities] = useState<{ [id: string]: number }>({})
+  
+  // State for dynamic pricing data
+  const [pricingData, setPricingData] = useState<PricingData | null>(null)
+  const [packagesData, setPackagesData] = useState<PackagesData | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Load pricing data on component mount
+  useEffect(() => {
+    const fetchPricingData = async () => {
+      try {
+        const response = await fetch('/api/pricing-data')
+        if (response.ok) {
+          const data = await response.json()
+          setPricingData(data.pricingData)
+          setPackagesData(data.packagesData)
+        } else {
+          console.error('Failed to fetch pricing data')
+        }
+      } catch (error) {
+        console.error('Error fetching pricing data:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchPricingData()
+  }, [])
 
   // Add this helper for slider stops
   const sizeOptions: { value: SizeKey; label: string; range: string }[] = [
@@ -742,64 +220,6 @@ export default function PricingPage() {
     { value: "4000-5000", label: "5", range: "4000–4999 sq ft" },
   ];
 
-  // Pricing and discount maps for each package
-  const essentialsPriceMap: Record<SizeKey, number> = {
-    '<1000': 179.99,
-    '1000-2000': 219.99,
-    '2000-3000': 269.99,
-    '3000-4000': 309.99,
-    '4000-5000': 359.99,
-  };
-  const essentialsDiscountMap: Record<SizeKey, string> = {
-    '<1000': 'Save $20',
-    '1000-2000': 'Save $25',
-    '2000-3000': 'Save $30',
-    '3000-4000': 'Save $35',
-    '4000-5000': 'Save $40',
-  };
-  const deluxePriceMap: Record<SizeKey, number> = {
-    '<1000': 369.99,
-    '1000-2000': 429.99,
-    '2000-3000': 499.99,
-    '3000-4000': 569.99,
-    '4000-5000': 629.99,
-  };
-  const deluxeDiscountMap: Record<SizeKey, string> = {
-    '<1000': 'Save $65',
-    '1000-2000': 'Save $75',
-    '2000-3000': 'Save $90',
-    '3000-4000': 'Save $100',
-    '4000-5000': 'Save $115',
-  };
-  const marketingProPriceMap: Record<SizeKey, number> = {
-    '<1000': 559.99,
-    '1000-2000': 639.99,
-    '2000-3000': 709.99,
-    '3000-4000': 779.99,
-    '4000-5000': 849.99,
-  };
-  const marketingProDiscountMap: Record<SizeKey, string> = {
-    '<1000': 'Save $120',
-    '1000-2000': 'Save $140',
-    '2000-3000': 'Save $165',
-    '3000-4000': 'Save $185',
-    '4000-5000': 'Save $205',
-  };
-  const premiumSellerPriceMap: Record<SizeKey, number> = {
-    '<1000': 799.99,
-    '1000-2000': 909.99,
-    '2000-3000': 1019.99,
-    '3000-4000': 1129.99,
-    '4000-5000': 1239.99,
-  };
-  const premiumSellerDiscountMap: Record<SizeKey, string> = {
-    '<1000': 'Save $200',
-    '1000-2000': 'Save $225',
-    '2000-3000': 'Save $255',
-    '3000-4000': 'Save $280',
-    '4000-5000': 'Save $305',
-  };
-
   const formatPrice = (price: number | string) => {
     if (typeof price === "number") {
       return `$${price.toFixed(2)}`;
@@ -808,6 +228,8 @@ export default function PricingPage() {
   };
 
   const handleServiceToggle = (serviceId: string) => {
+    if (!pricingData) return;
+    
     setSelectedServices((prev) => {
       const newSelection = prev.includes(serviceId) ? prev.filter((id) => id !== serviceId) : [...prev, serviceId]
       // If adding, set default quantity to 1 (or keep existing)
@@ -825,7 +247,7 @@ export default function PricingPage() {
       // Calculate new total
       const newTotal = newSelection.reduce((sum, id) => {
         const value = pricingData[selectedSize][id as keyof (typeof pricingData)["<1000"]];
-        const qty = (id === "virtualStaging" || id === "virtualTwilight") ? (serviceQuantities[id] || 1) : 1;
+        const qty = (id === "virtualStaging" || id === "virtualTwilight" || id === "virtualDeclutter") ? (serviceQuantities[id] || 1) : 1;
         if (typeof value === "number") return sum + value * qty;
         if (typeof value === "string" && !isNaN(Number(value))) return sum + Number(value) * qty;
         if (typeof value === "string" && value.endsWith("/image")) return sum + Number(value.replace("/image", "")) * qty;
@@ -838,6 +260,8 @@ export default function PricingPage() {
 
   // Handle quantity change for a service
   const handleQuantityChange = (serviceId: string, delta: number) => {
+    if (!pricingData) return;
+
     setServiceQuantities((prev) => {
       const current = prev[serviceId] || 1;
       // If decreasing from 1 to 0, remove from selectedServices and quantities
@@ -876,6 +300,18 @@ export default function PricingPage() {
 
   // Define a style string for the + and - buttons
   const qtyBtnStyle = "w-6 h-6 text-lg font-bold text-[#262F3F] bg-transparent border-none p-0 hover:bg-transparent focus:outline-none";
+
+  // Show loading state while pricing data is being fetched
+  if (isLoading || !pricingData || !packagesData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading pricing information...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -926,21 +362,10 @@ export default function PricingPage() {
       {/* Main Content */}
       <section className="py-16 md:py-24 bg-[#F8F5F0]">
         <div className="container mx-auto px-4 md:px-6">
-          {/* Introduction */}
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-light mb-6">
-              Choose the perfect package for your property
-            </h2>
-            <p className="text-gray-600">
-              Our pricing is based on property size and the services you need. Select from our pre-designed packages or
-              build your own custom solution.
-            </p>
-          </div>
-
           {/* Pre-designed Packages */}
           <div className="mb-24">
-            <h2 className="text-4xl font-serif font-bold mb-2 text-[#262F3F]">Packages</h2>
-            <p className="text-lg text-[#262F3F] mb-8">Save on our most popular services and check out in a flash with a package. Pricing is straightforward and additional services can be added à la carte.</p>
+            <h2 className="text-4xl font-serif font-bold mb-2 text-[#262F3F]">Complete Listing Packages</h2>
+            <p className="text-lg text-[#262F3F] mb-8">Get your listing ready for MLS with our all-in-one packages. They include everything you need to market your property, with clear pricing and the option to add extra services if needed.</p>
             {/* Size Selector */}
             {/* Mobile: slider/progress bar */}
             <div className="mb-8">
@@ -995,7 +420,7 @@ export default function PricingPage() {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {hardcodedPackages[selectedSize].map((pkg, idx) => (
+              {packagesData[selectedSize].map((pkg, idx) => (
                 <div
                   key={pkg.name + idx}
                   className={`flex flex-col rounded-xl border ${pkg.borderColor || "border-gray-200"} bg-white p-6 shadow-sm transition-all`}
@@ -1236,11 +661,11 @@ export default function PricingPage() {
                         <div className="text-xs text-[#6B7A86] mb-1 font-mazzard font-medium">up to 999 sq ft</div>
                         <div className="text-xs text-[#6B7A86] mb-2 font-mazzard font-medium">+$50 per 1,000 sq ft</div>
                         <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
-                          <li className="flex justify-between"><span>0–999 sq ft</span><span className="font-semibold">$199.99</span></li>
-                          <li className="flex justify-between"><span>1000–1999 sq ft</span><span className="font-semibold">$239.99</span></li>
-                          <li className="flex justify-between"><span>2000–2999 sq ft</span><span className="font-semibold">$279.99</span></li>
-                          <li className="flex justify-between"><span>3000–3999 sq ft</span><span className="font-semibold">$319.99</span></li>
-                          <li className="flex justify-between"><span>4000–4999 sq ft</span><span className="font-semibold">$349.99</span></li>
+                          <li className="flex justify-between"><span>0–999 sq ft</span><span className="font-semibold">{formatPrice(pricingData["<1000"].virtualTour)}</span></li>
+                          <li className="flex justify-between"><span>1000–1999 sq ft</span><span className="font-semibold">{formatPrice(pricingData["1000-2000"].virtualTour)}</span></li>
+                          <li className="flex justify-between"><span>2000–2999 sq ft</span><span className="font-semibold">{formatPrice(pricingData["2000-3000"].virtualTour)}</span></li>
+                          <li className="flex justify-between"><span>3000–3999 sq ft</span><span className="font-semibold">{formatPrice(pricingData["3000-4000"].virtualTour)}</span></li>
+                          <li className="flex justify-between"><span>4000–4999 sq ft</span><span className="font-semibold">{formatPrice(pricingData["4000-5000"].virtualTour)}</span></li>
                           <li className="flex justify-between"><span>5000+ sq ft</span><span className="font-semibold"><a href="/contact-us" className="text-primary underline hover:text-[#B42222]">Contact us</a></span></li>
                         </ul>
                       </div>
@@ -1278,8 +703,8 @@ export default function PricingPage() {
                           <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
                         </div>
                         <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
-                          <li className="flex justify-between"><span>Aerial Drone Photos (10-15 images)</span><span className="font-semibold">$159.99</span></li>
-                          <li className="flex justify-between"><span>Aerial Drone Video (30-60 seconds)</span><span className="font-semibold">$159.99</span></li>
+                          <li className="flex justify-between"><span>Aerial Drone Photos (10-15 images)</span><span className="font-semibold">{formatPrice(pricingData["<1000"].droneAerialPhotos)}</span></li>
+                          <li className="flex justify-between"><span>Aerial Drone Video (30-60 seconds)</span><span className="font-semibold">{formatPrice(pricingData["<1000"].droneAerialVideo)}</span></li>
                         </ul>
                         <div className="bg-[#E5E7EB] text-[#262F3F] text-xs rounded-md px-3 py-2 mb-4 flex items-center gap-2 justify-center"><span>ⓘ</span>Smaller aerial photo options are available for properties that require 1-10 aerial images</div>
                       </div>
@@ -1317,8 +742,8 @@ export default function PricingPage() {
                           <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
                         </div>
                         <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
-                          <li className="flex justify-between"><span>Virtual Twilight</span><span className="font-semibold">$49.99/img</span></li>
-                          <li className="flex justify-between"><span>Virtual Staging</span><span className="font-semibold">$39.99/img</span></li>
+                          <li className="flex justify-between"><span>Virtual Twilight</span><span className="font-semibold">{formatPrice(pricingData["<1000"].virtualTwilight)}</span></li>
+                          <li className="flex justify-between"><span>Virtual Staging</span><span className="font-semibold">{formatPrice(pricingData["<1000"].virtualStaging)}</span></li>
                         </ul>
                       </div>
                       <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Get Started</BookButton>
@@ -1387,7 +812,7 @@ export default function PricingPage() {
                           <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
                         </div>
                         <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
-                          <li className="flex justify-between"><span>Custom Domain for 1 Year</span><span className="font-semibold">$39.99</span></li>
+                          <li className="flex justify-between"><span>Custom Domain for 1 Year</span><span className="font-semibold">{formatPrice(pricingData["<1000"].customDomainName)}</span></li>
                           <li className="flex justify-between"><span>Live in 24-48 hours</span></li>
                         </ul>
                       </div>
@@ -1425,12 +850,64 @@ export default function PricingPage() {
                           <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
                         </div>
                         <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
-                          <li className="flex justify-between"><span>2D Floor Plan</span><span className="font-semibold">$119.99</span></li>
-                          <li className="flex justify-between"><span>3D House Model</span><span className="font-semibold">$189.99</span></li>
+                          <li className="flex justify-between"><span>2D Floor Plan</span><span className="font-semibold">{formatPrice(pricingData["<1000"].floorPlan2d)}</span></li>
+                          <li className="flex justify-between"><span>3D House Model</span><span className="font-semibold">{formatPrice(pricingData["<1000"].houseModel3d)}</span></li>
                         </ul>
                           </div>
                       <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Get Started</BookButton>
                             </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Slideshow Video Tour */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                {/* Image and Get quote card: hidden on mobile, visible on desktop */}
+                <div className="hidden md:block relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex flex-col justify-end bg-[#262F3F] order-1 md:order-2">
+                  <video
+                    src="/images/home/slide.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#262F3F]/80 to-transparent z-10" />
+                  <div className="relative z-20 p-8 flex flex-col justify-end h-full">
+                    <div className="mt-auto">
+                      <h3 className="text-2xl font-mazzard font-semibold text-white mb-2">Slideshow Video Tour</h3>
+                      <p className="text-white text-base font-normal mb-4">Create engaging visual flow with professionally edited slideshow videos set to music that showcase your property's best features</p>
+                      <BookButton href="/services/videography" size="lg" className="bg-[#f3a952] text-[#262F3F] font-mazzard font-semibold hover:bg-[#FFD24D]">Learn more</BookButton>
+                    </div>
+                  </div>
+                </div>
+                {/* Price/details card: visible on all screens */}
+                <div className="col-span-1 md:col-span-1">
+                  <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between min-h-[320px] border border-gray-200 overflow-hidden">
+                    <div className="block md:hidden mb-4 rounded-lg overflow-hidden">
+                      <video
+                        src="/images/home/slide.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-48 object-cover pointer-events-none"
+                      />
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-mazzard font-semibold uppercase tracking-wider text-[#6B7A86] mb-1">SLIDESHOW VIDEO TOUR</div>
+                        <div className="flex items-end gap-2 mb-1">
+                          <span className="text-3xl font-mazzard font-semibold text-[#262F3F]">{formatPrice(pricingData["<1000"].slideshowVideoTour)}</span>
+                          <span className="text-base text-[#6B7A86] font-mazzard font-normal mb-1">starting</span>
+                        </div>
+                        <ul className="mb-4 text-sm text-[#262F3F] font-mazzard space-y-1">
+                          <li className="flex justify-between"><span>Engaging Visual Flow</span></li>
+                          <li className="flex justify-between"><span>Edited to Music</span></li>
+                        </ul>
+                      </div>
+                      <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#f3a952] hover:text-[#262F3F] mt-2 w-full">Get Started</BookButton>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1468,7 +945,7 @@ export default function PricingPage() {
             <div className="mb-6 sm:mb-8">
               <h4 className="text-base sm:text-lg font-medium mb-3 sm:mb-4">2. Select your services</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                {services.map((service) => {
+                {services.filter(service => pricingData[selectedSize as SizeKey][service.id as keyof (typeof pricingData)["<1000"]]).map((service) => {
                   const price = pricingData[selectedSize as SizeKey][service.id as keyof (typeof pricingData)["<1000"]]
                   const isQty = service.id === "virtualStaging" || service.id === "virtualTwilight" || service.id === "virtualDeclutter";
                   const qty = serviceQuantities[service.id] || 1;
@@ -1528,7 +1005,7 @@ export default function PricingPage() {
                     <ul className="text-base text-gray-800 space-y-2">
                       {selectedServices.map((id) => {
                         const service = services.find(s => s.id === id);
-                        const price = pricingData[selectedSize][id as keyof (typeof pricingData)[SizeKey]];
+                        const price = pricingData[selectedSize][id as keyof (typeof pricingData)["<1000"]];
                         const qty = serviceQuantities[id] || 1;
                         return (
                           <li key={id} className="flex justify-between items-center border-b border-gray-200 pb-2 last:border-b-0 last:pb-0">
