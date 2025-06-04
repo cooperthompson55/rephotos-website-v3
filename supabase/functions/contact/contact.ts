@@ -16,7 +16,7 @@ const EMAIL_CONFIG = {
   phone: "905-299-9300"
 };
 // Add version logging
-console.log("Function version: 1.0.9");
+console.log("Function version: 1.0.10");
 console.log("Function started at:", new Date().toISOString());
 // Check if API key exists and log its presence (but not the actual key)
 // @ts-ignore
@@ -43,6 +43,402 @@ try {
   console.error("Failed to initialize Resend client:", error);
   throw error;
 }
+// --- PRICING DATA LOADING ---
+let PRICING_DATA: any = null;
+let PACKAGES_DATA: any = null;
+
+async function loadPricingData() {
+  if (PRICING_DATA && PACKAGES_DATA) {
+    return { pricingData: PRICING_DATA, packagesData: PACKAGES_DATA };
+  }
+
+  try {
+    // Load the HTML file content
+    const htmlContent = `<h2>A La Carte Services</h2><table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>Service</th>
+<th>0–999 sq ft</th>
+<th>1000–1999 sq ft</th>
+<th>2000–2999 sq ft</th>
+<th>3000–3999 sq ft</th>
+<th>4000–4999 sq ft</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HDR Photography</td>
+<td>189.99</td>
+<td>249.99</td>
+<td>319.99</td>
+<td>379.99</td>
+<td>439.99</td>
+</tr>
+<tr>
+<td>360° Virtual Tour</td>
+<td>199.99</td>
+<td>239.99</td>
+<td>279.99</td>
+<td>319.99</td>
+<td>349.99</td>
+</tr>
+<tr>
+<td>Property Highlights Video</td>
+<td>289.99</td>
+<td>309.99</td>
+<td>349.99</td>
+<td>379.99</td>
+<td>409.99</td>
+</tr>
+<tr>
+<td>Slideshow Video Tour</td>
+<td>99.99</td>
+<td>99.99</td>
+<td>99.99</td>
+<td>99.99</td>
+<td>99.99</td>
+</tr>
+<tr>
+<td>Social Media Reel</td>
+<td>229.99</td>
+<td>249.99</td>
+<td>279.99</td>
+<td>299.99</td>
+<td>329.99</td>
+</tr>
+<tr>
+<td>Drone Aerial Photos</td>
+<td>159.99</td>
+<td>159.99</td>
+<td>159.99</td>
+<td>159.99</td>
+<td>159.99</td>
+</tr>
+<tr>
+<td>Drone Aerial Video</td>
+<td>159.99</td>
+<td>159.99</td>
+<td>159.99</td>
+<td>159.99</td>
+<td>159.99</td>
+</tr>
+<tr>
+<td>2D Floor Plan</td>
+<td>119.99</td>
+<td>149.99</td>
+<td>189.99</td>
+<td>229.99</td>
+<td>269.99</td>
+</tr>
+<tr>
+<td>3D House Model</td>
+<td>189.99</td>
+<td>229.99</td>
+<td>269.99</td>
+<td>299.99</td>
+<td>339.99</td>
+</tr>
+<tr>
+<td>Property Website</td>
+<td>129.99</td>
+<td>129.99</td>
+<td>129.99</td>
+<td>129.99</td>
+<td>129.99</td>
+</tr>
+<tr>
+<td>Custom Domain Name</td>
+<td>39.99</td>
+<td>39.99</td>
+<td>39.99</td>
+<td>39.99</td>
+<td>39.99</td>
+</tr>
+<tr>
+<td>Virtual Declutter</td>
+<td>29.99/image</td>
+<td>29.99/image</td>
+<td>29.99/image</td>
+<td>29.99/image</td>
+<td>29.99/image</td>
+</tr>
+<tr>
+<td>Virtual Staging</td>
+<td>39.99/image</td>
+<td>39.99/image</td>
+<td>39.99/image</td>
+<td>39.99/image</td>
+<td>39.99/image</td>
+</tr>
+<tr>
+<td>Virtual Twilight</td>
+<td>49.99/image</td>
+<td>49.99/image</td>
+<td>49.99/image</td>
+<td>49.99/image</td>
+<td>49.99/image</td>
+</tr>
+</tbody>
+</table><br/><h2>Packages</h2><table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>Package Name</th>
+<th>Property Size</th>
+<th>New Price</th>
+<th>New A La Carte Value</th>
+<th>New Discount</th>
+<th>Includes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Essentials Package</td>
+<td>0–999 sq ft</td>
+<td>229.99</td>
+<td>479.97</td>
+<td>250</td>
+<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+</tr>
+<tr>
+<td>Essentials Package</td>
+<td>1000–1999 sq ft</td>
+<td>289.99</td>
+<td>549.97</td>
+<td>260</td>
+<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+</tr>
+<tr>
+<td>Essentials Package</td>
+<td>2000–2999 sq ft</td>
+<td>349.99</td>
+<td>609.97</td>
+<td>260</td>
+<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+</tr>
+<tr>
+<td>Essentials Package</td>
+<td>3000–3999 sq ft</td>
+<td>389.99</td>
+<td>669.97</td>
+<td>280</td>
+<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+</tr>
+<tr>
+<td>Essentials Package</td>
+<td>4000–4999 sq ft</td>
+<td>449.99</td>
+<td>729.97</td>
+<td>280</td>
+<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+</tr>
+<tr>
+<td>Deluxe Tour Package</td>
+<td>0–999 sq ft</td>
+<td>489.99</td>
+<td>839.96</td>
+<td>350</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+</tr>
+<tr>
+<td>Deluxe Tour Package</td>
+<td>1000–1999 sq ft</td>
+<td>579.99</td>
+<td>969.96</td>
+<td>390</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+</tr>
+<tr>
+<td>Deluxe Tour Package</td>
+<td>2000–2999 sq ft</td>
+<td>649.99</td>
+<td>1109.96</td>
+<td>460</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+</tr>
+<tr>
+<td>Deluxe Tour Package</td>
+<td>3000–3999 sq ft</td>
+<td>719.99</td>
+<td>1249.96</td>
+<td>530</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+</tr>
+<tr>
+<td>Deluxe Tour Package</td>
+<td>4000–4999 sq ft</td>
+<td>799.99</td>
+<td>1389.96</td>
+<td>590</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+</tr>
+<tr>
+<td>Marketing Pro Package</td>
+<td>0–999 sq ft</td>
+<td>829.99</td>
+<td>1099.96</td>
+<td>270</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
+</tr>
+<tr>
+<td>Marketing Pro Package</td>
+<td>1000–1999 sq ft</td>
+<td>959.99</td>
+<td>1259.96</td>
+<td>300</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
+</tr>
+<tr>
+<td>Marketing Pro Package</td>
+<td>2000–2999 sq ft</td>
+<td>1079.99</td>
+<td>1419.96</td>
+<td>340</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
+</tr>
+<tr>
+<td>Marketing Pro Package</td>
+<td>3000–3999 sq ft</td>
+<td>1179.99</td>
+<td>1579.96</td>
+<td>400</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
+</tr>
+<tr>
+<td>Marketing Pro Package</td>
+<td>4000–4999 sq ft</td>
+<td>1299.99</td>
+<td>1749.96</td>
+<td>450</td>
+<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
+</tr>
+<tr>
+<td>Premium Seller Experience</td>
+<td>0–999 sq ft</td>
+<td>1069.99</td>
+<td>1629.95</td>
+<td>560</td>
+<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
+</tr>
+<tr>
+<td>Premium Seller Experience</td>
+<td>1000–1999 sq ft</td>
+<td>1199.99</td>
+<td>1789.95</td>
+<td>590</td>
+<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
+</tr>
+<tr>
+<td>Premium Seller Experience</td>
+<td>2000–2999 sq ft</td>
+<td>1319.99</td>
+<td>1949.95</td>
+<td>630</td>
+<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
+</tr>
+<tr>
+<td>Premium Seller Experience</td>
+<td>3000–3999 sq ft</td>
+<td>1419.99</td>
+<td>2109.95</td>
+<td>690</td>
+<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
+</tr>
+<tr>
+<td>Premium Seller Experience</td>
+<td>4000–4999 sq ft</td>
+<td>1539.99</td>
+<td>2279.95</td>
+<td>740</td>
+<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
+</tr>
+</tbody>
+</table>`;
+
+    // Parse packages data
+    const packagesMatch = htmlContent.match(/<h2>Packages<\/h2><table[^>]*>([\s\S]*?)<\/table>/);
+    const packages: any[] = [];
+    
+    if (packagesMatch) {
+      const tableContent = packagesMatch[1];
+      const rowMatches = tableContent.match(/<tr[^>]*>[\s\S]*?<\/tr>/g);
+      
+      if (rowMatches) {
+        rowMatches.slice(1).forEach(row => {
+          const cells = row.match(/<td[^>]*>(.*?)<\/td>/g);
+          if (cells && cells.length >= 6) {
+            packages.push({
+              name: cells[0].replace(/<[^>]*>/g, '').trim(),
+              propertySize: cells[1].replace(/<[^>]*>/g, '').trim(),
+              price: parseFloat(cells[2].replace(/<[^>]*>/g, '').trim()),
+              aLaCarteValue: parseFloat(cells[3].replace(/<[^>]*>/g, '').trim()),
+              discount: parseFloat(cells[4].replace(/<[^>]*>/g, '').trim()),
+              includes: cells[5].replace(/<[^>]*>/g, '').trim()
+            });
+          }
+        });
+      }
+    }
+
+    PACKAGES_DATA = packages;
+    console.log("Loaded packages data:", packages.length, "packages");
+    
+    return { packagesData: packages };
+  } catch (error: unknown) {
+    console.error("Error loading pricing data:", error);
+    return { packagesData: [] };
+  }
+}
+
+// Function to find relevant packages for the customer's property size
+function findRelevantPackages(propertySize: string) {
+  const { packagesData } = PACKAGES_DATA ? { packagesData: PACKAGES_DATA } : { packagesData: [] };
+  
+  // Normalize property size for matching
+  const normalizeSize = (size: string) => {
+    if (size.includes('0-999') || size.includes('Under 1000')) return '0–999 sq ft';
+    if (size.includes('1000-1999') || size.includes('1000-2000')) return '1000–1999 sq ft';
+    if (size.includes('2000-2999') || size.includes('2000-3000')) return '2000–2999 sq ft';
+    if (size.includes('3000-3999') || size.includes('3000-4000')) return '3000–3999 sq ft';
+    if (size.includes('4000-4999') || size.includes('4000-5000')) return '4000–4999 sq ft';
+    return size;
+  };
+
+  const normalizedSize = normalizeSize(propertySize);
+  return packagesData.filter((pkg: any) => pkg.propertySize === normalizedSize);
+}
+
+// Function to generate package pricing section for email
+function generatePackagePricingSection(propertySize: string, currentTotal: number) {
+  const relevantPackages = findRelevantPackages(propertySize);
+  
+  if (relevantPackages.length === 0) {
+    return `Current Total: $${currentTotal.toFixed(2)}`;
+  }
+
+  let pricingSection = `CURRENT BOOKING
+Total: $${currentTotal.toFixed(2)}
+
+💰 PACKAGE SAVINGS AVAILABLE
+For your ${propertySize} property, consider these popular packages:
+
+`;
+
+  relevantPackages.forEach((pkg: any) => {
+    const savings = pkg.aLaCarteValue - pkg.price;
+    pricingSection += `📦 ${pkg.name.toUpperCase()}
+• Package Price: $${pkg.price.toFixed(2)}
+• Individual Value: $${pkg.aLaCarteValue.toFixed(2)}
+• You Save: $${savings.toFixed(2)}
+• Includes: ${pkg.includes}
+
+`;
+  });
+
+  pricingSection += `Want to switch to a package? Reply to this email or call us at ${EMAIL_CONFIG.phone}`;
+
+  return pricingSection;
+}
+
 // --- VOLUME DISCOUNT HELPERS ---
 function getDiscountPercent(amount: any) {
   if (amount >= 1100) return 17;
@@ -174,7 +570,7 @@ serve(async (req: any)=>{
         console.error(`[${requestId}] Test email failed:`, error);
         return new Response(JSON.stringify({
           error: "Test email failed",
-          details: error.message,
+          details: (error as Error).message,
           requestId,
           timestamp: new Date().toISOString(),
           from: EMAIL_CONFIG.from
@@ -204,6 +600,9 @@ serve(async (req: any)=>{
     });
   }
   try {
+    // Load pricing data at the start of each request
+    await loadPricingData();
+
     // Log the raw request body
     const body = await req.text();
     console.log(`[${requestId}] Raw request body:`, body);
@@ -228,6 +627,7 @@ serve(async (req: any)=>{
       });
       throw new Error(`Invalid request data: ${err.message}`);
     }
+
     // Log the parsed record (excluding sensitive data)
     console.log(`[${requestId}] Processing booking record:`, {
       property_size: record.property_size,
@@ -241,11 +641,15 @@ serve(async (req: any)=>{
       address_type: typeof record.address,
       has_notes: !!record.notes
     });
-    const { property_size, services, total_amount, address, notes, preferred_date, time, property_status, agent_name, agent_email, agent_phone, agent_company } = record;
+
+    const { property_size, services, total_amount, address, notes, preferred_date, time, property_status, agent_name, agent_email, agent_phone, agent_company, package_name } = record;
+
     // Format services for display
     const serviceList = services.map((service: any)=>`${service.name} (${service.count}x) - $${service.total}`).join("\n");
+
     // Format address
     const addressStr = typeof address === 'string' ? address : `${address.street}, ${address.city}, ${address.province} ${address.zipCode}`;
+
     // Format time for display (convert 24h to 12h format)
     const formatTime = (timeStr: any)=>{
       const [hours, minutes] = timeStr.split(':');
@@ -254,9 +658,11 @@ serve(async (req: any)=>{
       const hour12 = hour % 12 || 12;
       return `${hour12}:${minutes} ${ampm}`;
     };
-    // --- DISCOUNT CALC ---
+
+    // --- ENHANCED PRICING SECTION WITH PACKAGES ---
     const rawTotal = typeof total_amount === 'number' ? total_amount : parseFloat(total_amount);
-    let priceSection = `Subtotal: $${rawTotal.toFixed(2)}\nTotal: $${rawTotal.toFixed(2)}`;
+    const priceSection = generatePackagePricingSection(property_size, rawTotal);
+
     const emailBody = `Dear ${agent_name},
 
 Thank you for choosing ${EMAIL_CONFIG.companyName} for your photography needs! We're excited to help showcase your property.
@@ -266,6 +672,7 @@ Thank you for choosing ${EMAIL_CONFIG.companyName} for your photography needs! W
 PROPERTY DETAILS
 • Size: ${property_size}
 • Status: ${property_status}
+${package_name ? `• Package: ${package_name}` : ''}
 • Preferred Date: ${new Date(preferred_date).toLocaleDateString('en-US', {
       month: 'long',
       day: 'numeric',
@@ -302,6 +709,7 @@ Cooper Thompson
 ${EMAIL_CONFIG.from}
 ${EMAIL_CONFIG.phone}
 ${EMAIL_CONFIG.companyName.toLowerCase()}.ca`.trim();
+
     try {
       console.log(`[${requestId}] Sending booking confirmation email...`);
       const emailResponse = await sendEmail([

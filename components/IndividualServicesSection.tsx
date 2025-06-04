@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { BookButton } from "@/components/ui/book-button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { loadPricingData, type SizeKey, type PricingData } from "@/lib/pricing-parser"
+import Link from "next/link"
 
 // BeforeAfterSlider Component
 const BeforeAfterSlider = ({ beforeSrc, afterSrc, alt }: { beforeSrc: string; afterSrc: string; alt: string }) => {

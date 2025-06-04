@@ -373,6 +373,7 @@ export default function BookNowPage() {
       agent_email: safe(values.email),
       agent_phone: safe(values.phone),
       agent_company: 'Unknown',
+      package_name: selectedPackage || null,
     };
 
     try {
@@ -1734,29 +1735,41 @@ export default function BookNowPage() {
                   {(selectedPackage ? 1 : 0) + selectedServices.length} item{(selectedPackage ? 1 : 0) + selectedServices.length !== 1 ? 's' : ''} selected
                 </span>
               </div>
-              <div className="text-xl font-bold text-[#262F3F]">
-                ${(() => {
-                  let total = 0;
-                  if (selectedPackage && packagesData) {
-                    const pkg = packagesData[selectedSize as SizeKey]?.find(p => p.name === selectedPackage);
-                    if (pkg) total += parseFloat(pkg.price.replace('$', ''));
-                  }
-                  total += selectedServices.reduce((sum, id) => {
-                    const service = getServicesFromPricingData(pricingData).find(s => s.id === id);
-                    if (!service) return sum;
-                    const sizeIdx = sizeOptions.findIndex(opt => opt.value === selectedSize);
-                    const price = Array.isArray(service.prices) ? service.prices[sizeIdx] : service.prices;
-                    const qty = serviceQuantities[id] || 1;
-                    let priceNum = 0;
-                    if (typeof price === 'number') priceNum = price;
-                    else if (typeof price === 'string') {
-                      const match = price.match(/\d+(\.\d+)?/);
-                      priceNum = match ? parseFloat(match[0]) : 0;
+              
+              {/* Right side - Total and Proceed button */}
+              <div className="flex items-center gap-4">
+                <div className="text-xl font-bold text-[#262F3F]">
+                  ${(() => {
+                    let total = 0;
+                    if (selectedPackage && packagesData) {
+                      const pkg = packagesData[selectedSize as SizeKey]?.find(p => p.name === selectedPackage);
+                      if (pkg) total += parseFloat(pkg.price.replace('$', ''));
                     }
-                    return sum + priceNum * qty;
-                  }, 0);
-                  return total.toFixed(2);
-                })()}
+                    total += selectedServices.reduce((sum, id) => {
+                      const service = getServicesFromPricingData(pricingData).find(s => s.id === id);
+                      if (!service) return sum;
+                      const sizeIdx = sizeOptions.findIndex(opt => opt.value === selectedSize);
+                      const price = Array.isArray(service.prices) ? service.prices[sizeIdx] : service.prices;
+                      const qty = serviceQuantities[id] || 1;
+                      let priceNum = 0;
+                      if (typeof price === 'number') priceNum = price;
+                      else if (typeof price === 'string') {
+                        const match = price.match(/\d+(\.\d+)?/);
+                        priceNum = match ? parseFloat(match[0]) : 0;
+                      }
+                      return sum + priceNum * qty;
+                    }, 0);
+                    return total.toFixed(2);
+                  })()}
+                </div>
+                <button
+                  className="bg-[#1c4596] hover:bg-[#2853AE] text-white font-semibold rounded-lg px-4 py-2 transition disabled:opacity-60"
+                  disabled={!(selectedPackage || selectedServices.length > 0)}
+                  type="button"
+                  onClick={() => handleStepNavigation(4)}
+                >
+                  Proceed to Checkout
+                </button>
               </div>
             </div>
             {/* Expandable order details */}

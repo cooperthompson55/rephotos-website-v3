@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { GalleryDisplay } from "@/components/home/GalleryDisplay"
 import { CaseStudySection } from "@/components/home/CaseStudySection"
 import { CTASection } from "@/components/home/CTASection"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Fullscreen, Minimize } from "lucide-react"
 
 // Portfolio properties data
 const portfolioProperties = [
@@ -25,6 +25,39 @@ const portfolioProperties = [
 export default function PortfolioPage() {
   const [selectedProperty, setSelectedProperty] = useState<typeof portfolioProperties[0] | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const mainImageRef = useRef<HTMLDivElement>(null);
+
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (selectedProperty) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProperty]);
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('msfullscreenchange', handleFullscreenChange);
+    };
+  }, []);
 
   const openGallery = (property: typeof portfolioProperties[0]) => {
     setSelectedProperty(property)
@@ -32,6 +65,10 @@ export default function PortfolioPage() {
   }
 
   const closeGallery = () => {
+    // Exit fullscreen if active before closing gallery
+    if (isFullscreen) {
+      exitFullscreen();
+    }
     setSelectedProperty(null)
     setCurrentImageIndex(0)
   }
@@ -51,6 +88,34 @@ export default function PortfolioPage() {
       )
     }
   }
+
+  // Handler to trigger fullscreen
+  const handleFullscreen = () => {
+    if (mainImageRef.current && !isFullscreen) {
+      if (mainImageRef.current.requestFullscreen) {
+        mainImageRef.current.requestFullscreen();
+      } else if ((mainImageRef.current as any).webkitRequestFullscreen) {
+        (mainImageRef.current as any).webkitRequestFullscreen();
+      } else if ((mainImageRef.current as any).msRequestFullscreen) {
+        (mainImageRef.current as any).msRequestFullscreen();
+      }
+    }
+  };
+
+  // Handler to exit fullscreen
+  const exitFullscreen = () => {
+    if (isFullscreen) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).mozCancelFullScreen) {
+        (document as any).mozCancelFullScreen();
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen();
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -130,10 +195,10 @@ export default function PortfolioPage() {
 
       {/* Image Gallery Modal */}
       {selectedProperty && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-          <div className="w-full max-w-6xl mx-auto">
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="w-full max-w-6xl mx-auto flex flex-col max-h-[90vh]">
             {/* Header */}
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-6 shrink-0">
               <div className="text-white">
                 <h3 className="text-2xl font-semibold">{selectedProperty.address}</h3>
                 <p className="text-gray-300">{selectedProperty.town}</p>
@@ -147,7 +212,7 @@ export default function PortfolioPage() {
             </div>
 
             {/* Main Image */}
-            <div className="relative aspect-[4/3] mb-6 bg-black rounded-lg overflow-hidden">
+            <div ref={mainImageRef} className="relative aspect-[4/3] mb-6 bg-black rounded-lg overflow-hidden grow flex items-center justify-center">
               <Image
                 src={selectedProperty.images[currentImageIndex]}
                 alt={`${selectedProperty.address} - Image ${currentImageIndex + 1}`}
@@ -155,6 +220,15 @@ export default function PortfolioPage() {
                 className="object-contain"
               />
               
+              {/* Fullscreen/Exit Fullscreen Icon */}
+              <button
+                onClick={isFullscreen ? exitFullscreen : handleFullscreen}
+                className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/75 rounded-full p-2 z-10"
+                title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+              >
+                {isFullscreen ? <Minimize className="h-6 w-6" /> : <Fullscreen className="h-6 w-6" />}
+              </button>
+
               {/* Navigation Arrows */}
               <button
                 onClick={prevImage}
@@ -168,7 +242,6 @@ export default function PortfolioPage() {
               >
                 <ChevronRight className="h-6 w-6" />
               </button>
-
               {/* Image Counter */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-3 py-1 rounded-full text-sm">
                 {currentImageIndex + 1} / {selectedProperty.images.length}
@@ -176,7 +249,7 @@ export default function PortfolioPage() {
             </div>
 
             {/* Thumbnail Grid */}
-            <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2 max-h-32 overflow-y-auto">
+            <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2 max-h-32 overflow-y-auto shrink-0">
               {selectedProperty.images.map((image, index) => (
                 <button
                   key={index}

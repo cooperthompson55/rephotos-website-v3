@@ -25,3 +25,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Large video files (prevent GitHub file size issues)
+**/1080p-*.mp4
+**/*1080p*.mp4
+# Add any other large video patterns here
+# *.mp4 # Uncomment if you want to ignore all MP4 files

@@ -9,9 +9,10 @@ import { GalleryDisplay } from "@/components/home/GalleryDisplay"
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { OptimizedVideo } from "@/components/ui/optimized-video"
 import { CheckCircle, Video, Instagram, Plane, Images, Volume2, VolumeX } from "lucide-react"
 import Link from "next/link"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 
 const pricingTiers = [
   {
@@ -59,6 +60,29 @@ const pricingTiers = [
 export default function Home() {
   const [isMuted, setIsMuted] = useState(true)
   const slideshowVideoRef = useRef<HTMLVideoElement>(null)
+
+  // Preload critical videos for better performance
+  useEffect(() => {
+    // Only preload on larger screens and with good connection
+    if (typeof window !== 'undefined' && window.innerWidth > 768) {
+      const link1 = document.createElement('link')
+      link1.rel = 'preload'
+      link1.as = 'video'
+      link1.href = '/horizontal.mp4'
+      document.head.appendChild(link1)
+
+      const link2 = document.createElement('link')
+      link2.rel = 'preload'
+      link2.as = 'video'
+      link2.href = '/vertical.mp4'
+      document.head.appendChild(link2)
+
+      return () => {
+        document.head.removeChild(link1)
+        document.head.removeChild(link2)
+      }
+    }
+  }, [])
 
   const toggleMute = () => {
     if (slideshowVideoRef.current) {
@@ -252,7 +276,7 @@ export default function Home() {
                 <CardHeader className="text-center">
                   {/* All videos use the same aspect ratio and max height for consistency */}
                   {(index === 0 || index === 1 || index === 2) && (
-                    <video
+                    <OptimizedVideo
                       src={
                         index === 0
                           ? "/horizontal.mp4"
@@ -260,12 +284,6 @@ export default function Home() {
                           ? "/vertical.mp4"
                           : "/aerial.mp4"
                       }
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      disableRemotePlayback
-                      controlsList="nodownload noremoteplayback"
                       poster={
                         index === 0
                           ? "/images/photobank/s_2.webp"
@@ -275,36 +293,26 @@ export default function Home() {
                       }
                       className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
                       style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
-                    >
-                      Your browser does not support the video tag.
-                    </video>
+                    />
                   )}
                   {index === 3 && (
                     <div className="relative">
-                      <video
-                        ref={slideshowVideoRef}
+                      <OptimizedVideo
                         src="/images/services/videography/824-gazley-slideshow.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        disableRemotePlayback
-                        controlsList="nodownload noremoteplayback"
                         className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
                         style={{ aspectRatio: '16/9', height: '225px', maxHeight: '225px' }}
                       >
-                        Your browser does not support the video tag.
-                      </video>
-                      <button
-                        onClick={toggleMute}
-                        className="absolute bottom-2 right-2 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
-                      >
-                        {isMuted ? (
-                          <VolumeX className="w-4 h-4 text-white" />
-                        ) : (
-                          <Volume2 className="w-4 h-4 text-white" />
-                        )}
-                      </button>
+                        <button
+                          onClick={toggleMute}
+                          className="absolute bottom-2 right-2 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+                        >
+                          {isMuted ? (
+                            <VolumeX className="w-4 h-4 text-white" />
+                          ) : (
+                            <Volume2 className="w-4 h-4 text-white" />
+                          )}
+                        </button>
+                      </OptimizedVideo>
                     </div>
                   )}
                   <div className="flex items-center justify-center mb-4">
