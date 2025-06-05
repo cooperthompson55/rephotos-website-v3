@@ -301,6 +301,7 @@ export default function BookNowPage() {
       // Find the selected package object
       const pkg = packagesData[propertySize as SizeKey]?.find(p => p.name === selectedPackage);
       if (pkg) {
+        console.log('Found package:', pkg);
         // For each feature, try to find a matching service for price, else price 0
         servicesArr = pkg.features.map(f => {
           // Try to match to a service for price
@@ -323,6 +324,7 @@ export default function BookNowPage() {
         totalAmount = servicesArr.reduce((sum: number, s: any) => sum + s.total, 0);
       }
     } else if (selectedServices.length > 0) {
+      console.log('Selected individual services:', selectedServices);
       servicesArr = selectedServices.map(id => {
         const service = getServicesFromPricingData(pricingData).find(s => s.id === id);
         if (!service) return null;
@@ -345,24 +347,16 @@ export default function BookNowPage() {
       totalAmount = servicesArr.reduce((sum: number, s: any) => sum + s.total, 0);
     }
 
-    const safe = (val: string | undefined | null) => (val && val.trim() !== '' ? val : 'Unknown');
-    const street = safe(values.address);
-    const street2 = '';
-    const city = '';
-    const province = '';
-    const zipCode = '';
+    console.log('Built services array:', servicesArr);
+    console.log('Total amount:', totalAmount);
 
+    const safe = (val: string | undefined | null) => (val && val.trim() !== '' ? val : 'Unknown');
+    
     const payload = {
       property_size: propertySize,
       services: servicesArr,
       total_amount: parseFloat(totalAmount.toFixed(2)),
-      address: {
-        street: safe(street),
-        street2: safe(street2),
-        city: safe(city),
-        province: safe(province),
-        zipCode: safe(zipCode),
-      },
+      address: safe(values.address), // Send as simple string, not object
       notes: safe(values.additionalInfo || ''),
       preferred_date: safe(values.date),
       time: safe(values.time),
@@ -376,20 +370,32 @@ export default function BookNowPage() {
       package_name: selectedPackage || null,
     };
 
+    console.log('Sending payload to Supabase:', payload);
+
     try {
       const { data, error } = await supabase
         .from('bookings')
         .insert([payload]);
+        
+      console.log('Supabase response:', { data, error });
+      
       setIsSubmitting(false);
       if (error) {
+        console.error('Supabase error details:', error);
+        console.error('Error message:', error.message);
+        console.error('Error details:', error.details);
+        console.error('Error hint:', error.hint);
         setIsSuccess(false);
         setSubmitStatus('error');
         setSubmitAnim('error');
+        setTopLevelError(`Booking failed: ${error.message}`);
         setTimeout(() => setSubmitAnim('idle'), 1200);
       } else {
+        console.log('Booking successful:', data);
         // Trigger Supabase Edge Function after successful booking
         try {
-          await fetch('https://jshnsfvvsmjlxlbdpehf.functions.supabase.co/index', {
+          console.log('Calling edge function...');
+          const edgeResponse = await fetch('https://jshnsfvvsmjlxlbdpehf.functions.supabase.co/index', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -397,6 +403,7 @@ export default function BookNowPage() {
             },
             body: JSON.stringify(payload),
           });
+          console.log('Edge function response:', edgeResponse.status);
         } catch (e) {
           // Optionally handle/log edge function errors, but don't block user
           console.error('Edge function call failed:', e);
@@ -407,10 +414,12 @@ export default function BookNowPage() {
         setTimeout(() => setSubmitAnim('idle'), 1200);
       }
     } catch (err) {
+      console.error('Unexpected error during booking submission:', err);
       setIsSubmitting(false);
       setIsSuccess(false);
       setSubmitStatus('error');
       setSubmitAnim('error');
+      setTopLevelError(`Booking failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
       setTimeout(() => setSubmitAnim('idle'), 1200);
     }
   }
