@@ -46,10 +46,13 @@ export default function PortfolioPage() {
   const [showThumbnails, setShowThumbnails] = useState(false); // Thumbnails hidden by default on mobile
   const [videoError, setVideoError] = useState(false); // Track video loading errors
   const [videoLoading, setVideoLoading] = useState(false); // Track video loading state
+  const [videoReady, setVideoReady] = useState(false); // Track if video is ready to play
+  const [videoPaused, setVideoPaused] = useState(true); // Track video play state
   const [isMobile, setIsMobile] = useState(false); // Track if on mobile device
   const mainImageRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Detect mobile device
   useEffect(() => {
@@ -100,6 +103,8 @@ export default function PortfolioPage() {
     setCurrentImageIndex(0)
     setVideoError(false) // Reset video error state when opening gallery
     setVideoLoading(false) // Reset video loading state when opening gallery
+    setVideoReady(false) // Reset video ready state when opening gallery
+    setVideoPaused(true) // Reset video play state when opening gallery
   }
 
   const closeGallery = () => {
@@ -111,20 +116,29 @@ export default function PortfolioPage() {
     if (isMobileFullscreen) {
       setIsMobileFullscreen(false);
     }
+    // Clear video timeout
+    if (videoTimeoutRef.current) {
+      clearTimeout(videoTimeoutRef.current);
+      videoTimeoutRef.current = null;
+    }
     setSelectedProperty(null)
     setCurrentImageIndex(0)
     setVideoError(false) // Reset video error state when closing gallery
     setVideoLoading(false) // Reset video loading state when closing gallery
+    setVideoReady(false) // Reset video ready state when closing gallery
+    setVideoPaused(true) // Reset video play state when closing gallery
   }
 
   const nextImage = () => {
     if (selectedProperty) {
       const newIndex = currentImageIndex === selectedProperty.images.length - 1 ? 0 : currentImageIndex + 1;
       setCurrentImageIndex(newIndex);
-      // Reset video error and loading if navigating to video (index 0 in slideshow mode)
+      // Reset video states if navigating to video (index 0 in slideshow mode)
       if (showSlideshow && newIndex === 0) {
         setVideoError(false);
         setVideoLoading(false);
+        setVideoReady(false);
+        setVideoPaused(true);
       }
     }
   }
@@ -133,10 +147,12 @@ export default function PortfolioPage() {
     if (selectedProperty) {
       const newIndex = currentImageIndex === 0 ? selectedProperty.images.length - 1 : currentImageIndex - 1;
       setCurrentImageIndex(newIndex);
-      // Reset video error and loading if navigating to video (index 0 in slideshow mode)
+      // Reset video states if navigating to video (index 0 in slideshow mode)
       if (showSlideshow && newIndex === 0) {
         setVideoError(false);
         setVideoLoading(false);
+        setVideoReady(false);
+        setVideoPaused(true);
       }
     }
   }
@@ -422,43 +438,91 @@ export default function PortfolioPage() {
                     webkit-playsinline="true" // Additional iOS compatibility
                     onLoadStart={() => {
                       console.log('Video loading started:', selectedProperty.slideshowVideo);
-                      fetch(selectedProperty.slideshowVideo, { method: 'HEAD' })
-                        .then(response => {
-                          console.log('Video URL check:', response.status, response.statusText);
-                          if (!response.ok) {
-                            console.error('Video URL not accessible:', response.status);
-                          }
-                        })
-                        .catch(error => {
-                          console.error('Video URL fetch failed:', error);
-                        });
                       setVideoLoading(true);
                       setVideoError(false);
+                      setVideoReady(false);
+                      
+                      // Clear any existing timeout
+                      if (videoTimeoutRef.current) {
+                        clearTimeout(videoTimeoutRef.current);
+                      }
+                      
+                      // Set a timeout for mobile devices (30 seconds)
+                      if (isMobile) {
+                        videoTimeoutRef.current = setTimeout(() => {
+                          console.warn('Video loading timeout on mobile');
+                          setVideoError(true);
+                          setVideoLoading(false);
+                        }, 30000);
+                      }
                     }}
                     onLoadedMetadata={() => {
                       console.log('Video metadata loaded');
                       setVideoLoading(false);
+                      // Clear timeout since video started loading
+                      if (videoTimeoutRef.current) {
+                        clearTimeout(videoTimeoutRef.current);
+                        videoTimeoutRef.current = null;
+                      }
                     }}
                     onLoadedData={() => {
                       console.log('Video data loaded successfully');
                       setVideoLoading(false);
+                      // Clear timeout since video loaded
+                      if (videoTimeoutRef.current) {
+                        clearTimeout(videoTimeoutRef.current);
+                        videoTimeoutRef.current = null;
+                      }
                     }}
                     onCanPlay={() => {
                       console.log('Video can play');
                       setVideoLoading(false);
+                      setVideoReady(true);
+                      // Clear timeout since video is ready
+                      if (videoTimeoutRef.current) {
+                        clearTimeout(videoTimeoutRef.current);
+                        videoTimeoutRef.current = null;
+                      }
+                      // On desktop, try to autoplay
+                      if (!isMobile && videoRef.current) {
+                        videoRef.current.play().catch(error => {
+                          console.warn('Video autoplay failed:', error);
+                        });
+                      }
+                    }}
+                    onCanPlayThrough={() => {
+                      console.log('Video can play through');
+                      setVideoReady(true);
+                    }}
+                    onPlay={() => {
+                      console.log('Video started playing');
+                      setVideoPaused(false);
+                    }}
+                    onPause={() => {
+                      console.log('Video paused');
+                      setVideoPaused(true);
                     }}
                     onError={(e) => {
-                      console.error('Video failed to load:', selectedProperty.slideshowVideo, e);
+                      console.error('Video failed to load:', selectedProperty.slideshowVideo);
                       console.error('Video error details:', e.currentTarget.error);
+                      console.error('Error code:', e.currentTarget.error?.code);
+                      console.error('Error message:', e.currentTarget.error?.message);
                       setVideoError(true);
                       setVideoLoading(false);
+                      setVideoReady(false);
+                      // Clear timeout on error
+                      if (videoTimeoutRef.current) {
+                        clearTimeout(videoTimeoutRef.current);
+                        videoTimeoutRef.current = null;
+                      }
                     }}
                     onAbort={() => {
                       console.log('Video loading aborted');
                       setVideoLoading(false);
                     }}
                     onStalled={() => {
-                      console.warn('Video loading stalled');
+                      console.warn('Video loading stalled - network might be slow');
+                      // Don't set error immediately, just warn
                     }}
                     onSuspend={() => {
                       console.log('Video loading suspended');
@@ -466,21 +530,43 @@ export default function PortfolioPage() {
                     onWaiting={() => {
                       console.log('Video waiting for more data');
                     }}
+                    onProgress={() => {
+                      if (videoRef.current) {
+                        const buffered = videoRef.current.buffered;
+                        if (buffered.length > 0) {
+                          const bufferedEnd = buffered.end(buffered.length - 1);
+                          const duration = videoRef.current.duration;
+                          if (duration > 0) {
+                            const bufferedPercent = (bufferedEnd / duration) * 100;
+                            console.log(`Video buffered: ${bufferedPercent.toFixed(1)}%`);
+                          }
+                        }
+                      }
+                    }}
                     {...(!isMobile ? { autoPlay: true } : {})}
                   />
                   {/* Tap to play overlay for mobile if video is paused */}
-                  {isMobile && videoRef.current && videoRef.current.paused && !videoLoading && !videoError && (
+                  {isMobile && videoReady && videoPaused && !videoLoading && !videoError && (
                     <button
                       className="absolute inset-0 flex items-center justify-center bg-black/40 z-20"
                       style={{ fontSize: 48, color: 'white', border: 'none', background: 'none', cursor: 'pointer' }}
                       aria-label="Play slideshow video"
                       tabIndex={0}
                       onClick={() => {
-                        if (videoRef.current) videoRef.current.play();
+                        if (videoRef.current) {
+                          videoRef.current.play().catch(error => {
+                            console.error('Failed to play video:', error);
+                          });
+                        }
                       }}
                       onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
-                          if (videoRef.current) videoRef.current.play();
+                          e.preventDefault();
+                          if (videoRef.current) {
+                            videoRef.current.play().catch(error => {
+                              console.error('Failed to play video:', error);
+                            });
+                          }
                         }
                       }}
                     >
@@ -509,6 +595,8 @@ export default function PortfolioPage() {
                           console.log('Video URL:', selectedProperty.slideshowVideo);
                           setVideoError(false);
                           setVideoLoading(true);
+                          setVideoReady(false);
+                          setVideoPaused(true);
                           // Try to reload the video
                           if (videoRef.current) {
                             videoRef.current.load();
@@ -611,6 +699,8 @@ export default function PortfolioPage() {
                       setCurrentImageIndex(0);
                       setVideoError(false); // Reset video error when clicking video thumbnail
                       setVideoLoading(false); // Reset video loading when clicking video thumbnail
+                      setVideoReady(false); // Reset video ready when clicking video thumbnail
+                      setVideoPaused(true); // Reset video play state when clicking video thumbnail
                     }}
                     className={`relative flex-shrink-0 w-16 h-16 md:w-auto md:h-auto md:aspect-square overflow-hidden rounded transition-all duration-200 ${
                       currentImageIndex === 0 ? 'ring-2 ring-white' : 'hover:ring-1 hover:ring-gray-400'
