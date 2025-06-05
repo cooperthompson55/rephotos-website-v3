@@ -13,27 +13,27 @@ const portfolioProperties = [
     id: "2272-mowat-oakville",
     address: "2272 Mowat Avenue",
     town: "Oakville",
-    coverImage: encodeURI("/images/portfolio/2272 Mowat Avenue, Oakville/1-gallery.webp"),
+    coverImage: "/images/portfolio/2272%20Mowat%20Avenue,%20Oakville/1-gallery.webp",
     totalImages: 42,
     images: Array.from({ length: 42 }, (_, i) => 
-      encodeURI(`/images/portfolio/2272 Mowat Avenue, Oakville/${i + 1}-gallery.webp`)
+      `/images/portfolio/2272%20Mowat%20Avenue,%20Oakville/${i + 1}-gallery.webp`
     ),
-    slideshowVideo: encodeURI("/images/portfolio/2272 Mowat Avenue, Oakville/2272-mowat-1080p.mp4")
+    slideshowVideo: "/images/portfolio/2272%20Mowat%20Avenue,%20Oakville/2272-mowat-1080p.mp4"
   },
   {
     id: "824-gazley-milton",
     address: "824 Gazley Circle",
     town: "Milton",
-    coverImage: encodeURI("/images/portfolio/824 Gazley Circle, Milton/1-exterior-gallery.webp"),
+    coverImage: "/images/portfolio/824%20Gazley%20Circle,%20Milton/1-exterior-gallery.webp",
     totalImages: 45,
     images: [
-      encodeURI("/images/portfolio/824 Gazley Circle, Milton/1-exterior-gallery.webp"),
-      encodeURI("/images/portfolio/824 Gazley Circle, Milton/2-exterior-gallery.webp"),
+      "/images/portfolio/824%20Gazley%20Circle,%20Milton/1-exterior-gallery.webp",
+      "/images/portfolio/824%20Gazley%20Circle,%20Milton/2-exterior-gallery.webp",
       ...Array.from({ length: 43 }, (_, i) =>
-        encodeURI(`/images/portfolio/824 Gazley Circle, Milton/${i + 3}-gallery.webp`)
+        `/images/portfolio/824%20Gazley%20Circle,%20Milton/${i + 3}-gallery.webp`
       )
     ],
-    slideshowVideo: encodeURI("/images/portfolio/824 Gazley Circle, Milton/1080p-824-gazley-circle.mp4")
+    slideshowVideo: "/images/portfolio/824%20Gazley%20Circle,%20Milton/1080p-824-gazley-circle.mp4"
   }
 ]
 
@@ -45,6 +45,7 @@ export default function PortfolioPage() {
   const [showSlideshow, setShowSlideshow] = useState(false);
   const [showThumbnails, setShowThumbnails] = useState(false); // Thumbnails hidden by default on mobile
   const [videoError, setVideoError] = useState(false); // Track video loading errors
+  const [videoLoading, setVideoLoading] = useState(false); // Track video loading state
   const [isMobile, setIsMobile] = useState(false); // Track if on mobile device
   const mainImageRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -98,6 +99,7 @@ export default function PortfolioPage() {
     setShowSlideshow(slideshow)
     setCurrentImageIndex(0)
     setVideoError(false) // Reset video error state when opening gallery
+    setVideoLoading(false) // Reset video loading state when opening gallery
   }
 
   const closeGallery = () => {
@@ -112,15 +114,17 @@ export default function PortfolioPage() {
     setSelectedProperty(null)
     setCurrentImageIndex(0)
     setVideoError(false) // Reset video error state when closing gallery
+    setVideoLoading(false) // Reset video loading state when closing gallery
   }
 
   const nextImage = () => {
     if (selectedProperty) {
       const newIndex = currentImageIndex === selectedProperty.images.length - 1 ? 0 : currentImageIndex + 1;
       setCurrentImageIndex(newIndex);
-      // Reset video error if navigating to video (index 0 in slideshow mode)
+      // Reset video error and loading if navigating to video (index 0 in slideshow mode)
       if (showSlideshow && newIndex === 0) {
         setVideoError(false);
+        setVideoLoading(false);
       }
     }
   }
@@ -129,9 +133,10 @@ export default function PortfolioPage() {
     if (selectedProperty) {
       const newIndex = currentImageIndex === 0 ? selectedProperty.images.length - 1 : currentImageIndex - 1;
       setCurrentImageIndex(newIndex);
-      // Reset video error if navigating to video (index 0 in slideshow mode)
+      // Reset video error and loading if navigating to video (index 0 in slideshow mode)
       if (showSlideshow && newIndex === 0) {
         setVideoError(false);
+        setVideoLoading(false);
       }
     }
   }
@@ -394,37 +399,95 @@ export default function PortfolioPage() {
             {/* Main Media (Video or Image) */}
             {showSlideshow && currentImageIndex === 0 ? (
               !videoError ? (
-                <video
-                  ref={videoRef}
-                  src={selectedProperty.slideshowVideo}
-                  controls
-                  playsInline // Required for iOS Safari
-                  muted={isMobile} // Mute on mobile to allow autoplay
-                  autoPlay={!isMobile} // Only autoplay on desktop
-                  preload="auto" // Better preloading for improved reliability
-                  className="w-full h-full object-contain max-w-full max-h-full"
-                  poster={selectedProperty.coverImage}
-                  onError={(e) => {
-                    console.error('Video failed to load:', selectedProperty.slideshowVideo, e);
-                    setVideoError(true);
-                  }}
-                  onLoadStart={() => {
-                    console.log('Video loading started:', selectedProperty.slideshowVideo);
-                    setVideoError(false);
-                  }}
-                  onLoadedData={() => {
-                    console.log('Video data loaded successfully');
-                  }}
-                  onCanPlay={() => {
-                    console.log('Video can play');
-                    // Try to play the video on mobile when it's ready
-                    if (isMobile && videoRef.current) {
-                      videoRef.current.play().catch(error => {
-                        console.warn('Video autoplay failed on mobile:', error);
-                      });
-                    }
-                  }}
-                />
+                <div className="relative w-full h-full">
+                  {/* Loading Spinner */}
+                  {videoLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
+                      <div className="text-white text-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
+                        <p className="text-sm">Loading video...</p>
+                      </div>
+                    </div>
+                  )}
+                  {/* Video Element */}
+                  <video
+                    ref={videoRef}
+                    src={selectedProperty.slideshowVideo}
+                    controls
+                    playsInline // Required for iOS Safari
+                    muted // Always muted for mobile compatibility
+                    preload={isMobile ? "metadata" : "auto"}
+                    className="w-full h-full object-contain max-w-full max-h-full"
+                    poster={selectedProperty.coverImage}
+                    webkit-playsinline="true" // Additional iOS compatibility
+                    onLoadStart={() => {
+                      console.log('Video loading started:', selectedProperty.slideshowVideo);
+                      fetch(selectedProperty.slideshowVideo, { method: 'HEAD' })
+                        .then(response => {
+                          console.log('Video URL check:', response.status, response.statusText);
+                          if (!response.ok) {
+                            console.error('Video URL not accessible:', response.status);
+                          }
+                        })
+                        .catch(error => {
+                          console.error('Video URL fetch failed:', error);
+                        });
+                      setVideoLoading(true);
+                      setVideoError(false);
+                    }}
+                    onLoadedMetadata={() => {
+                      console.log('Video metadata loaded');
+                      setVideoLoading(false);
+                    }}
+                    onLoadedData={() => {
+                      console.log('Video data loaded successfully');
+                      setVideoLoading(false);
+                    }}
+                    onCanPlay={() => {
+                      console.log('Video can play');
+                      setVideoLoading(false);
+                    }}
+                    onError={(e) => {
+                      console.error('Video failed to load:', selectedProperty.slideshowVideo, e);
+                      console.error('Video error details:', e.currentTarget.error);
+                      setVideoError(true);
+                      setVideoLoading(false);
+                    }}
+                    onAbort={() => {
+                      console.log('Video loading aborted');
+                      setVideoLoading(false);
+                    }}
+                    onStalled={() => {
+                      console.warn('Video loading stalled');
+                    }}
+                    onSuspend={() => {
+                      console.log('Video loading suspended');
+                    }}
+                    onWaiting={() => {
+                      console.log('Video waiting for more data');
+                    }}
+                    {...(!isMobile ? { autoPlay: true } : {})}
+                  />
+                  {/* Tap to play overlay for mobile if video is paused */}
+                  {isMobile && videoRef.current && videoRef.current.paused && !videoLoading && !videoError && (
+                    <button
+                      className="absolute inset-0 flex items-center justify-center bg-black/40 z-20"
+                      style={{ fontSize: 48, color: 'white', border: 'none', background: 'none', cursor: 'pointer' }}
+                      aria-label="Play slideshow video"
+                      tabIndex={0}
+                      onClick={() => {
+                        if (videoRef.current) videoRef.current.play();
+                      }}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          if (videoRef.current) videoRef.current.play();
+                        }
+                      }}
+                    >
+                      ▶
+                    </button>
+                  )}
+                </div>
               ) : (
                 // Fallback: Show poster image if video fails to load
                 <div className="w-full h-full flex flex-col items-center justify-center bg-gray-900 text-white">
@@ -437,17 +500,22 @@ export default function PortfolioPage() {
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 p-4">
                     <div className="text-center">
                       <p className="text-lg font-semibold mb-2">Video Unavailable</p>
-                      <p className="text-sm text-gray-300 mb-4">The slideshow video could not be loaded.</p>
+                      <p className="text-sm text-gray-300 mb-4">
+                        The slideshow video could not be loaded. This may be due to a slow connection, device limitations, or browser restrictions. Please try again or view on desktop for best experience.
+                      </p>
                       <button
                         onClick={() => {
                           console.log('Retrying video load...');
+                          console.log('Video URL:', selectedProperty.slideshowVideo);
                           setVideoError(false);
+                          setVideoLoading(true);
                           // Try to reload the video
                           if (videoRef.current) {
                             videoRef.current.load();
                           }
                         }}
                         className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors"
+                        aria-label="Try loading the video again"
                       >
                         Try Again
                       </button>
@@ -542,6 +610,7 @@ export default function PortfolioPage() {
                     onClick={() => {
                       setCurrentImageIndex(0);
                       setVideoError(false); // Reset video error when clicking video thumbnail
+                      setVideoLoading(false); // Reset video loading when clicking video thumbnail
                     }}
                     className={`relative flex-shrink-0 w-16 h-16 md:w-auto md:h-auto md:aspect-square overflow-hidden rounded transition-all duration-200 ${
                       currentImageIndex === 0 ? 'ring-2 ring-white' : 'hover:ring-1 hover:ring-gray-400'
