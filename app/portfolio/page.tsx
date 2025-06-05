@@ -13,27 +13,27 @@ const portfolioProperties = [
     id: "2272-mowat-oakville",
     address: "2272 Mowat Avenue",
     town: "Oakville",
-    coverImage: "/images/portfolio/2272 Mowat Avenue, Oakville/1-gallery.webp",
+    coverImage: encodeURI("/images/portfolio/2272 Mowat Avenue, Oakville/1-gallery.webp"),
     totalImages: 42,
     images: Array.from({ length: 42 }, (_, i) => 
-      `/images/portfolio/2272 Mowat Avenue, Oakville/${i + 1}-gallery.webp`
+      encodeURI(`/images/portfolio/2272 Mowat Avenue, Oakville/${i + 1}-gallery.webp`)
     ),
-    slideshowVideo: "/images/portfolio/2272 Mowat Avenue, Oakville/2272-mowat-1080p.mp4"
+    slideshowVideo: encodeURI("/images/portfolio/2272 Mowat Avenue, Oakville/2272-mowat-1080p.mp4")
   },
   {
     id: "824-gazley-milton",
     address: "824 Gazley Circle",
     town: "Milton",
-    coverImage: "/images/portfolio/824 Gazley Circle, Milton/1-exterior-gallery.webp",
+    coverImage: encodeURI("/images/portfolio/824 Gazley Circle, Milton/1-exterior-gallery.webp"),
     totalImages: 45,
     images: [
-      "/images/portfolio/824 Gazley Circle, Milton/1-exterior-gallery.webp",
-      "/images/portfolio/824 Gazley Circle, Milton/2-exterior-gallery.webp",
+      encodeURI("/images/portfolio/824 Gazley Circle, Milton/1-exterior-gallery.webp"),
+      encodeURI("/images/portfolio/824 Gazley Circle, Milton/2-exterior-gallery.webp"),
       ...Array.from({ length: 43 }, (_, i) =>
-        `/images/portfolio/824 Gazley Circle, Milton/${i + 3}-gallery.webp`
+        encodeURI(`/images/portfolio/824 Gazley Circle, Milton/${i + 3}-gallery.webp`)
       )
     ],
-    slideshowVideo: "/images/portfolio/824 Gazley Circle, Milton/1080p-824-gazley-circle.mp4"
+    slideshowVideo: encodeURI("/images/portfolio/824 Gazley Circle, Milton/1080p-824-gazley-circle.mp4")
   }
 ]
 
@@ -41,6 +41,7 @@ export default function PortfolioPage() {
   const [selectedProperty, setSelectedProperty] = useState<typeof portfolioProperties[0] | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isMobileFullscreen, setIsMobileFullscreen] = useState(false) // Mobile-specific fullscreen state
   const [showSlideshow, setShowSlideshow] = useState(false);
   const [showThumbnails, setShowThumbnails] = useState(false); // Thumbnails hidden by default on mobile
   const [videoError, setVideoError] = useState(false); // Track video loading errors
@@ -104,6 +105,10 @@ export default function PortfolioPage() {
     if (isFullscreen) {
       exitFullscreen();
     }
+    // Exit mobile fullscreen mode
+    if (isMobileFullscreen) {
+      setIsMobileFullscreen(false);
+    }
     setSelectedProperty(null)
     setCurrentImageIndex(0)
     setVideoError(false) // Reset video error state when closing gallery
@@ -131,23 +136,34 @@ export default function PortfolioPage() {
     }
   }
 
-  // Handler to trigger fullscreen - Fixed for mobile
+  // Handler to trigger fullscreen - Enhanced for mobile with better fallbacks
   const handleFullscreen = async () => {
     try {
-      // Use gallery container for mobile, image container for desktop
-      const isMobile = window.innerWidth < 768;
-      const targetElement = isMobile ? galleryRef.current : mainImageRef.current;
+      // On mobile, use our custom fullscreen mode instead of the unreliable Fullscreen API
+      if (isMobile) {
+        setIsMobileFullscreen(true);
+        // Hide mobile browser UI by scrolling
+        if (window.scrollY > 0) {
+          window.scrollTo(0, 0);
+        }
+        // Additional mobile browser UI hiding techniques
+        setTimeout(() => {
+          window.scrollTo(0, 1);
+          setTimeout(() => window.scrollTo(0, 0), 100);
+        }, 100);
+        return;
+      }
+
+      // Desktop fullscreen using Fullscreen API
+      const targetElement = mainImageRef.current;
       
       if (targetElement && !isFullscreen) {
         // Try different fullscreen methods for better browser compatibility
         if (targetElement.requestFullscreen) {
           await targetElement.requestFullscreen();
         } else if ((targetElement as any).webkitRequestFullscreen) {
-          // Safari/webkit browsers (including mobile Safari)
+          // Safari/webkit browsers
           await (targetElement as any).webkitRequestFullscreen();
-        } else if ((targetElement as any).webkitEnterFullscreen) {
-          // iOS Safari fallback
-          await (targetElement as any).webkitEnterFullscreen();
         } else if ((targetElement as any).mozRequestFullScreen) {
           // Firefox
           await (targetElement as any).mozRequestFullScreen();
@@ -156,23 +172,27 @@ export default function PortfolioPage() {
           await (targetElement as any).msRequestFullscreen();
         } else {
           console.warn('Fullscreen API not supported on this device/browser');
+          // Fallback to mobile-style fullscreen even on desktop
+          setIsMobileFullscreen(true);
         }
       }
     } catch (error) {
       console.warn('Fullscreen request failed:', error);
-      // Fallback: For mobile browsers that don't support fullscreen,
-      // we can simulate fullscreen by hiding the browser UI
-      if (window.innerWidth < 768) {
-        // Mobile fallback - scroll to top and hide address bar
-        window.scrollTo(0, 1);
-        setTimeout(() => window.scrollTo(0, 0), 100);
-      }
+      // Fallback to mobile-style fullscreen
+      setIsMobileFullscreen(true);
     }
   };
 
   // Handler to exit fullscreen - Enhanced for mobile
   const exitFullscreen = async () => {
     try {
+      // Exit mobile fullscreen mode
+      if (isMobileFullscreen) {
+        setIsMobileFullscreen(false);
+        return;
+      }
+
+      // Exit desktop fullscreen
       if (isFullscreen) {
         if (document.exitFullscreen) {
           await document.exitFullscreen();
@@ -189,6 +209,8 @@ export default function PortfolioPage() {
       }
     } catch (error) {
       console.warn('Exit fullscreen failed:', error);
+      // Force exit mobile fullscreen as fallback
+      setIsMobileFullscreen(false);
     }
   };
 
@@ -197,8 +219,10 @@ export default function PortfolioPage() {
     e.stopPropagation();
     e.preventDefault();
     
-    // Ensure we're in a proper user event context for mobile browsers
-    if (isFullscreen) {
+    // Check if we're in any kind of fullscreen mode
+    const isInFullscreen = isFullscreen || isMobileFullscreen;
+    
+    if (isInFullscreen) {
       await exitFullscreen();
     } else {
       await handleFullscreen();
@@ -322,10 +346,22 @@ export default function PortfolioPage() {
       {selectedProperty && (
         <div 
           ref={galleryRef}
-          className="fixed inset-0 bg-black z-50 flex flex-col overflow-hidden"
+          className={`fixed inset-0 bg-black z-50 flex flex-col overflow-hidden ${
+            isMobileFullscreen ? 'h-screen w-screen' : ''
+          }`}
+          style={isMobileFullscreen ? {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 9999
+          } : {}}
         >
           {/* Mobile Header - Minimal and Clean */}
-          <div className="flex justify-between items-center p-4 md:p-6 shrink-0 bg-black/80 backdrop-blur-sm">
+          <div className={`flex justify-between items-center p-4 md:p-6 shrink-0 bg-black/80 backdrop-blur-sm ${
+            isMobileFullscreen ? 'hidden' : ''
+          }`}>
             <div className="text-white min-w-0 flex-1">
               <h3 className="text-base md:text-xl font-semibold truncate">{selectedProperty.address}</h3>
               <p className="text-gray-300 text-sm md:text-base">{selectedProperty.town}</p>
@@ -365,15 +401,22 @@ export default function PortfolioPage() {
                   playsInline // Required for iOS Safari
                   muted={isMobile} // Mute on mobile to allow autoplay
                   autoPlay={!isMobile} // Only autoplay on desktop
-                  preload="metadata" // Helps with loading
+                  preload="auto" // Better preloading for improved reliability
                   className="w-full h-full object-contain max-w-full max-h-full"
                   poster={selectedProperty.coverImage}
-                  onError={() => {
-                    console.error('Video failed to load:', selectedProperty.slideshowVideo);
+                  onError={(e) => {
+                    console.error('Video failed to load:', selectedProperty.slideshowVideo, e);
                     setVideoError(true);
                   }}
-                  onLoadStart={() => setVideoError(false)}
+                  onLoadStart={() => {
+                    console.log('Video loading started:', selectedProperty.slideshowVideo);
+                    setVideoError(false);
+                  }}
+                  onLoadedData={() => {
+                    console.log('Video data loaded successfully');
+                  }}
                   onCanPlay={() => {
+                    console.log('Video can play');
                     // Try to play the video on mobile when it's ready
                     if (isMobile && videoRef.current) {
                       videoRef.current.play().catch(error => {
@@ -397,6 +440,7 @@ export default function PortfolioPage() {
                       <p className="text-sm text-gray-300 mb-4">The slideshow video could not be loaded.</p>
                       <button
                         onClick={() => {
+                          console.log('Retrying video load...');
                           setVideoError(false);
                           // Try to reload the video
                           if (videoRef.current) {
@@ -426,9 +470,9 @@ export default function PortfolioPage() {
             <button
               onClick={handleFullscreenClick}
               className="absolute top-3 right-3 md:top-4 md:right-4 text-white bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
-              title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+              title={(isFullscreen || isMobileFullscreen) ? "Exit Fullscreen" : "Fullscreen"}
             >
-              {isFullscreen ? <Minimize className="h-4 w-4 md:h-5 md:w-5" /> : <Fullscreen className="h-4 w-4 md:h-5 md:w-5" />}
+              {(isFullscreen || isMobileFullscreen) ? <Minimize className="h-4 w-4 md:h-5 md:w-5" /> : <Fullscreen className="h-4 w-4 md:h-5 md:w-5" />}
             </button>
 
             {/* Navigation Arrows - Enhanced for Mobile */}
@@ -461,6 +505,7 @@ export default function PortfolioPage() {
           {/* Thumbnail Section - Collapsible on Mobile */}
           <div className={`
             transition-all duration-300 ease-in-out bg-black/90 backdrop-blur-sm
+            ${isMobileFullscreen ? 'hidden' : ''}
             ${showThumbnails 
               ? 'h-32 md:h-40 opacity-100' 
               : 'h-0 md:h-32 md:opacity-100 opacity-0 md:block'
