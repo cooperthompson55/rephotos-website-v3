@@ -5,7 +5,7 @@ import { GalleryDisplay } from "@/components/home/GalleryDisplay"
 import { CaseStudySection } from "@/components/home/CaseStudySection"
 import { CTASection } from "@/components/home/CTASection"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight, Fullscreen, Minimize } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Fullscreen, Minimize, Grid3X3, ChevronUp, ChevronDown } from "lucide-react"
 
 // Portfolio properties data
 const portfolioProperties = [
@@ -42,7 +42,9 @@ export default function PortfolioPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showSlideshow, setShowSlideshow] = useState(false);
+  const [showThumbnails, setShowThumbnails] = useState(false); // Thumbnails hidden by default on mobile
   const mainImageRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
 
   // Prevent background scroll when modal is open
   useEffect(() => {
@@ -146,6 +148,36 @@ export default function PortfolioPage() {
     }
   };
 
+  // Handler for touch/swipe navigation
+  const handleTouchStart = useRef({ x: 0, y: 0 });
+  const handleTouchEnd = useRef({ x: 0, y: 0 });
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    handleTouchStart.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY
+    };
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    handleTouchEnd.current = {
+      x: e.changedTouches[0].clientX,
+      y: e.changedTouches[0].clientY
+    };
+
+    const deltaX = handleTouchStart.current.x - handleTouchEnd.current.x;
+    const deltaY = handleTouchStart.current.y - handleTouchEnd.current.y;
+
+    // Only handle horizontal swipes (ignore vertical)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+      if (deltaX > 0) {
+        nextImage(); // Swipe left to go to next image
+      } else {
+        prevImage(); // Swipe right to go to previous image
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Hero Section */}
@@ -229,100 +261,167 @@ export default function PortfolioPage() {
       {/* CTA Section */}
       <CTASection />
 
-      {/* Image Gallery Modal */}
+      {/* Image Gallery Modal - Mobile First Design */}
       {selectedProperty && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-          <div className="w-full max-w-6xl mx-auto flex flex-col max-h-[95vh] sm:max-h-[90vh]">
-            {/* Header */}
-            <div className="flex justify-between items-center mb-4 sm:mb-6 shrink-0 px-2 sm:px-0">
-              <div className="text-white">
-                <h3 className="text-lg sm:text-2xl font-semibold">{selectedProperty.address}</h3>
-                <p className="text-gray-300 text-sm sm:text-base">{selectedProperty.town}</p>
-              </div>
+        <div 
+          ref={galleryRef}
+          className="fixed inset-0 bg-black z-50 flex flex-col overflow-hidden"
+        >
+          {/* Mobile Header - Minimal and Clean */}
+          <div className="flex justify-between items-center p-4 md:p-6 shrink-0 bg-black/80 backdrop-blur-sm">
+            <div className="text-white min-w-0 flex-1">
+              <h3 className="text-base md:text-xl font-semibold truncate">{selectedProperty.address}</h3>
+              <p className="text-gray-300 text-sm md:text-base">{selectedProperty.town}</p>
+            </div>
+            <div className="flex items-center gap-2 ml-4">
+              {/* Thumbnail toggle button for mobile */}
+              <button
+                onClick={() => setShowThumbnails(!showThumbnails)}
+                className="md:hidden text-white hover:text-gray-300 transition-colors p-2 rounded-full bg-black/50"
+                title="Toggle thumbnails"
+              >
+                <Grid3X3 className="h-5 w-5" />
+              </button>
               <button
                 onClick={closeGallery}
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-white hover:text-gray-300 transition-colors p-2 rounded-full bg-black/50"
               >
-                <X className="h-6 w-6 sm:h-8 sm:w-8" />
+                <X className="h-5 w-5 md:h-6 md:w-6" />
               </button>
+            </div>
+          </div>
+
+          {/* Main Image Container - Takes Full Available Space on Mobile */}
+          <div 
+            ref={mainImageRef} 
+            className="relative flex-1 bg-black flex items-center justify-center overflow-hidden"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            {/* Main Media (Video or Image) */}
+            {showSlideshow && currentImageIndex === 0 ? (
+              <video
+                src={selectedProperty.slideshowVideo}
+                controls
+                autoPlay
+                className="w-full h-full object-contain max-w-full max-h-full"
+                poster={selectedProperty.coverImage}
+              />
+            ) : (
+              <Image
+                src={showSlideshow ? selectedProperty.images[currentImageIndex - 1] : selectedProperty.images[currentImageIndex]}
+                alt={`${selectedProperty.address} - Image ${showSlideshow ? currentImageIndex : currentImageIndex + 1}`}
+                fill
+                className="object-contain"
+                sizes="100vw"
+                priority
+              />
+            )}
+
+            {/* Fullscreen Button - Mobile Optimized */}
+            <button
+              onClick={handleFullscreenClick}
+              className="absolute top-3 right-3 md:top-4 md:right-4 text-white bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+            >
+              {isFullscreen ? <Minimize className="h-4 w-4 md:h-5 md:w-5" /> : <Fullscreen className="h-4 w-4 md:h-5 md:w-5" />}
+            </button>
+
+            {/* Navigation Arrows - Enhanced for Mobile */}
+            <button
+              onClick={prevImage}
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-3 md:p-4 touch-manipulation"
+              style={{ minHeight: '48px', minWidth: '48px' }} // Touch target size
+            >
+              <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+            </button>
+            <button
+              onClick={nextImage}
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-3 md:p-4 touch-manipulation"
+              style={{ minHeight: '48px', minWidth: '48px' }} // Touch target size
+            >
+              <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+            </button>
+
+            {/* Image Counter - Mobile Optimized */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm md:text-base font-medium">
+              {showSlideshow ? currentImageIndex + 1 : currentImageIndex + 1} / {showSlideshow ? selectedProperty.images.length + 1 : selectedProperty.images.length}
             </div>
 
-            {/* Main Media (Video or Image) */}
-            <div ref={mainImageRef} className="relative aspect-[4/3] mb-4 sm:mb-6 bg-black rounded-lg overflow-hidden grow flex items-center justify-center">
-              {/* If slideshow, first media is video */}
-              {showSlideshow && currentImageIndex === 0 ? (
-                <video
-                  src={selectedProperty.slideshowVideo}
-                  controls
-                  autoPlay
-                  className="object-contain w-full h-full"
-                  poster={selectedProperty.coverImage}
-                />
-              ) : (
-                <Image
-                  src={showSlideshow ? selectedProperty.images[currentImageIndex - (showSlideshow ? 1 : 0)] : selectedProperty.images[currentImageIndex]}
-                  alt={`${selectedProperty.address} - Image ${showSlideshow ? currentImageIndex : currentImageIndex + 1}`}
-                  fill
-                  className="object-contain"
-                />
-              )}
-              {/* Fullscreen/Exit Fullscreen Icon */}
-              <button
-                onClick={handleFullscreenClick}
-                className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white bg-black/50 hover:bg-black/75 rounded-full p-1.5 sm:p-2 z-50 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
-                title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-              >
-                {isFullscreen ? <Minimize className="h-4 w-4 sm:h-6 sm:w-6" /> : <Fullscreen className="h-4 w-4 sm:h-6 sm:w-6" />}
-              </button>
-              {/* Navigation Arrows */}
-              <button
-                onClick={prevImage}
-                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 hover:bg-black/75 rounded-full p-1.5 sm:p-2"
-              >
-                <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
-              </button>
-              <button
-                onClick={nextImage}
-                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black/50 hover:bg-black/75 rounded-full p-1.5 sm:p-2"
-              >
-                <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
-              </button>
-              {/* Image/Video Counter */}
-              <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
-                {showSlideshow ? currentImageIndex + 1 : currentImageIndex + 1} / {showSlideshow ? selectedProperty.images.length + 1 : selectedProperty.images.length}
-              </div>
+            {/* Swipe Indicator - Only on mobile */}
+            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 text-white bg-black/40 backdrop-blur-sm px-2 py-1 rounded text-xs md:hidden opacity-50">
+              Swipe to navigate
             </div>
-            {/* Thumbnail Grid */}
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 sm:gap-3 overflow-y-auto p-1 pb-4">
-              {showSlideshow && (
-                <button
-                  key="video-thumb"
-                  onClick={() => setCurrentImageIndex(0)}
-                  className={`relative aspect-square overflow-hidden rounded transition-all duration-200 ${currentImageIndex === 0 ? 'ring-2 ring-white' : 'hover:ring-1 hover:ring-gray-400'}`}
-                >
-                  <div className="w-full h-full flex items-center justify-center bg-black">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="32" height="32"><path d="M8 5v14l11-7z"/></svg>
-                  </div>
-                </button>
+          </div>
+
+          {/* Thumbnail Section - Collapsible on Mobile */}
+          <div className={`
+            transition-all duration-300 ease-in-out bg-black/90 backdrop-blur-sm
+            ${showThumbnails 
+              ? 'h-32 md:h-40 opacity-100' 
+              : 'h-0 md:h-32 md:opacity-100 opacity-0 md:block'
+            }
+            ${showThumbnails ? 'border-t border-gray-700' : ''}
+          `}>
+            {/* Thumbnail Toggle for Mobile */}
+            <button
+              onClick={() => setShowThumbnails(!showThumbnails)}
+              className="md:hidden w-full py-2 text-white hover:text-gray-300 transition-colors flex items-center justify-center gap-2"
+            >
+              {showThumbnails ? (
+                <>
+                  <ChevronDown className="h-4 w-4" />
+                  <span className="text-sm">Hide Thumbnails</span>
+                </>
+              ) : (
+                <>
+                  <ChevronUp className="h-4 w-4" />
+                  <span className="text-sm">Show Thumbnails</span>
+                </>
               )}
-              {selectedProperty.images.map((image, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentImageIndex(showSlideshow ? index + 1 : index)}
-                  className={`relative aspect-square overflow-hidden rounded transition-all duration-200 ${
-                    currentImageIndex === (showSlideshow ? index + 1 : index)
-                      ? 'ring-2 ring-white'
-                      : 'hover:ring-1 hover:ring-gray-400'
-                  }`}
-                >
-                  <Image
-                    src={image}
-                    alt={`Thumbnail ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </button>
-              ))}
+            </button>
+
+            {/* Thumbnail Grid */}
+            <div className={`
+              ${showThumbnails ? 'block' : 'hidden md:block'}
+              p-3 md:p-4 overflow-x-auto overflow-y-hidden
+            `}>
+              <div className="flex md:grid md:grid-cols-8 lg:grid-cols-12 xl:grid-cols-16 gap-2 md:gap-3 min-w-max md:min-w-0">
+                {showSlideshow && (
+                  <button
+                    key="video-thumb"
+                    onClick={() => setCurrentImageIndex(0)}
+                    className={`relative flex-shrink-0 w-16 h-16 md:w-auto md:h-auto md:aspect-square overflow-hidden rounded transition-all duration-200 ${
+                      currentImageIndex === 0 ? 'ring-2 ring-white' : 'hover:ring-1 hover:ring-gray-400'
+                    }`}
+                  >
+                    <div className="w-full h-full flex items-center justify-center bg-black">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" className="w-6 h-6">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                  </button>
+                )}
+                {selectedProperty.images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(showSlideshow ? index + 1 : index)}
+                    className={`relative flex-shrink-0 w-16 h-16 md:w-auto md:h-auto md:aspect-square overflow-hidden rounded transition-all duration-200 ${
+                      currentImageIndex === (showSlideshow ? index + 1 : index)
+                        ? 'ring-2 ring-white'
+                        : 'hover:ring-1 hover:ring-gray-400'
+                    }`}
+                  >
+                    <Image
+                      src={image}
+                      alt={`Thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
