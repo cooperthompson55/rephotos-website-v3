@@ -43,8 +43,22 @@ export default function PortfolioPage() {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showSlideshow, setShowSlideshow] = useState(false);
   const [showThumbnails, setShowThumbnails] = useState(false); // Thumbnails hidden by default on mobile
+  const [videoError, setVideoError] = useState(false); // Track video loading errors
+  const [isMobile, setIsMobile] = useState(false); // Track if on mobile device
   const mainImageRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Prevent background scroll when modal is open
   useEffect(() => {
@@ -61,7 +75,7 @@ export default function PortfolioPage() {
   // Listen for fullscreen changes
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(Boolean(document.fullscreenElement));
+      setIsFullscreen(Boolean(document.fullscreenElement || (document as any).webkitFullscreenElement));
     };
 
     document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -82,6 +96,7 @@ export default function PortfolioPage() {
     setSelectedProperty(property)
     setShowSlideshow(slideshow)
     setCurrentImageIndex(0)
+    setVideoError(false) // Reset video error state when opening gallery
   }
 
   const closeGallery = () => {
@@ -91,60 +106,102 @@ export default function PortfolioPage() {
     }
     setSelectedProperty(null)
     setCurrentImageIndex(0)
+    setVideoError(false) // Reset video error state when closing gallery
   }
 
   const nextImage = () => {
     if (selectedProperty) {
-      setCurrentImageIndex((prev) => 
-        prev === selectedProperty.images.length - 1 ? 0 : prev + 1
-      )
+      const newIndex = currentImageIndex === selectedProperty.images.length - 1 ? 0 : currentImageIndex + 1;
+      setCurrentImageIndex(newIndex);
+      // Reset video error if navigating to video (index 0 in slideshow mode)
+      if (showSlideshow && newIndex === 0) {
+        setVideoError(false);
+      }
     }
   }
 
   const prevImage = () => {
     if (selectedProperty) {
-      setCurrentImageIndex((prev) => 
-        prev === 0 ? selectedProperty.images.length - 1 : prev - 1
-      )
+      const newIndex = currentImageIndex === 0 ? selectedProperty.images.length - 1 : currentImageIndex - 1;
+      setCurrentImageIndex(newIndex);
+      // Reset video error if navigating to video (index 0 in slideshow mode)
+      if (showSlideshow && newIndex === 0) {
+        setVideoError(false);
+      }
     }
   }
 
-  // Handler to trigger fullscreen
-  const handleFullscreen = () => {
-    if (mainImageRef.current && !isFullscreen) {
-      if (mainImageRef.current.requestFullscreen) {
-        mainImageRef.current.requestFullscreen();
-      } else if ((mainImageRef.current as any).webkitRequestFullscreen) {
-        (mainImageRef.current as any).webkitRequestFullscreen();
-      } else if ((mainImageRef.current as any).msRequestFullscreen) {
-        (mainImageRef.current as any).msRequestFullscreen();
+  // Handler to trigger fullscreen - Fixed for mobile
+  const handleFullscreen = async () => {
+    try {
+      // Use gallery container for mobile, image container for desktop
+      const isMobile = window.innerWidth < 768;
+      const targetElement = isMobile ? galleryRef.current : mainImageRef.current;
+      
+      if (targetElement && !isFullscreen) {
+        // Try different fullscreen methods for better browser compatibility
+        if (targetElement.requestFullscreen) {
+          await targetElement.requestFullscreen();
+        } else if ((targetElement as any).webkitRequestFullscreen) {
+          // Safari/webkit browsers (including mobile Safari)
+          await (targetElement as any).webkitRequestFullscreen();
+        } else if ((targetElement as any).webkitEnterFullscreen) {
+          // iOS Safari fallback
+          await (targetElement as any).webkitEnterFullscreen();
+        } else if ((targetElement as any).mozRequestFullScreen) {
+          // Firefox
+          await (targetElement as any).mozRequestFullScreen();
+        } else if ((targetElement as any).msRequestFullscreen) {
+          // IE/Edge
+          await (targetElement as any).msRequestFullscreen();
+        } else {
+          console.warn('Fullscreen API not supported on this device/browser');
+        }
+      }
+    } catch (error) {
+      console.warn('Fullscreen request failed:', error);
+      // Fallback: For mobile browsers that don't support fullscreen,
+      // we can simulate fullscreen by hiding the browser UI
+      if (window.innerWidth < 768) {
+        // Mobile fallback - scroll to top and hide address bar
+        window.scrollTo(0, 1);
+        setTimeout(() => window.scrollTo(0, 0), 100);
       }
     }
   };
 
-  // Handler to exit fullscreen
-  const exitFullscreen = () => {
-    if (isFullscreen) {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if ((document as any).webkitExitFullscreen) {
-        (document as any).webkitExitFullscreen();
-      } else if ((document as any).mozCancelFullScreen) {
-        (document as any).mozCancelFullScreen();
-      } else if ((document as any).msExitFullscreen) {
-        (document as any).msExitFullscreen();
+  // Handler to exit fullscreen - Enhanced for mobile
+  const exitFullscreen = async () => {
+    try {
+      if (isFullscreen) {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if ((document as any).webkitExitFullscreen) {
+          await (document as any).webkitExitFullscreen();
+        } else if ((document as any).webkitCancelFullScreen) {
+          // iOS Safari
+          await (document as any).webkitCancelFullScreen();
+        } else if ((document as any).mozCancelFullScreen) {
+          await (document as any).mozCancelFullScreen();
+        } else if ((document as any).msExitFullscreen) {
+          await (document as any).msExitFullscreen();
+        }
       }
+    } catch (error) {
+      console.warn('Exit fullscreen failed:', error);
     }
   };
 
-  // Handler for fullscreen button click with event propagation prevention
-  const handleFullscreenClick = (e: React.MouseEvent) => {
+  // Handler for fullscreen button click - Enhanced for mobile
+  const handleFullscreenClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
+    
+    // Ensure we're in a proper user event context for mobile browsers
     if (isFullscreen) {
-      exitFullscreen();
+      await exitFullscreen();
     } else {
-      handleFullscreen();
+      await handleFullscreen();
     }
   };
 
@@ -300,13 +357,60 @@ export default function PortfolioPage() {
           >
             {/* Main Media (Video or Image) */}
             {showSlideshow && currentImageIndex === 0 ? (
-              <video
-                src={selectedProperty.slideshowVideo}
-                controls
-                autoPlay
-                className="w-full h-full object-contain max-w-full max-h-full"
-                poster={selectedProperty.coverImage}
-              />
+              !videoError ? (
+                <video
+                  ref={videoRef}
+                  src={selectedProperty.slideshowVideo}
+                  controls
+                  playsInline // Required for iOS Safari
+                  muted={isMobile} // Mute on mobile to allow autoplay
+                  autoPlay={!isMobile} // Only autoplay on desktop
+                  preload="metadata" // Helps with loading
+                  className="w-full h-full object-contain max-w-full max-h-full"
+                  poster={selectedProperty.coverImage}
+                  onError={() => {
+                    console.error('Video failed to load:', selectedProperty.slideshowVideo);
+                    setVideoError(true);
+                  }}
+                  onLoadStart={() => setVideoError(false)}
+                  onCanPlay={() => {
+                    // Try to play the video on mobile when it's ready
+                    if (isMobile && videoRef.current) {
+                      videoRef.current.play().catch(error => {
+                        console.warn('Video autoplay failed on mobile:', error);
+                      });
+                    }
+                  }}
+                />
+              ) : (
+                // Fallback: Show poster image if video fails to load
+                <div className="w-full h-full flex flex-col items-center justify-center bg-gray-900 text-white">
+                  <Image
+                    src={selectedProperty.coverImage}
+                    alt={`${selectedProperty.address} - Video unavailable`}
+                    fill
+                    className="object-contain opacity-50"
+                  />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 p-4">
+                    <div className="text-center">
+                      <p className="text-lg font-semibold mb-2">Video Unavailable</p>
+                      <p className="text-sm text-gray-300 mb-4">The slideshow video could not be loaded.</p>
+                      <button
+                        onClick={() => {
+                          setVideoError(false);
+                          // Try to reload the video
+                          if (videoRef.current) {
+                            videoRef.current.load();
+                          }
+                        }}
+                        className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors"
+                      >
+                        Try Again
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )
             ) : (
               <Image
                 src={showSlideshow ? selectedProperty.images[currentImageIndex - 1] : selectedProperty.images[currentImageIndex]}
@@ -390,7 +494,10 @@ export default function PortfolioPage() {
                 {showSlideshow && (
                   <button
                     key="video-thumb"
-                    onClick={() => setCurrentImageIndex(0)}
+                    onClick={() => {
+                      setCurrentImageIndex(0);
+                      setVideoError(false); // Reset video error when clicking video thumbnail
+                    }}
                     className={`relative flex-shrink-0 w-16 h-16 md:w-auto md:h-auto md:aspect-square overflow-hidden rounded transition-all duration-200 ${
                       currentImageIndex === 0 ? 'ring-2 ring-white' : 'hover:ring-1 hover:ring-gray-400'
                     }`}
