@@ -360,7 +360,7 @@ export default function BookNowPage() {
         ? `${packageInfo}\n\nAdditional Notes: ${values.additionalInfo}`
         : packageInfo;
     }
-    
+
     const payload = {
       property_size: propertySize,
       services: servicesArr,
