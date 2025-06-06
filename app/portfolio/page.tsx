@@ -45,8 +45,8 @@ export default function PortfolioPage() {
   const [showSlideshow, setShowSlideshow] = useState(false);
   const [showThumbnails, setShowThumbnails] = useState(false); // Thumbnails hidden by default on mobile
   const [videoError, setVideoError] = useState(false); // Track video loading errors
-  const [videoPlaying, setVideoPlaying] = useState(false); // Track if video is playing
   const [isMobile, setIsMobile] = useState(false); // Track if on mobile device
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false); // Track if video is playing
   const mainImageRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -134,7 +134,7 @@ export default function PortfolioPage() {
     setShowSlideshow(slideshow)
     setCurrentImageIndex(0)
     setVideoError(false) // Reset video error state when opening gallery
-    setVideoPlaying(false) // Reset video playing state when opening gallery
+    setIsVideoPlaying(false) // Reset video playing state when opening gallery
   }
 
   const closeGallery = () => {
@@ -149,7 +149,7 @@ export default function PortfolioPage() {
     setSelectedProperty(null)
     setCurrentImageIndex(0)
     setVideoError(false) // Reset video error state when closing gallery
-    setVideoPlaying(false) // Reset video playing state when closing gallery
+    setIsVideoPlaying(false) // Reset video playing state when closing gallery
   }
 
   const nextImage = () => {
@@ -433,7 +433,6 @@ export default function PortfolioPage() {
                     controls
                     playsInline
                     muted
-                    autoPlay={!isMobile} // Autoplay only on desktop
                     preload="metadata"
                     className="w-full h-full object-contain"
                     poster={selectedProperty.coverImage}
@@ -442,6 +441,7 @@ export default function PortfolioPage() {
                     }}
                     onLoadedMetadata={() => {
                       console.log('VIDEO: Metadata loaded');
+                      setVideoError(false);
                     }}
                     onLoadedData={() => {
                       console.log('VIDEO: Data loaded successfully');
@@ -449,23 +449,23 @@ export default function PortfolioPage() {
                     }}
                     onCanPlay={() => {
                       console.log('VIDEO: Can play');
-                      // Try autoplay on desktop when video is ready
-                      if (!isMobile && videoRef.current) {
-                        videoRef.current.play().catch(error => {
-                          console.log('Autoplay prevented, user interaction required');
-                        });
-                      }
+                      setVideoError(false);
                     }}
                     onCanPlayThrough={() => {
                       console.log('VIDEO: Can play through');
+                      setVideoError(false);
                     }}
                     onPlay={() => {
                       console.log('VIDEO: Started playing');
-                      setVideoPlaying(true);
+                      setIsVideoPlaying(true);
                     }}
                     onPause={() => {
                       console.log('VIDEO: Paused');
-                      setVideoPlaying(false);
+                      setIsVideoPlaying(false);
+                    }}
+                    onEnded={() => {
+                      console.log('VIDEO: Ended');
+                      setIsVideoPlaying(false);
                     }}
                     onError={(e) => {
                       console.error('VIDEO: Failed to load:', selectedProperty.slideshowVideo);
@@ -473,11 +473,10 @@ export default function PortfolioPage() {
                       console.error('VIDEO: Error code:', e.currentTarget.error?.code);
                       console.error('VIDEO: Error message:', e.currentTarget.error?.message);
                       setVideoError(true);
-                      setVideoPlaying(false);
+                      setIsVideoPlaying(false);
                     }}
                     onAbort={() => {
                       console.log('VIDEO: Load aborted');
-                      setVideoPlaying(false);
                     }}
                     onStalled={() => {
                       console.warn('VIDEO: Loading stalled');
@@ -490,22 +489,35 @@ export default function PortfolioPage() {
                     }}
                   />
                   
-                  {/* Mobile Play Overlay - Shows when video is paused on mobile */}
-                  {isMobile && !videoPlaying && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                  {/* Large White Play Button Overlay - Only shown when video is not playing */}
+                  {!isVideoPlaying && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                       <button
-                        className="bg-black/60 hover:bg-black/80 text-white rounded-full p-4 transition-colors"
+                        className="pointer-events-auto bg-white/95 hover:bg-white text-black rounded-full shadow-2xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white/50 flex items-center justify-center"
                         onClick={() => {
-                          console.log('Mobile play button clicked');
+                          console.log('Play button clicked');
                           if (videoRef.current) {
-                            videoRef.current.play().catch(error => {
+                            const video = videoRef.current;
+                            video.play().then(() => {
+                              console.log('Video started playing successfully');
+                              setIsVideoPlaying(true);
+                            }).catch(error => {
                               console.error('Failed to play video:', error);
+                              setVideoError(true);
                             });
                           }
                         }}
-                        aria-label="Play video"
+                        aria-label="Play slideshow video"
+                        style={{ 
+                          width: isMobile ? '100px' : '140px',
+                          height: isMobile ? '100px' : '140px'
+                        }}
                       >
-                        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <svg 
+                          viewBox="0 0 24 24" 
+                          fill="currentColor" 
+                          className="w-8 h-8 md:w-12 md:h-12 ml-1"
+                        >
                           <path d="M8 5v14l11-7z"/>
                         </svg>
                       </button>
@@ -633,7 +645,6 @@ export default function PortfolioPage() {
                     onClick={() => {
                       setCurrentImageIndex(0);
                       setVideoError(false); // Reset video error when clicking video thumbnail
-                      setVideoPlaying(false); // Reset video playing state when switching to video
                     }}
                     className={`relative flex-shrink-0 w-16 h-16 md:w-auto md:h-auto md:aspect-square overflow-hidden rounded transition-all duration-200 ${
                       currentImageIndex === 0 ? 'ring-2 ring-white' : 'hover:ring-1 hover:ring-gray-400'
