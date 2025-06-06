@@ -352,12 +352,21 @@ export default function BookNowPage() {
 
     const safe = (val: string | undefined | null) => (val && val.trim() !== '' ? val : 'Unknown');
     
+    // Include package name in notes if a package was selected
+    let notesWithPackage = safe(values.additionalInfo || '');
+    if (selectedPackage) {
+      const packageInfo = `Selected Package: ${selectedPackage}`;
+      notesWithPackage = values.additionalInfo 
+        ? `${packageInfo}\n\nAdditional Notes: ${values.additionalInfo}`
+        : packageInfo;
+    }
+    
     const payload = {
       property_size: propertySize,
       services: servicesArr,
       total_amount: parseFloat(totalAmount.toFixed(2)),
       address: safe(values.address), // Send as simple string, not object
-      notes: safe(values.additionalInfo || ''),
+      notes: notesWithPackage,
       preferred_date: safe(values.date),
       time: safe(values.time),
       property_status: 'Vacant',
@@ -367,7 +376,7 @@ export default function BookNowPage() {
       agent_email: safe(values.email),
       agent_phone: safe(values.phone),
       agent_company: 'Unknown',
-      package_name: selectedPackage || null,
+      // Removed package_name field since it doesn't exist in database schema
     };
 
     console.log('Sending payload to Supabase:', payload);
