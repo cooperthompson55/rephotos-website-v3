@@ -18,7 +18,7 @@ const portfolioProperties = [
     images: Array.from({ length: 42 }, (_, i) => 
       `/images/portfolio/2272%20Mowat%20Avenue,%20Oakville/${i + 1}-gallery.webp`
     ),
-    slideshowVideo: "/images/portfolio/2272%20Mowat%20Avenue,%20Oakville/2272-mowat-1080p.mp4"
+    slideshowVideo: "https://www.youtube.com/embed/Uf5QITELM30?autoplay=0&mute=1&rel=0&modestbranding=1"
   },
   {
     id: "824-gazley-milton",
@@ -33,7 +33,7 @@ const portfolioProperties = [
         `/images/portfolio/824%20Gazley%20Circle,%20Milton/${i + 3}-gallery.webp`
       )
     ],
-    slideshowVideo: "/images/portfolio/824%20Gazley%20Circle,%20Milton/1080p-824-gazley-circle.mp4"
+    slideshowVideo: "https://www.youtube.com/embed/9F-tMSUPfGU?autoplay=0&mute=1&rel=0&modestbranding=1"
   }
 ]
 
@@ -44,12 +44,17 @@ export default function PortfolioPage() {
   const [isMobileFullscreen, setIsMobileFullscreen] = useState(false) // Mobile-specific fullscreen state
   const [showSlideshow, setShowSlideshow] = useState(false);
   const [showThumbnails, setShowThumbnails] = useState(false); // Thumbnails hidden by default on mobile
-  const [videoError, setVideoError] = useState(false); // Track video loading errors
   const [isMobile, setIsMobile] = useState(false); // Track if on mobile device
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false); // Track if video is playing
   const mainImageRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLIFrameElement>(null);
+
+  // Reset video states when slideshow mode changes
+  useEffect(() => {
+    if (showSlideshow && currentImageIndex === 0) {
+      console.log('Slideshow mode activated - YouTube embed will handle loading');
+    }
+  }, [showSlideshow, currentImageIndex]);
 
   // Detect mobile device
   useEffect(() => {
@@ -93,48 +98,11 @@ export default function PortfolioPage() {
     };
   }, []);
 
-  // Debug slideshow activation
-  useEffect(() => {
-    if (showSlideshow && currentImageIndex === 0 && selectedProperty) {
-      console.log('=== SLIDESHOW ACTIVATED ===');
-      console.log('Property:', selectedProperty.address);
-      console.log('Video URL:', selectedProperty.slideshowVideo);
-      console.log('Is Mobile:', isMobile);
-      
-      // Test URL accessibility
-      fetch(selectedProperty.slideshowVideo, { method: 'HEAD' })
-        .then(response => {
-          console.log('URL Test Result:', response.status, response.statusText);
-          if (response.ok) {
-            console.log('✅ Video URL is accessible');
-          } else {
-            console.error('❌ Video URL returned error:', response.status);
-          }
-        })
-        .catch(error => {
-          console.error('❌ Failed to test video URL:', error);
-        });
-      
-      // Reset video error state
-      setVideoError(false);
-      
-      // Force video reload if needed
-      setTimeout(() => {
-        if (videoRef.current) {
-          console.log('Forcing video load...');
-          videoRef.current.load();
-        }
-      }, 100);
-    }
-  }, [showSlideshow, currentImageIndex, selectedProperty, isMobile]);
-
   // Open gallery with optional slideshow video as first media
   const openGallery = (property: typeof portfolioProperties[0], slideshow = false) => {
     setSelectedProperty(property)
     setShowSlideshow(slideshow)
     setCurrentImageIndex(0)
-    setVideoError(false) // Reset video error state when opening gallery
-    setIsVideoPlaying(false) // Reset video playing state when opening gallery
   }
 
   const closeGallery = () => {
@@ -148,8 +116,6 @@ export default function PortfolioPage() {
     }
     setSelectedProperty(null)
     setCurrentImageIndex(0)
-    setVideoError(false) // Reset video error state when closing gallery
-    setIsVideoPlaying(false) // Reset video playing state when closing gallery
   }
 
   const nextImage = () => {
@@ -423,141 +389,21 @@ export default function PortfolioPage() {
           >
             {/* Main Media (Video or Image) */}
             {showSlideshow && currentImageIndex === 0 ? (
-              !videoError ? (
-                <div className="relative w-full h-full">
-                  {/* Simple Video Element */}
-                  <video
-                    key={`${selectedProperty.id}-slideshow`}
-                    ref={videoRef}
-                    src={selectedProperty.slideshowVideo}
-                    controls
-                    playsInline
-                    muted
-                    preload="metadata"
-                    className="w-full h-full object-contain"
-                    poster={selectedProperty.coverImage}
-                    onLoadStart={() => {
-                      console.log('VIDEO: Load started');
-                    }}
-                    onLoadedMetadata={() => {
-                      console.log('VIDEO: Metadata loaded');
-                      setVideoError(false);
-                    }}
-                    onLoadedData={() => {
-                      console.log('VIDEO: Data loaded successfully');
-                      setVideoError(false);
-                    }}
-                    onCanPlay={() => {
-                      console.log('VIDEO: Can play');
-                      setVideoError(false);
-                    }}
-                    onCanPlayThrough={() => {
-                      console.log('VIDEO: Can play through');
-                      setVideoError(false);
-                    }}
-                    onPlay={() => {
-                      console.log('VIDEO: Started playing');
-                      setIsVideoPlaying(true);
-                    }}
-                    onPause={() => {
-                      console.log('VIDEO: Paused');
-                      setIsVideoPlaying(false);
-                    }}
-                    onEnded={() => {
-                      console.log('VIDEO: Ended');
-                      setIsVideoPlaying(false);
-                    }}
-                    onError={(e) => {
-                      console.error('VIDEO: Failed to load:', selectedProperty.slideshowVideo);
-                      console.error('VIDEO: Error details:', e.currentTarget.error);
-                      console.error('VIDEO: Error code:', e.currentTarget.error?.code);
-                      console.error('VIDEO: Error message:', e.currentTarget.error?.message);
-                      setVideoError(true);
-                      setIsVideoPlaying(false);
-                    }}
-                    onAbort={() => {
-                      console.log('VIDEO: Load aborted');
-                    }}
-                    onStalled={() => {
-                      console.warn('VIDEO: Loading stalled');
-                    }}
-                    onSuspend={() => {
-                      console.log('VIDEO: Loading suspended');
-                    }}
-                    onWaiting={() => {
-                      console.log('VIDEO: Waiting for data');
-                    }}
-                  />
-                  
-                  {/* Large White Play Button Overlay - Only shown when video is not playing */}
-                  {!isVideoPlaying && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <button
-                        className="pointer-events-auto bg-white/95 hover:bg-white text-black rounded-full shadow-2xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white/50 flex items-center justify-center"
-                        onClick={() => {
-                          console.log('Play button clicked');
-                          if (videoRef.current) {
-                            const video = videoRef.current;
-                            video.play().then(() => {
-                              console.log('Video started playing successfully');
-                              setIsVideoPlaying(true);
-                            }).catch(error => {
-                              console.error('Failed to play video:', error);
-                              setVideoError(true);
-                            });
-                          }
-                        }}
-                        aria-label="Play slideshow video"
-                        style={{ 
-                          width: isMobile ? '100px' : '140px',
-                          height: isMobile ? '100px' : '140px'
-                        }}
-                      >
-                        <svg 
-                          viewBox="0 0 24 24" 
-                          fill="currentColor" 
-                          className="w-8 h-8 md:w-12 md:h-12 ml-1"
-                        >
-                          <path d="M8 5v14l11-7z"/>
-                        </svg>
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                // Fallback: Show error message with retry
-                <div className="w-full h-full flex flex-col items-center justify-center bg-gray-900 text-white">
-                  <Image
-                    src={selectedProperty.coverImage}
-                    alt={`${selectedProperty.address} - Video unavailable`}
-                    fill
-                    className="object-contain opacity-50"
-                  />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 p-4">
-                    <div className="text-center">
-                      <p className="text-lg font-semibold mb-2">Video Unavailable</p>
-                      <p className="text-sm text-gray-300 mb-4">
-                        The slideshow video could not be loaded. This may be due to a slow connection, device limitations, or browser restrictions. Please try again or view on desktop for best experience.
-                      </p>
-                      <button
-                        onClick={() => {
-                          console.log('Retrying video load...');
-                          console.log('Video URL:', selectedProperty.slideshowVideo);
-                          setVideoError(false);
-                          // Try to reload the video
-                          if (videoRef.current) {
-                            videoRef.current.load();
-                          }
-                        }}
-                        className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors"
-                        aria-label="Try loading the video again"
-                      >
-                        Try Again
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )
+              <div className="relative w-full h-full">
+                {/* YouTube Embed */}
+                <iframe
+                  key={`${selectedProperty.id}-slideshow`}
+                  ref={videoRef}
+                  src={selectedProperty.slideshowVideo}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full object-contain max-w-full max-h-full"
+                  title={`${selectedProperty.address} Slideshow Video`}
+                ></iframe>
+              </div>
             ) : (
               <Image
                 src={showSlideshow ? selectedProperty.images[currentImageIndex - 1] : selectedProperty.images[currentImageIndex]}
@@ -644,7 +490,6 @@ export default function PortfolioPage() {
                     key="video-thumb"
                     onClick={() => {
                       setCurrentImageIndex(0);
-                      setVideoError(false); // Reset video error when clicking video thumbnail
                     }}
                     className={`relative flex-shrink-0 w-16 h-16 md:w-auto md:h-auto md:aspect-square overflow-hidden rounded transition-all duration-200 ${
                       currentImageIndex === 0 ? 'ring-2 ring-white' : 'hover:ring-1 hover:ring-gray-400'
