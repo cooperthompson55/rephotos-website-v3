@@ -451,17 +451,16 @@ export default function PortfolioPage() {
             </div>
           </div>
 
-          {/* Thumbnail Section - Collapsible on Mobile */}
+          {/* Thumbnail Section - Collapsible on Mobile, Always Visible on Desktop */}
           <div className={`
             transition-all duration-300 ease-in-out bg-black/90 backdrop-blur-sm
             ${isMobileFullscreen ? 'hidden' : ''}
             ${showThumbnails 
-              ? 'h-32 md:h-40 opacity-100' 
-              : 'h-0 md:h-32 md:opacity-100 opacity-0 md:block'
+              ? 'h-32 opacity-100 border-t border-gray-700' 
+              : 'h-0 opacity-0 md:h-40 md:opacity-100 md:border-t md:border-gray-700'
             }
-            ${showThumbnails ? 'border-t border-gray-700' : ''}
           `}>
-            {/* Thumbnail Toggle for Mobile */}
+            {/* Thumbnail Toggle for Mobile Only */}
             <button
               onClick={() => setShowThumbnails(!showThumbnails)}
               className="md:hidden w-full py-2 text-white hover:text-gray-300 transition-colors flex items-center justify-center gap-2"
@@ -479,7 +478,7 @@ export default function PortfolioPage() {
               )}
             </button>
 
-            {/* Thumbnail Grid */}
+            {/* Thumbnail Grid - Always visible on desktop, collapsible on mobile */}
             <div className={`
               ${showThumbnails ? 'block' : 'hidden md:block'}
               p-3 md:p-4 overflow-x-auto overflow-y-hidden
@@ -504,7 +503,7 @@ export default function PortfolioPage() {
                 )}
                 {selectedProperty.images.map((image, index) => (
                   <button
-                    key={index}
+                    key={`thumb-${index}`}
                     onClick={() => setCurrentImageIndex(showSlideshow ? index + 1 : index)}
                     className={`relative flex-shrink-0 w-16 h-16 md:w-auto md:h-auto md:aspect-square overflow-hidden rounded transition-all duration-200 ${
                       currentImageIndex === (showSlideshow ? index + 1 : index)
@@ -517,7 +516,7 @@ export default function PortfolioPage() {
                       alt={`Thumbnail ${index + 1}`}
                       fill
                       className="object-cover"
-                      sizes="64px"
+                      sizes="(max-width: 768px) 64px, 80px"
                     />
                   </button>
                 ))}

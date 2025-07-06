@@ -166,7 +166,7 @@ export default function Home() {
       <GalleryDisplay />
 
       {/* Individual Services Section */}
-      <section className="py-16 md:py-24 bg-[#F8F5F0]">
+      <section id="services" className="py-16 md:py-24 bg-[#F8F5F0]">
         <div className="container mx-auto px-4 md:px-6">
           <IndividualServicesSection />
         </div>
@@ -174,86 +174,66 @@ export default function Home() {
 
       <CaseStudySection />
 
-      {/* Photography Pricing Section (copied from /services/photography) */}
+      {/* Photography Pricing Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Photography Pricing</h6>
-            <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Transparent, value-driven pricing</h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Our photography packages are designed to provide exceptional value while delivering the quality your listings deserve.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Condo */}
-            <Card className="relative">
-              <CardHeader className="text-center">
-                <CardTitle className="text-lg">Condo</CardTitle>
-                <div className="text-3xl font-light">$189.99 to $249.99</div>
-                <CardDescription>Up to 1,999 sq ft</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Full interior + exterior coverage</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Professional editing</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Next-day delivery</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />MLS + Web versions</li>
-                </ul>
-                <Button asChild className="w-full"><Link href="/portfolio">View Gallery</Link></Button>
-              </CardContent>
-            </Card>
-            {/* Medium Homes (Most Popular) */}
-            <Card className="relative border-secondary shadow-lg">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <div className="bg-secondary text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</div>
-              </div>
-              <CardHeader className="text-center">
-                <CardTitle className="text-lg">Medium Homes</CardTitle>
-                <div className="text-3xl font-light">$319.99–$379.99</div>
-                <CardDescription>2,000–3,999 sq ft</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Full interior + exterior coverage</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Delivered next business day</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />High-res and web-optimized</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />MLS ready images</li>
-                </ul>
-                <Button asChild className="w-full"><Link href="/portfolio">View Gallery</Link></Button>
-              </CardContent>
-            </Card>
-            {/* Large Homes */}
-            <Card className="relative">
-              <CardHeader className="text-center">
-                <CardTitle className="text-lg">Large Homes</CardTitle>
-                <div className="text-3xl font-light">$439.99+</div>
-                <CardDescription>4,000–4,999 sq ft</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Full interior + exterior coverage</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Custom shot list if needed</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />Fast turnaround</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />All file formats included</li>
-                </ul>
-                <Button asChild className="w-full"><Link href="/portfolio">View Gallery</Link></Button>
-              </CardContent>
-            </Card>
-          </div>
-          {/* 5,000+ sq ft Contact for Quote */}
-          <div className="mt-10 max-w-2xl mx-auto">
-            <Card className="md:col-span-3">
-              <CardHeader className="text-center">
-                <CardTitle className="text-lg">5,000+ sq ft?</CardTitle>
-                <div className="text-3xl font-light">Contact for Quote</div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />We'll build a custom plan based on your layout and needs. Quick turnaround guaranteed.</li>
-                </ul>
-                <Button asChild className="w-full" variant="outline"><Link href="/contact-us">Get in Touch</Link></Button>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left side: Text content */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-3xl md:text-4xl font-serif text-[#262F3F] mb-4">Photography Pricing</h2>
+              <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0">
+                Help any property stand out on the MLS, social media, and more with stunning photography by our award-winning Visual Artists.
+              </p>
+              <Button asChild size="lg">
+                <Link href="/pricing">View Pricing</Link>
+              </Button>
+            </div>
+
+            {/* Right side: Pricing details card */}
+            <div className="w-full max-w-md mx-auto">
+              <Card className="shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-center">PHOTOGRAPHY</CardTitle>
+                  <div className="text-center">
+                    <span className="text-4xl font-extrabold">$169.00</span>
+                    <p className="text-sm text-muted-foreground">starting up to 1499 sq ft</p>
+                    <p className="text-xs text-muted-foreground mt-1">+$60 per 1,000 sq ft</p>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-center text-sm font-semibold text-primary mb-4">Recommended for most listings</p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                      <span className="font-medium">Up to 1499 sq ft</span>
+                      <span className="font-bold">$169.00</span>
+                    </div>
+                    <div className="flex justify-between items-center p-2 rounded-md">
+                      <span className="font-medium">1500–2499 sq ft</span>
+                      <span className="font-bold">$229.00</span>
+                    </div>
+                    <div className="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                      <span className="font-medium">2500–3499 sq ft</span>
+                      <span className="font-bold">$289.00</span>
+                    </div>
+                    <div className="flex justify-between items-center p-2 rounded-md">
+                      <span className="font-medium">3500–4499 sq ft</span>
+                      <span className="font-bold">$349.00</span>
+                    </div>
+                    <div className="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                      <span className="font-medium">4500–5499 sq ft</span>
+                      <span className="font-bold">$409.00</span>
+                    </div>
+                    <div className="flex justify-between items-center p-2 rounded-md">
+                      <span className="font-medium">5500+ sq ft</span>
+                      <Link href="/contact-us" className="font-bold text-primary hover:underline">Contact us</Link>
+                    </div>
+                  </div>
+                  <div className="mt-4 text-xs text-muted-foreground text-center p-2 bg-blue-50 border border-blue-200 rounded-md">
+                    ⓘ Choose a complete listing package for exclusive discounted rates.
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>

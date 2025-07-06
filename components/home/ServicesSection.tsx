@@ -56,7 +56,7 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section className="py-16 md:py-24 bg-[#F8F5F0]">
+    <section id="services" className="py-16 md:py-24 bg-[#F8F5F0]">
       <div className="container-wide">
         <div className="flex justify-between items-center mb-8">
           <div>

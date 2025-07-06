@@ -228,6 +228,7 @@ serve(async (req)=>{
     }
     // Log the parsed record (excluding sensitive data)
     console.log(`[${requestId}] Processing booking record:`, {
+      reference_number: record.reference_number,
       property_size: record.property_size,
       services_count: record.services?.length,
       total_amount: record.total_amount,
@@ -237,13 +238,63 @@ serve(async (req)=>{
       time: record.time,
       property_status: record.property_status,
       address_type: typeof record.address,
-      has_notes: !!record.notes
+      selected_package_name: record.selected_package_name,
+      property_type: record.property_type,
+      has_access_instructions: !!record.access_instructions,
+      has_additional_instructions: !!record.additional_instructions,
+      agent_brokerage: record.agent_brokerage,
+      agent_designation: record.agent_designation
     });
-    const { property_size, services, total_amount, address, notes, preferred_date, time, property_status, agent_name, agent_email, agent_phone, agent_company } = record;
+
+    const { 
+      reference_number, 
+      property_size, 
+      services, 
+      total_amount, 
+      address, 
+      notes, 
+      preferred_date, 
+      time, 
+      property_status, 
+      agent_name, 
+      agent_email, 
+      agent_phone, 
+      agent_company,
+      // New structured fields
+      selected_package_name,
+      additional_instructions,
+      property_type,
+      bedrooms,
+      bathrooms,
+      parking_spaces,
+      suite_unit,
+      postal_code,
+      access_instructions,
+      agent_designation,
+      agent_brokerage,
+      feature_sheet_content
+    } = record;
     // Format services for display
     const serviceList = services.map((service)=>`${service.name} (${service.count}x) - $${service.total}`).join("\n");
-    // Format address
-    const addressStr = typeof address === 'string' ? address : `${address.street}, ${address.city}, ${address.province} ${address.zipCode}`;
+    // Format address including unit number if provided
+    const formatCompleteAddress = () => {
+      if (typeof address === 'string') {
+        // If suite_unit is provided, prepend it to the address
+        if (suite_unit && suite_unit.trim()) {
+          return `${suite_unit.trim()}, ${address}`;
+        }
+        return address;
+      } else {
+        // Handle object-style address (legacy format)
+        const baseAddress = `${address.street}, ${address.city}, ${address.province} ${address.zipCode}`;
+        if (suite_unit && suite_unit.trim()) {
+          return `${suite_unit.trim()}, ${baseAddress}`;
+        }
+        return baseAddress;
+      }
+    };
+    
+    const addressStr = formatCompleteAddress();
     // Format time for display (convert 24h to 12h format)
     const formatTime = (timeStr)=>{
       const [hours, minutes] = timeStr.split(':');
@@ -261,20 +312,40 @@ serve(async (req)=>{
     } else {
       priceSection = `Total Price: $${rawTotal.toFixed(2)}`;
     }
+
+    // Generate confirmation URL if reference number exists
+    const confirmationUrl = reference_number 
+      ? `https://www.rephotos.ca/book-now/confirmation/${reference_number}`
+      : null;
+
+    // Helper function to format date as local date (avoiding timezone issues)
+    const formatDateLocal = (dateString) => {
+      try {
+        // Parse the date as local date to avoid timezone issues
+        const [year, month, day] = dateString.split('-').map(num => parseInt(num, 10));
+        const localDate = new Date(year, month - 1, day); // month is 0-indexed in JS
+        return localDate.toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        });
+      } catch {
+        return dateString;
+      }
+    };
+
     const emailBody = `Dear ${agent_name},
 
 Thank you for choosing ${EMAIL_CONFIG.companyName} for your photography needs! We're excited to help showcase your property.
 
 📸 BOOKING CONFIRMATION
+${reference_number ? `\nBooking Reference: ${reference_number}` : ''}
+${confirmationUrl ? `View Online: ${confirmationUrl}` : ''}
 
 PROPERTY DETAILS
 • Size: ${property_size}
 • Status: ${property_status}
-• Preferred Date: ${new Date(preferred_date).toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
-    })}
+• Preferred Date: ${formatDateLocal(preferred_date)}
 • Preferred Time: ${formatTime(time)}
 • Address: ${addressStr}
 
@@ -300,6 +371,7 @@ Please ensure the property is ready by reviewing our Photo Day Prep Guide. https
 Our photographer will arrive on time and begin capturing the property as outlined in the checklist.
 
 If you need to make any changes to your booking, simply reply to this email or call us at ${EMAIL_CONFIG.phone}.
+${confirmationUrl ? `\nYou can also view your booking details anytime at: ${confirmationUrl}` : ''}
 
 Best regards,
 Cooper Thompson

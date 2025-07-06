@@ -53,130 +53,138 @@ async function loadPricingData() {
   }
 
   try {
-    // Load the HTML file content
+    // Load the updated pricing data based on new CSV structure
     const htmlContent = `<h2>A La Carte Services</h2><table border="1" class="dataframe">
 <thead>
 <tr style="text-align: right;">
 <th>Service</th>
-<th>0–999 sq ft</th>
-<th>1000–1999 sq ft</th>
-<th>2000–2999 sq ft</th>
-<th>3000–3999 sq ft</th>
-<th>4000–4999 sq ft</th>
+<th>Under 1500 sq ft</th>
+<th>1500-2500 sq ft</th>
+<th>2500-3500 sq ft</th>
+<th>3500-4500 sq ft</th>
+<th>4500-5500 sq ft</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>HDR Photography</td>
-<td>189.99</td>
-<td>249.99</td>
-<td>319.99</td>
-<td>379.99</td>
-<td>439.99</td>
+<td>169.00</td>
+<td>229.00</td>
+<td>289.00</td>
+<td>349.00</td>
+<td>409.00</td>
 </tr>
 <tr>
-<td>360° Virtual Tour</td>
-<td>199.99</td>
-<td>239.99</td>
-<td>279.99</td>
-<td>319.99</td>
-<td>349.99</td>
+<td>Matterport 3D Tour</td>
+<td>199.00</td>
+<td>239.00</td>
+<td>279.00</td>
+<td>319.00</td>
+<td>359.00</td>
 </tr>
 <tr>
 <td>Property Highlights Video</td>
-<td>289.99</td>
-<td>309.99</td>
-<td>349.99</td>
-<td>379.99</td>
-<td>409.99</td>
+<td>289.00</td>
+<td>309.00</td>
+<td>329.00</td>
+<td>349.00</td>
+<td>369.00</td>
 </tr>
 <tr>
 <td>Slideshow Video Tour</td>
-<td>99.99</td>
-<td>99.99</td>
-<td>99.99</td>
-<td>99.99</td>
-<td>99.99</td>
+<td>99.00</td>
+<td>99.00</td>
+<td>99.00</td>
+<td>99.00</td>
+<td>99.00</td>
 </tr>
 <tr>
 <td>Social Media Reel</td>
-<td>229.99</td>
-<td>249.99</td>
-<td>279.99</td>
-<td>299.99</td>
-<td>329.99</td>
+<td>229.00</td>
+<td>249.00</td>
+<td>269.00</td>
+<td>289.00</td>
+<td>309.00</td>
 </tr>
 <tr>
 <td>Drone Aerial Photos</td>
-<td>159.99</td>
-<td>159.99</td>
-<td>159.99</td>
-<td>159.99</td>
-<td>159.99</td>
+<td>159.00</td>
+<td>159.00</td>
+<td>159.00</td>
+<td>159.00</td>
+<td>159.00</td>
 </tr>
 <tr>
 <td>Drone Aerial Video</td>
-<td>159.99</td>
-<td>159.99</td>
-<td>159.99</td>
-<td>159.99</td>
-<td>159.99</td>
+<td>159.00</td>
+<td>159.00</td>
+<td>159.00</td>
+<td>159.00</td>
+<td>159.00</td>
+</tr>
+<tr>
+<td>Drone Photos + Video</td>
+<td>199.00</td>
+<td>199.00</td>
+<td>199.00</td>
+<td>199.00</td>
+<td>199.00</td>
 </tr>
 <tr>
 <td>2D Floor Plan</td>
-<td>119.99</td>
-<td>149.99</td>
-<td>189.99</td>
-<td>229.99</td>
-<td>269.99</td>
+<td>119.00</td>
+<td>149.00</td>
+<td>179.00</td>
+<td>209.00</td>
+<td>239.00</td>
 </tr>
 <tr>
 <td>3D House Model</td>
-<td>189.99</td>
-<td>229.99</td>
-<td>269.99</td>
-<td>299.99</td>
-<td>339.99</td>
+<td>159.00</td>
+<td>199.00</td>
+<td>239.00</td>
+<td>279.00</td>
+<td>319.00</td>
 </tr>
 <tr>
 <td>Property Website</td>
-<td>129.99</td>
-<td>129.99</td>
-<td>129.99</td>
-<td>129.99</td>
-<td>129.99</td>
+<td>129.00</td>
+<td>129.00</td>
+<td>129.00</td>
+<td>129.00</td>
+<td>129.00</td>
 </tr>
 <tr>
 <td>Custom Domain Name</td>
-<td>39.99</td>
-<td>39.99</td>
-<td>39.99</td>
-<td>39.99</td>
-<td>39.99</td>
+<td>39.00</td>
+<td>39.00</td>
+<td>39.00</td>
+<td>39.00</td>
+<td>39.00</td>
 </tr>
 <tr>
 <td>Virtual Declutter</td>
-<td>29.99/image</td>
-<td>29.99/image</td>
-<td>29.99/image</td>
-<td>29.99/image</td>
-<td>29.99/image</td>
+<td>29.00/image</td>
+<td>29.00/image</td>
+<td>29.00/image</td>
+<td>29.00/image</td>
+<td>29.00/image</td>
 </tr>
 <tr>
 <td>Virtual Staging</td>
-<td>39.99/image</td>
-<td>39.99/image</td>
-<td>39.99/image</td>
-<td>39.99/image</td>
-<td>39.99/image</td>
+<td>39.00/image</td>
+<td>39.00/image</td>
+<td>39.00/image</td>
+<td>39.00/image</td>
+<td>39.00/image</td>
 </tr>
 <tr>
 <td>Virtual Twilight</td>
-<td>49.99/image</td>
-<td>49.99/image</td>
-<td>49.99/image</td>
-<td>49.99/image</td>
-<td>49.99/image</td>
+<td>49.00/image</td>
+<td>49.00/image</td>
+<td>49.00/image</td>
+<td>49.00/image</td>
+<td>49.00/image</td>
 </tr>
 </tbody>
 </table><br/><h2>Packages</h2><table border="1" class="dataframe">
@@ -192,164 +200,124 @@ async function loadPricingData() {
 </thead>
 <tbody>
 <tr>
-<td>Essentials Package</td>
-<td>0–999 sq ft</td>
-<td>229.99</td>
-<td>479.97</td>
-<td>250</td>
-<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+<td>Essentials</td>
+<td>Under 1500 sq ft</td>
+<td>279.00</td>
+<td>450.00</td>
+<td>171</td>
+<td>Professional Photography, 1-2 Drone Photos, Listing Website, Slideshow Video, Feature Sheet (PDF), Social Media Post (Square), Social Media Story (Vertical), Blue Sky Replacement</td>
 </tr>
 <tr>
-<td>Essentials Package</td>
-<td>1000–1999 sq ft</td>
-<td>289.99</td>
-<td>549.97</td>
-<td>260</td>
-<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+<td>Essentials</td>
+<td>1500-2500 sq ft</td>
+<td>329.00</td>
+<td>500.00</td>
+<td>171</td>
+<td>Professional Photography, 1-2 Drone Photos, Listing Website, Slideshow Video, Feature Sheet (PDF), Social Media Post (Square), Social Media Story (Vertical), Blue Sky Replacement</td>
 </tr>
 <tr>
-<td>Essentials Package</td>
-<td>2000–2999 sq ft</td>
-<td>349.99</td>
-<td>609.97</td>
-<td>260</td>
-<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+<td>Essentials</td>
+<td>2500-3500 sq ft</td>
+<td>379.00</td>
+<td>550.00</td>
+<td>171</td>
+<td>Professional Photography, 1-2 Drone Photos, Listing Website, Slideshow Video, Feature Sheet (PDF), Social Media Post (Square), Social Media Story (Vertical), Blue Sky Replacement</td>
 </tr>
 <tr>
-<td>Essentials Package</td>
-<td>3000–3999 sq ft</td>
-<td>389.99</td>
-<td>669.97</td>
-<td>280</td>
-<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+<td>Essentials</td>
+<td>3500-4500 sq ft</td>
+<td>429.00</td>
+<td>600.00</td>
+<td>171</td>
+<td>Professional Photography, 1-2 Drone Photos, Listing Website, Slideshow Video, Feature Sheet (PDF), Social Media Post (Square), Social Media Story (Vertical), Blue Sky Replacement</td>
 </tr>
 <tr>
-<td>Essentials Package</td>
-<td>4000–4999 sq ft</td>
-<td>449.99</td>
-<td>729.97</td>
-<td>280</td>
-<td>HDR Photography, 1–2 Drone Shots, Slideshow Video Tour, Property Website</td>
+<td>Essentials</td>
+<td>4500-5500 sq ft</td>
+<td>479.00</td>
+<td>650.00</td>
+<td>171</td>
+<td>Professional Photography, 1-2 Drone Photos, Listing Website, Slideshow Video, Feature Sheet (PDF), Social Media Post (Square), Social Media Story (Vertical), Blue Sky Replacement</td>
 </tr>
 <tr>
-<td>Deluxe Tour Package</td>
-<td>0–999 sq ft</td>
-<td>489.99</td>
-<td>839.96</td>
-<td>350</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+<td>Marketing Pro</td>
+<td>Under 1500 sq ft</td>
+<td>679.00</td>
+<td>1050.00</td>
+<td>371</td>
+<td>Everything in Essentials + Enhanced Twilight Listing Image + 360 Virtual Tour, Property Highlights Video, 2D Floor Plan (Color-coded + Blk and white, Full Aerial Coverage (Additional Drone Images + Footage) + Custom Domain Name</td>
 </tr>
 <tr>
-<td>Deluxe Tour Package</td>
-<td>1000–1999 sq ft</td>
-<td>579.99</td>
-<td>969.96</td>
-<td>390</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+<td>Marketing Pro</td>
+<td>1500-2500 sq ft</td>
+<td>729.00</td>
+<td>1150.00</td>
+<td>421</td>
+<td>Everything in Essentials + Enhanced Twilight Listing Image + 360 Virtual Tour, Property Highlights Video, 2D Floor Plan (Color-coded + Blk and white, Full Aerial Coverage (Additional Drone Images + Footage) + Custom Domain Name</td>
 </tr>
 <tr>
-<td>Deluxe Tour Package</td>
-<td>2000–2999 sq ft</td>
-<td>649.99</td>
-<td>1109.96</td>
-<td>460</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+<td>Marketing Pro</td>
+<td>2500-3500 sq ft</td>
+<td>779.00</td>
+<td>1250.00</td>
+<td>471</td>
+<td>Everything in Essentials + Enhanced Twilight Listing Image + 360 Virtual Tour, Property Highlights Video, 2D Floor Plan (Color-coded + Blk and white, Full Aerial Coverage (Additional Drone Images + Footage) + Custom Domain Name</td>
 </tr>
 <tr>
-<td>Deluxe Tour Package</td>
-<td>3000–3999 sq ft</td>
-<td>719.99</td>
-<td>1249.96</td>
-<td>530</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+<td>Marketing Pro</td>
+<td>3500-4500 sq ft</td>
+<td>829.00</td>
+<td>1350.00</td>
+<td>521</td>
+<td>Everything in Essentials + Enhanced Twilight Listing Image + 360 Virtual Tour, Property Highlights Video, 2D Floor Plan (Color-coded + Blk and white, Full Aerial Coverage (Additional Drone Images + Footage) + Custom Domain Name</td>
 </tr>
 <tr>
-<td>Deluxe Tour Package</td>
-<td>4000–4999 sq ft</td>
-<td>799.99</td>
-<td>1389.96</td>
-<td>590</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Slideshow Video Tour, Property Website, Custom Domain Name</td>
+<td>Marketing Pro</td>
+<td>4500-5500 sq ft</td>
+<td>879.00</td>
+<td>1450.00</td>
+<td>571</td>
+<td>Everything in Essentials + Enhanced Twilight Listing Image + 360 Virtual Tour, Property Highlights Video, 2D Floor Plan (Color-coded + Blk and white, Full Aerial Coverage (Additional Drone Images + Footage) + Custom Domain Name</td>
 </tr>
 <tr>
-<td>Marketing Pro Package</td>
-<td>0–999 sq ft</td>
-<td>829.99</td>
-<td>1099.96</td>
-<td>270</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
+<td>Top Agent</td>
+<td>Under 1500 sq ft</td>
+<td>799.00</td>
+<td>1350.00</td>
+<td>551</td>
+<td>Everything in Marketing Pro + Agent on video, 2 Additional Twilight Images, Social Media Reel Video, Extra social media content, 2D + 3D Floor Plan</td>
 </tr>
 <tr>
-<td>Marketing Pro Package</td>
-<td>1000–1999 sq ft</td>
-<td>959.99</td>
-<td>1259.96</td>
-<td>300</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
+<td>Top Agent</td>
+<td>1500-2500 sq ft</td>
+<td>849.00</td>
+<td>1450.00</td>
+<td>601</td>
+<td>Everything in Marketing Pro + Agent on video, 2 Additional Twilight Images, Social Media Reel Video, Extra social media content, 2D + 3D Floor Plan</td>
 </tr>
 <tr>
-<td>Marketing Pro Package</td>
-<td>2000–2999 sq ft</td>
-<td>1079.99</td>
-<td>1419.96</td>
-<td>340</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
+<td>Top Agent</td>
+<td>2500-3500 sq ft</td>
+<td>899.00</td>
+<td>1550.00</td>
+<td>651</td>
+<td>Everything in Marketing Pro + Agent on video, 2 Additional Twilight Images, Social Media Reel Video, Extra social media content, 2D + 3D Floor Plan</td>
 </tr>
 <tr>
-<td>Marketing Pro Package</td>
-<td>3000–3999 sq ft</td>
-<td>1179.99</td>
-<td>1579.96</td>
-<td>400</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
+<td>Top Agent</td>
+<td>3500-4500 sq ft</td>
+<td>949.00</td>
+<td>1650.00</td>
+<td>701</td>
+<td>Everything in Marketing Pro + Agent on video, 2 Additional Twilight Images, Social Media Reel Video, Extra social media content, 2D + 3D Floor Plan</td>
 </tr>
 <tr>
-<td>Marketing Pro Package</td>
-<td>4000–4999 sq ft</td>
-<td>1299.99</td>
-<td>1749.96</td>
-<td>450</td>
-<td>HDR Photography, 2–3 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, Slideshow Video Tour</td>
-</tr>
-<tr>
-<td>Premium Seller Experience</td>
-<td>0–999 sq ft</td>
-<td>1069.99</td>
-<td>1629.95</td>
-<td>560</td>
-<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
-</tr>
-<tr>
-<td>Premium Seller Experience</td>
-<td>1000–1999 sq ft</td>
-<td>1199.99</td>
-<td>1789.95</td>
-<td>590</td>
-<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
-</tr>
-<tr>
-<td>Premium Seller Experience</td>
-<td>2000–2999 sq ft</td>
-<td>1319.99</td>
-<td>1949.95</td>
-<td>630</td>
-<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
-</tr>
-<tr>
-<td>Premium Seller Experience</td>
-<td>3000–3999 sq ft</td>
-<td>1419.99</td>
-<td>2109.95</td>
-<td>690</td>
-<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
-</tr>
-<tr>
-<td>Premium Seller Experience</td>
-<td>4000–4999 sq ft</td>
-<td>1539.99</td>
-<td>2279.95</td>
-<td>740</td>
-<td>HDR Photography, 3–5 Drone Shots, 360° Virtual Tour, 2D Floor Plan, Custom Video, Property Website, Custom Domain Name, 3D House Model, Virtual Twilight, Slideshow Video Tour</td>
+<td>Top Agent</td>
+<td>4500-5500 sq ft</td>
+<td>999.00</td>
+<td>1750.00</td>
+<td>751</td>
+<td>Everything in Marketing Pro + Agent on video, 2 Additional Twilight Images, Social Media Reel Video, Extra social media content, 2D + 3D Floor Plan</td>
 </tr>
 </tbody>
 </table>`;

@@ -11,9 +11,8 @@ export function ServiceAreasSection() {
         <div className="text-center mb-12">
           <h6 className="text-sm uppercase tracking-wider text-muted-foreground mb-2">Service Areas</h6>
           <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">Where we work</h2>
-          <p className="text-gray-600 max-w-3xl mx-auto">
-            RePhotos provides premium real estate photography and marketing services throughout Southern Ontario. Our
-            team of professional photographers and visual artists are strategically located to serve you better.
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            RePhotos provides premium real estate photography and marketing services throughout Southern Ontario. Our professional photography operation serves all areas shown on the map below with no travel fees, and extends to additional locations throughout the region for a small travel fee.
           </p>
         </div>
 

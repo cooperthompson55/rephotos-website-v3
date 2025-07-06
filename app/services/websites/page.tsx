@@ -279,14 +279,13 @@ export default function WebsitesPage() {
 
               <TabsContent value="desktop" className="mt-0">
                 <div className="bg-gray-900 rounded-lg p-4 max-w-4xl mx-auto">
-                  <div className="bg-white rounded aspect-[16/5] w-full" style={{ maxWidth: '1000px', margin: '0 auto' }}>
-                    <Image
-                      src="/placeholder.svg?height=400&width=1280&query=luxury-property-website-desktop"
-                      alt="Desktop website preview"
-                      width={1280}
-                      height={400}
-                      className="rounded"
-                      style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+                  <div className="bg-white rounded aspect-[16/10] w-full" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <iframe
+                      src="https://tour.homeontour.com/jnEcI7337A?branded=0"
+                      className="rounded w-full h-full"
+                      style={{ width: '100%', height: '100%', border: 'none' }}
+                      title="Desktop website preview - Property Tour"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -294,13 +293,13 @@ export default function WebsitesPage() {
 
               <TabsContent value="tablet" className="mt-0">
                 <div className="bg-gray-900 rounded-lg p-8 max-w-2xl mx-auto">
-                  <div className="bg-white rounded aspect-[4/3]">
-                    <Image
-                      src="/placeholder.svg?height=768&width=1024&query=luxury-property-website-tablet"
-                      alt="Tablet website preview"
-                      width={1024}
-                      height={768}
-                      className="rounded"
+                  <div className="bg-white rounded aspect-[4/3]" style={{ width: '100%', height: '600px' }}>
+                    <iframe
+                      src="https://tour.homeontour.com/jnEcI7337A?branded=0"
+                      className="rounded w-full h-full"
+                      style={{ width: '100%', height: '100%', border: 'none' }}
+                      title="Tablet website preview - Property Tour"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -308,13 +307,13 @@ export default function WebsitesPage() {
 
               <TabsContent value="mobile" className="mt-0">
                 <div className="bg-gray-900 rounded-3xl p-4 max-w-sm mx-auto">
-                  <div className="bg-white rounded-2xl aspect-[9/16]">
-                    <Image
-                      src="/placeholder.svg?height=844&width=390&query=luxury-property-website-mobile"
-                      alt="Mobile website preview"
-                      width={390}
-                      height={844}
-                      className="rounded-2xl"
+                  <div className="bg-white rounded-2xl aspect-[9/16]" style={{ width: '100%', height: '600px' }}>
+                    <iframe
+                      src="https://tour.homeontour.com/jnEcI7337A?branded=0"
+                      className="rounded-2xl w-full h-full"
+                      style={{ width: '100%', height: '100%', border: 'none' }}
+                      title="Mobile website preview - Property Tour"
+                      loading="lazy"
                     />
                   </div>
                 </div>

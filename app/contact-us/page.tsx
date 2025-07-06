@@ -220,7 +220,7 @@ export default function ContactPage() {
                             <SelectItem value="pricing">Pricing Question</SelectItem>
                             <SelectItem value="support">Technical Support</SelectItem>
                             <SelectItem value="feedback">Feedback</SelectItem>
-                            <SelectItem value="large-project">Larger Project (5,000+ sq ft or commercial)</SelectItem>
+                            <SelectItem value="large-project">Larger Project (5,500+ sq ft or commercial)</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
