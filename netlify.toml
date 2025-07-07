@@ -16,4 +16,3 @@
   from = "/services/virtual-staging"
   to = "/services/virtual-services"
   status = 301
-c
