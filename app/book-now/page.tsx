@@ -1235,16 +1235,17 @@ const isServiceIncludedInBundle = (serviceId: string, bundleId: string | null) =
   const checkDirectServices = (bundleToCheck: typeof bundle): boolean => {
     // Create a mapping of service IDs to bundle service names
     const serviceMapping: { [key: string]: string[] } = {
+      "hdrPhotography": ["Professional Photography", "HDR Photography"],
       "matterportTour": ["360° Virtual Tour", "Matterport Tour"],
       "propertyHighlightsVideo": ["Property Highlights Video", "Property Tour Video", "Property Tour Video (Drone Footage)"],
       "socialMediaReel": ["Social Media Reel Video"],
-      "droneAerialPhotos": ["1-2 Drone Photos", "Drone Aerial Photos", "Full Aerial Coverage"],
-      "droneAerialVideo": ["Drone Aerial Video", "Drone Aerial Footage", "Full Aerial Coverage"],
-      "dronePhotosVideo": ["Full Aerial Coverage"],
+      "droneAerialPhotos": ["1-2 Drone Photos", "Drone Aerial Photos", "Full Aerial Coverage", "2-4 Aerial Photos Optimized For Your Listing"],
+      "droneAerialVideo": ["Drone Aerial Video", "Drone Aerial Footage", "Full Aerial Coverage", "Complete Aerial Coverage"],
+      "dronePhotosVideo": ["Full Aerial Coverage", "Complete Aerial Coverage"],
       "floorPlan2d": ["2D Floor Plan", "2D Floor Plan (Color-coded + Black and white)"],
       "houseModel3d": ["3D House Model", "2D + 3D Floor Plan"],
       "customDomainName": ["Custom Domain Name"],
-      "virtualTwilight": ["Enhanced Twilight Listing Image", "2 Additional Twilight Images"]
+      "virtualTwilight": ["Enhanced Twilight Listing Image", "2 Additional Twilight Images", "Virtual Twilight Photography"]
     };
     
     const serviceNames = serviceMapping[serviceId] || [];
