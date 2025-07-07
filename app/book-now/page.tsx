@@ -4511,6 +4511,17 @@ export default function BookNowPage() {
         .custom-checkbox-anim {
           transition: box-shadow 0.2s, background 0.2s, border 0.2s;
         }
+        
+        /* Custom checkbox styling to match blue button color */
+        input[type="checkbox"] {
+          accent-color: #1c4596;
+        }
+        
+        /* For browsers that don't support accent-color */
+        input[type="checkbox"]:checked {
+          background-color: #1c4596;
+          border-color: #1c4596;
+        }
         @keyframes slideUp {
           from { 
             opacity: 0; 
