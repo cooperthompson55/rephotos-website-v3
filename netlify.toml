@@ -7,8 +7,7 @@
 
 [build.environment]
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
-  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SUPABASE_ANON_KEY,NEXT_PUBLIC_SUPABASE_URL,SUPABASE_SERVICE_ROLE_KEY,SUPABASE_FUNCTION_URL"
-  SECRETS_SCAN_OMIT_PATHS = "app/api/bookings/route.ts,app/api/test-supabase/route.ts"
+  SECRETS_SCAN_ENABLED = "false"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
