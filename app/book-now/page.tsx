@@ -987,7 +987,16 @@ const getAddonServices = (selectedSize: string) => [
 // Add categorized addon services data
 const getAddonServicesByCategory = (selectedSize: string) => {
   const photographyServices = [
-    // HDR Photography removed from here - will be added as regular addon
+    {
+      id: "hdrPhotography",
+      title: "HDR Photography",
+      description: "✓ Professional HDR photography for crisp, well-lit interior and exterior shots",
+      images: ["/images/book-now/packages/INSTAGRAM STORY (12).jpg"],
+      getPrice: () => {
+        const prices = { "Under 1500": 169, "1500-2500": 229, "2500-3500": 289, "3500-4500": 349, "4500-5500": 409 };
+        return prices[selectedSize as keyof typeof prices] || 169;
+      }
+    },
     {
       id: "droneAerialPhotos",
       title: "Drone Aerial Photos",
