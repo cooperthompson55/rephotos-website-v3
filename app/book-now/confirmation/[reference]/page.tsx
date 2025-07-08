@@ -248,19 +248,39 @@ export default function BookingConfirmationPage() {
           // Handle object with name property
           if ('name' in service && service.name) {
             const serviceName = String(service.name);
-            if ('count' in service && service.count && Number(service.count) > 1) {
-              return `${serviceName} (${service.count}x)`;
+            const servicePrice = 'price' in service && service.price ? Number(service.price) : null;
+            const serviceCount = 'count' in service && service.count ? Number(service.count) : 1;
+            
+            // Format the service name with pricing
+            let displayName = serviceName;
+            if (servicePrice !== null) {
+              displayName += ` ($${servicePrice.toFixed(0)})`;
             }
-            return serviceName;
+            
+            if (serviceCount > 1) {
+              displayName += ` (${serviceCount}x)`;
+            }
+            
+            return displayName;
           }
           
           // Handle object with title property (fallback)
           if ('title' in service && service.title) {
             const serviceName = String(service.title);
-            if ('count' in service && service.count && Number(service.count) > 1) {
-              return `${serviceName} (${service.count}x)`;
+            const servicePrice = 'price' in service && service.price ? Number(service.price) : null;
+            const serviceCount = 'count' in service && service.count ? Number(service.count) : 1;
+            
+            // Format the service name with pricing
+            let displayName = serviceName;
+            if (servicePrice !== null) {
+              displayName += ` ($${servicePrice.toFixed(0)})`;
             }
-            return serviceName;
+            
+            if (serviceCount > 1) {
+              displayName += ` (${serviceCount}x)`;
+            }
+            
+            return displayName;
           }
           
           // Handle object that might be stringified
