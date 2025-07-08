@@ -332,6 +332,27 @@ export default function BookingConfirmationPage() {
     }
   }
 
+  const formatTime = (timeString: string) => {
+    if (!timeString || timeString === 'Unknown' || timeString === 'Not specified') {
+      return 'Not specified'
+    }
+    try {
+      // Handle different time formats: "HH:MM:SS", "HH:MM", or just "HH"
+      const timeParts = timeString.split(':')
+      const hours = parseInt(timeParts[0], 10)
+      const minutes = timeParts[1] ? parseInt(timeParts[1], 10) : 0
+      
+      // Convert to 12-hour format
+      const ampm = hours >= 12 ? 'PM' : 'AM'
+      const displayHours = hours % 12 || 12
+      const displayMinutes = minutes.toString().padStart(2, '0')
+      
+      return `${displayHours}:${displayMinutes} ${ampm}`
+    } catch {
+      return timeString
+    }
+  }
+
   return (
     <div className="relative bg-[#262F3F] min-h-screen">
       <img
@@ -352,17 +373,29 @@ export default function BookingConfirmationPage() {
             Thank you for your booking! We have received your request and will contact you shortly to confirm the details.
           </p>
 
+          {/* Booking Includes */}
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-[#262F3F] mb-4">Booking Includes</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {getBookingServices().map((feature, idx) => (
+                <div key={idx} className="flex items-start gap-2">
+                  <span className="text-[#1c4596] text-lg">•</span>
+                  <span className="text-gray-700">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Booking Details */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
             <h2 className="text-xl font-bold text-[#262F3F] mb-4">Booking Details:</h2>
             <div className="space-y-2 text-gray-700">
-              <div><strong>Package:</strong> {selectedPackageName}</div>
-              <div><strong>Property Size:</strong> {booking.property_size}</div>
               <div><strong>Property Address:</strong> {formatCompleteAddress(booking)}</div>
-              <div><strong>Investment:</strong> <span className="text-2xl font-bold text-[#1c4596]">${booking.total_amount.toFixed(2)}</span></div>
+              <div><strong>Property Size:</strong> {booking.property_size}</div>
               <div><strong>Preferred Date:</strong> {formatDate(booking.preferred_date)}</div>
-              <div><strong>Preferred Time:</strong> {booking.time || 'Not specified'}</div>
-              <div><strong>Status:</strong> <span className="capitalize bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm font-medium">{booking.status}</span></div>
+              <div><strong>Preferred Time:</strong> {formatTime(booking.time)}</div>
+              <div><strong>Total Price:</strong> ${booking.total_amount.toFixed(2)}</div>
+              <div><strong>Status:</strong> <span className="capitalize bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">Confirmed</span></div>
             </div>
           </div>
 
@@ -392,19 +425,6 @@ export default function BookingConfirmationPage() {
               <p className="text-sm text-gray-600">
                 📍 Our photographer will arrive at this location for your scheduled shoot.
               </p>
-            </div>
-          </div>
-
-          {/* Booking Includes */}
-          <div className="mb-8">
-            <h2 className="text-xl font-bold text-[#262F3F] mb-4">Booking Includes</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {getBookingServices().map((feature, idx) => (
-                <div key={idx} className="flex items-start gap-2">
-                  <span className="text-[#1c4596] text-lg">•</span>
-                  <span className="text-gray-700">{feature}</span>
-                </div>
-              ))}
             </div>
           </div>
 

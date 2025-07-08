@@ -31,6 +31,7 @@ const formSchema = z.object({
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,6 +46,7 @@ export default function ContactPage() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
+    setErrorMessage(null)
     console.log(values)
 
     // Send form data to our API route
@@ -56,14 +58,23 @@ export default function ContactPage() {
         },
         body: JSON.stringify(values)
       })
-      if (!res.ok) throw new Error("Failed to send message")
-    } catch (err) {
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}))
+        const errorMsg = errorData.error || "Failed to send message"
+        setErrorMessage(errorMsg)
+        setIsSubmitting(false)
+        return
+      }
+      
+      // Success
       setIsSubmitting(false)
-      return
+      setIsSuccess(true)
+    } catch (err) {
+      console.error('Contact form error:', err)
+      setErrorMessage("Unable to send message. Please try again or contact us directly at cooper@rephotos.ca or call (905) 299-9300.")
+      setIsSubmitting(false)
     }
-
-    setIsSubmitting(false)
-    setIsSuccess(true)
   }
 
   if (isSuccess) {
@@ -158,6 +169,19 @@ export default function ContactPage() {
             </div>
 
             <div>
+              {errorMessage && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                  <div className="flex items-start">
+                    <svg className="w-5 h-5 text-red-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <h3 className="text-sm font-medium text-red-800">Unable to send message</h3>
+                      <p className="text-sm text-red-700 mt-1">{errorMessage}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <FormField

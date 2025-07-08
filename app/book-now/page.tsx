@@ -1261,7 +1261,78 @@ const isServiceIncludedInBundle = (serviceId: string, bundleId: string | null) =
 };
 
 export default function BookNowPage() {
-  // Get pricing for service bundles based on property size
+  // Centralized pricing calculation function to ensure consistency
+  const calculateTotalPrice = () => {
+    let total = 0;
+    
+    // Bundle pricing
+    if (selectedBundle) {
+      const bundlePrice = getBundlePricing(selectedBundle, selectedSize);
+      total += parseFloat(bundlePrice.replace('$', ''));
+    }
+    
+    // Individual services pricing
+    selectedServices.forEach(id => {
+      const qty = serviceQuantities[id] || 1;
+      
+      // First check if it's a service from getAddonServicesByCategory
+      const categories = getAddonServicesByCategory(selectedSize);
+      let categoryService: any = null;
+      
+      // Find service in photography category
+      categoryService = categories.photography.services.find((s: any) => s.id === id);
+      if (!categoryService) {
+        // Find service in video category  
+        categoryService = (categories.video.services as any[]).find((s: any) => s.id === id);
+      }
+      if (!categoryService) {
+        // Find service in floor plans category
+        categoryService = (categories.floorPlans.services as any[]).find((s: any) => s.id === id);
+      }
+      if (!categoryService) {
+        // Find service in marketing category
+        categoryService = (categories.marketing.services as any[]).find((s: any) => s.id === id);
+      }
+      if (!categoryService) {
+        // Find service in virtual category
+        categoryService = (categories.virtual.services as any[]).find((s: any) => s.id === id);
+      }
+      
+      if (categoryService) {
+        // Handle services from getAddonServicesByCategory
+        const price = categoryService.getPrice();
+        total += price * qty;
+      } else {
+        // Handle regular services from pricingData
+        const service = getServicesFromPricingData(pricingData).find(s => s.id === id);
+        if (service) {
+          const sizeIdx = sizeOptions.findIndex(opt => opt.value === selectedSize);
+          const price = Array.isArray(service.prices) ? service.prices[sizeIdx] : service.prices;
+          let priceNum = 0;
+          if (typeof price === 'number') priceNum = price;
+          else if (typeof price === 'string') {
+            const match = price.match(/\d+(\.\d+)?/);
+            priceNum = match ? parseFloat(match[0]) : 0;
+          }
+          total += priceNum * qty;
+        }
+      }
+    });
+    
+    // Addons pricing
+    Object.entries(addonQuantities).forEach(([addonId, qty]) => {
+      if (qty > 0) {
+        const addon = getAddonServices(selectedSize).find(a => a.id === addonId);
+        if (addon) {
+          const price = addon.getPrice();
+          total += price * qty;
+        }
+      }
+    });
+    
+    return total;
+  };
+
   const getBundlePricing = (bundleId: string, propertySize: string) => {
     const priceMap: { [key: string]: { [size: string]: string } } = {
       "essentials": {
@@ -1474,7 +1545,7 @@ export default function BookNowPage() {
 
   // Manage sticky bar animations and visibility
   useEffect(() => {
-    const shouldShow = (step === 0 || step === 1 || step === 2) && (selectedBundle || selectedServices.length > 0 || selectedAddons.length > 0)
+    const shouldShow = (step === 0 || step === 1 || step === 2 || step === 3) && (selectedBundle || selectedServices.length > 0 || selectedAddons.length > 0)
     
     if (shouldShow && !stickyBarVisible) {
       // Show bar with entrance animation
@@ -1494,7 +1565,7 @@ export default function BookNowPage() {
 
   // Auto-collapse expanded bar when navigating steps
   useEffect(() => {
-    if (step > 2) {
+    if (step > 3) {
       setBarExpanded(false)
     }
   }, [step])
@@ -1880,9 +1951,9 @@ export default function BookNowPage() {
     // Use selected size or default
     const propertySize = selectedSize || 'Under 1500';
 
-    // Build services array
+    // Build services array and calculate total using centralized pricing function
     let servicesArr: any[] = [];
-    let totalAmount = 0;
+    const totalAmount = calculateTotalPrice();
     
     // Handle selected bundle
     if (selectedBundle) {
@@ -1897,7 +1968,6 @@ export default function BookNowPage() {
           count: 1,
           total: bundlePriceNum,
         });
-        totalAmount += bundlePriceNum;
       }
     }
 
@@ -1940,7 +2010,6 @@ export default function BookNowPage() {
         };
         console.log(`Found category service ${id}:`, serviceData);
         servicesArr.push(serviceData);
-        totalAmount += price * qty;
       } else {
         // Handle regular services from pricingData
         const service = getServicesFromPricingData(pricingData).find(s => s.id === id);
@@ -1962,11 +2031,8 @@ export default function BookNowPage() {
           };
           console.log(`Found pricing data service ${id}:`, serviceData);
           servicesArr.push(serviceData);
-          totalAmount += priceNum * qty;
         } else {
           console.log(`Service ${id} not found in any category or pricing data!`);
-          
-          
         }
       }
     });
@@ -1983,7 +2049,6 @@ export default function BookNowPage() {
             count: qty,
             total: price * qty,
           });
-          totalAmount += price * qty;
         }
       }
     });
@@ -3316,6 +3381,9 @@ export default function BookNowPage() {
                                     <SelectItem value="16:00">4:00 PM</SelectItem>
                                     <SelectItem value="16:30">4:30 PM</SelectItem>
                                     <SelectItem value="17:00">5:00 PM</SelectItem>
+                                    <SelectItem value="17:30">5:30 PM</SelectItem>
+                                    <SelectItem value="18:00">6:00 PM</SelectItem>
+                                    <SelectItem value="18:30">6:30 PM</SelectItem>
                                   </SelectContent>
                                 </Select>
                                 <FormMessage />
@@ -3813,6 +3881,25 @@ export default function BookNowPage() {
                           }
                         })()}</span>
                       </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="font-medium">Preferred Time:</span>
+                        <span>{(() => {
+                          const currentTime = form.getValues("time");
+                          if (!currentTime) return "Not specified";
+                          
+                          // Convert 24-hour time to 12-hour format with AM/PM
+                          try {
+                            const [hours, minutes] = currentTime.split(':').map(num => parseInt(num, 10));
+                            const ampm = hours >= 12 ? 'PM' : 'AM';
+                            const displayHours = hours % 12 || 12;
+                            const displayMinutes = minutes.toString().padStart(2, '0');
+                            return `${displayHours}:${displayMinutes} ${ampm}`;
+                          } catch {
+                            return currentTime;
+                          }
+                        })()}</span>
+                      </div>
                     </div>
 
                     <div className="border-t pt-4">
@@ -3861,32 +3948,7 @@ export default function BookNowPage() {
                       <div className="flex justify-between items-center text-xl font-bold">
                         <span>Total:</span>
                         <span>
-                          ${(() => {
-                            let total = 0;
-                            if (selectedBundle) {
-                              const bundlePrice = getBundlePricing(selectedBundle, selectedSize);
-                              total += parseFloat(bundlePrice.replace('$', ''));
-                            }
-                            total += selectedServices.reduce((sum, id) => {
-                              const service = getServicesFromPricingData(pricingData).find(s => s.id === id);
-                              if (!service) return sum;
-                              const sizeIdx = sizeOptions.findIndex(opt => opt.value === selectedSize);
-                              const price = Array.isArray(service.prices) ? service.prices[sizeIdx] : service.prices;
-                              const qty = serviceQuantities[id] || 1;
-                              let priceNum = 0;
-                              if (typeof price === 'number') priceNum = price;
-                              else if (typeof price === 'string') {
-                                const match = price.match(/\d+(\.\d+)?/);
-                                priceNum = match ? parseFloat(match[0]) : 0;
-                              }
-                              return sum + priceNum * qty;
-                            }, 0);
-                            total += Object.entries(addonQuantities).reduce((sum, [addonId, qty]) => {
-                              const addon = getAddonServices(selectedSize).find(a => a.id === addonId);
-                              return sum + (addon ? addon.getPrice() * qty : 0);
-                            }, 0);
-                            return total.toFixed(2);
-                          })()}
+                          ${calculateTotalPrice().toFixed(2)}
                         </span>
                       </div>
                     </div>
@@ -4017,44 +4079,7 @@ export default function BookNowPage() {
               {/* Right side - Total and Proceed button */}
               <div className="flex items-center gap-2 sm:gap-4">
                 <div className="text-lg sm:text-xl font-bold text-[#262F3F]">
-                  {(() => {
-                    let total = 0;
-                    if (selectedBundle) {
-                      const bundlePrice = getBundlePricing(selectedBundle, selectedSize);
-                      total += parseFloat(bundlePrice.replace('$', ''));
-                    }
-                    total += selectedServices.reduce((sum, id) => {
-                      // Special handling for HDR Photography
-                      if (id === 'hdrPhotography') {
-                        const photographyServices = getAddonServicesByCategory(selectedSize).photography.services;
-                        const hdrService = photographyServices.find(s => s.id === 'hdrPhotography');
-                        if (hdrService) {
-                          const qty = serviceQuantities[id] || 1;
-                          return sum + (hdrService.getPrice() * qty);
-                        }
-                        return sum;
-                      }
-                      
-                      // Regular service price calculation
-                      const service = getServicesFromPricingData(pricingData).find(s => s.id === id);
-                      if (!service) return sum;
-                      const sizeIdx = sizeOptions.findIndex(opt => opt.value === selectedSize);
-                      const price = Array.isArray(service.prices) ? service.prices[sizeIdx] : service.prices;
-                      const qty = serviceQuantities[id] || 1;
-                      let priceNum = 0;
-                      if (typeof price === 'number') priceNum = price;
-                      else if (typeof price === 'string') {
-                        const match = price.match(/\d+(\.\d+)?/);
-                        priceNum = match ? parseFloat(match[0]) : 0;
-                      }
-                      return sum + priceNum * qty;
-                    }, 0);
-                    total += Object.entries(addonQuantities).reduce((sum, [addonId, qty]) => {
-                      const addon = getAddonServices(selectedSize).find(a => a.id === addonId);
-                      return sum + (addon ? addon.getPrice() * qty : 0);
-                    }, 0);
-                    return `$${total.toFixed(2)}`;
-                  })()}
+                  ${calculateTotalPrice().toFixed(2)}
                 </div>
                 <button
                   className="bg-[#1c4596] hover:bg-[#2853AE] text-white font-semibold rounded-lg px-2 py-2 sm:px-4 sm:py-2 transition disabled:opacity-60 text-xs sm:text-sm"
@@ -4069,13 +4094,13 @@ export default function BookNowPage() {
                     {step === 0 ? 'Continue to Add-ons →' : 
                      step === 1 ? 'Continue to Property Details →' :
                      step === 2 ? 'Continue to Personal Info →' : 
-                     'Proceed to Checkout'}
+                     'Proceed to Confirmation →'}
                   </span>
                   <span className="sm:hidden">
                     {step === 0 ? 'Add-ons →' : 
                      step === 1 ? 'Property →' :
                      step === 2 ? 'Personal →' : 
-                     'Checkout'}
+                     'Confirmation →'}
                   </span>
                 </button>
               </div>
