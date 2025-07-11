@@ -7,8 +7,20 @@ import { CTASection } from "@/components/home/CTASection"
 import Image from "next/image"
 import { X, ChevronLeft, ChevronRight, Fullscreen, Minimize, Grid3X3, ChevronUp, ChevronDown } from "lucide-react"
 
+// Portfolio property type
+type PortfolioProperty = {
+  id: string
+  address: string
+  town: string
+  coverImage: string
+  totalImages: number
+  images: string[]
+  slideshowVideo?: string
+  virtualTour?: string
+}
+
 // Portfolio properties data
-const portfolioProperties = [
+const portfolioProperties: PortfolioProperty[] = [
   {
     id: "2272-mowat-oakville",
     address: "2272 Mowat Avenue",
@@ -34,11 +46,23 @@ const portfolioProperties = [
       )
     ],
     slideshowVideo: "https://www.youtube.com/embed/9F-tMSUPfGU?autoplay=0&mute=1&rel=0&modestbranding=1"
+  },
+  {
+    id: "1460-thetford-mississauga",
+    address: "1460 Thetford Court",
+    town: "Mississauga",
+    coverImage: "/images/portfolio/1460%20Thetford%20Court,%20Mississauga/1-gallery.jpg",
+    totalImages: 2,
+    images: [
+      "/images/portfolio/1460%20Thetford%20Court,%20Mississauga/1-gallery.jpg",
+      "/images/portfolio/1460%20Thetford%20Court,%20Mississauga/2-gallery.jpg"
+    ],
+    virtualTour: "https://my.matterport.com/show/?m=BrDJ76jfsh2"
   }
 ]
 
 export default function PortfolioPage() {
-  const [selectedProperty, setSelectedProperty] = useState<typeof portfolioProperties[0] | null>(null)
+  const [selectedProperty, setSelectedProperty] = useState<PortfolioProperty | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isMobileFullscreen, setIsMobileFullscreen] = useState(false) // Mobile-specific fullscreen state
@@ -99,7 +123,7 @@ export default function PortfolioPage() {
   }, []);
 
   // Open gallery with optional slideshow video as first media
-  const openGallery = (property: typeof portfolioProperties[0], slideshow = false) => {
+  const openGallery = (property: PortfolioProperty, slideshow = false) => {
     setSelectedProperty(property)
     setShowSlideshow(slideshow)
     setCurrentImageIndex(0)
@@ -313,14 +337,26 @@ export default function PortfolioPage() {
                       {property.address}
                     </h3>
                     <p className="text-gray-600 text-lg">{property.town}</p>
-                    {/* Slideshow video button */}
-                    <button
-                      className="text-primary underline text-sm w-fit hover:text-secondary focus:outline-none"
-                      onClick={e => { e.stopPropagation(); openGallery(property, true); }}
-                      type="button"
-                    >
-                      View Slideshow Video
-                    </button>
+                    {/* Slideshow video button or Virtual Tour button */}
+                    {property.virtualTour ? (
+                      <a
+                        href={property.virtualTour}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary underline text-sm w-fit hover:text-secondary focus:outline-none"
+                        onClick={e => e.stopPropagation()}
+                      >
+                        Virtual Tour
+                      </a>
+                    ) : (
+                      <button
+                        className="text-primary underline text-sm w-fit hover:text-secondary focus:outline-none"
+                        onClick={e => { e.stopPropagation(); openGallery(property, true); }}
+                        type="button"
+                      >
+                        View Slideshow Video
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -388,7 +424,7 @@ export default function PortfolioPage() {
             onTouchEnd={onTouchEnd}
           >
             {/* Main Media (Video or Image) */}
-            {showSlideshow && currentImageIndex === 0 ? (
+            {showSlideshow && currentImageIndex === 0 && selectedProperty.slideshowVideo ? (
               <div className="relative w-full h-full">
                 {/* YouTube Embed */}
                 <iframe
@@ -442,7 +478,7 @@ export default function PortfolioPage() {
 
             {/* Image Counter - Mobile Optimized */}
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm md:text-base font-medium">
-              {showSlideshow ? currentImageIndex + 1 : currentImageIndex + 1} / {showSlideshow ? selectedProperty.images.length + 1 : selectedProperty.images.length}
+              {showSlideshow ? currentImageIndex + 1 : currentImageIndex + 1} / {showSlideshow && selectedProperty.slideshowVideo ? selectedProperty.images.length + 1 : selectedProperty.images.length}
             </div>
 
             {/* Swipe Indicator - Only on mobile */}
@@ -484,7 +520,7 @@ export default function PortfolioPage() {
               p-3 md:p-4 overflow-x-auto overflow-y-hidden
             `}>
               <div className="flex md:grid md:grid-cols-8 lg:grid-cols-12 xl:grid-cols-16 gap-2 md:gap-3 min-w-max md:min-w-0">
-                {showSlideshow && (
+                {showSlideshow && selectedProperty.slideshowVideo && (
                   <button
                     key="video-thumb"
                     onClick={() => {
