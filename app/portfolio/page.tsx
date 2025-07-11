@@ -5,7 +5,8 @@ import { GalleryDisplay } from "@/components/home/GalleryDisplay"
 import { CaseStudySection } from "@/components/home/CaseStudySection"
 import { CTASection } from "@/components/home/CTASection"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight, Fullscreen, Minimize, Grid3X3, ChevronUp, ChevronDown, Download } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Fullscreen, Minimize, Grid3X3, ChevronUp, ChevronDown, Download, FolderDown } from "lucide-react"
+import JSZip from "jszip"
 
 // Portfolio property type
 type PortfolioProperty = {
@@ -69,6 +70,7 @@ export default function PortfolioPage() {
   const [showThumbnails, setShowThumbnails] = useState(false); // Thumbnails hidden by default on mobile
   const [isMobile, setIsMobile] = useState(false); // Track if on mobile device
   const [isDownloading, setIsDownloading] = useState(false); // Track download state
+  const [isDownloadingAll, setIsDownloadingAll] = useState(false); // Track download all state
   const mainImageRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLIFrameElement>(null);
@@ -299,6 +301,60 @@ export default function PortfolioPage() {
     }
   };
 
+  // Handler for downloading all images as a zip file
+  const handleDownloadAll = async () => {
+    if (!selectedProperty || isDownloadingAll) return;
+    
+    setIsDownloadingAll(true);
+    
+    try {
+      const zip = new JSZip();
+      const folder = zip.folder(selectedProperty.address.replace(/\s+/g, '_'));
+      
+      // Download all images in parallel
+      const downloadPromises = selectedProperty.images.map(async (imageSrc, index) => {
+        try {
+          const response = await fetch(imageSrc);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const blob = await response.blob();
+          
+          // Extract the file extension from the image URL
+          const urlParts = imageSrc.split('.');
+          const extension = urlParts[urlParts.length - 1].split('?')[0]; // Remove query params if any
+          
+          const filename = `${selectedProperty.address.replace(/\s+/g, '_')}_${selectedProperty.town}_${index + 1}.${extension}`;
+          
+          folder?.file(filename, blob);
+        } catch (error) {
+          console.error(`Failed to download image ${index + 1}:`, error);
+        }
+      });
+      
+      // Wait for all downloads to complete
+      await Promise.all(downloadPromises);
+      
+      // Generate and download the zip file
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      const url = window.URL.createObjectURL(zipBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${selectedProperty.address.replace(/\s+/g, '_')}_${selectedProperty.town}_All_Images.zip`;
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+    } catch (error) {
+      console.error('Download all failed:', error);
+      alert('Download all failed. Please try again.');
+    } finally {
+      setIsDownloadingAll(false);
+    }
+  };
+
   // Handler for touch/swipe navigation
   const handleTouchStart = useRef({ x: 0, y: 0 });
   const handleTouchEnd = useRef({ x: 0, y: 0 });
@@ -520,6 +576,22 @@ export default function PortfolioPage() {
                   )}
                 </button>
               )}
+              
+              {/* Download All Button */}
+              <button
+                onClick={handleDownloadAll}
+                disabled={isDownloadingAll}
+                className={`text-white bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50 ${
+                  isDownloadingAll ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                title={isDownloadingAll ? "Downloading All..." : "Download All Images"}
+              >
+                {isDownloadingAll ? (
+                  <div className="h-4 w-4 md:h-5 md:w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <FolderDown className="h-4 w-4 md:h-5 md:w-5" />
+                )}
+              </button>
               
               {/* Fullscreen Button */}
               <button

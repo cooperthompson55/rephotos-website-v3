@@ -116,7 +116,7 @@ const videographyProcess = [
 const pricingTiers = [
   {
     size: "Property Highlights Video",
-    price: "$289.99",
+    price: "$289",
     starting: true,
     duration: "1–2 minute horizontal video",
     features: [
@@ -130,7 +130,7 @@ const pricingTiers = [
   },
   {
     size: "Social Media Reel",
-    price: "$229.99",
+    price: "$229",
     starting: true,
     duration: "30–60 second vertical video",
     features: [
@@ -144,7 +144,7 @@ const pricingTiers = [
   },
   {
     size: "Slideshow Video Tour",
-    price: "$99.99",
+    price: "$99",
     starting: false,
     duration: "1–2 minute slideshow video",
     features: [
@@ -158,7 +158,7 @@ const pricingTiers = [
   },
   {
     size: "Drone Aerial Video",
-    price: "$159.99",
+    price: "$159",
     starting: false,
     duration: "30–60 seconds of aerial footage",
     features: [

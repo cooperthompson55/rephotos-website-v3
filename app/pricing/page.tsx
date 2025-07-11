@@ -1412,7 +1412,7 @@ export default function PricingPage() {
                           <li className="flex justify-between"><span>2500–3499 sq ft</span><span className="font-semibold">{formatPrice(pricingData["2500-3500"].matterportTour)}</span></li>
                           <li className="flex justify-between"><span>3500–4499 sq ft</span><span className="font-semibold">{formatPrice(pricingData["3500-4500"].matterportTour)}</span></li>
                           <li className="flex justify-between"><span>4500–5499 sq ft</span><span className="font-semibold">{formatPrice(pricingData["4500-5500"].matterportTour)}</span></li>
-                          <li className="flex justify-between"><span>5000+ sq ft</span><span className="font-semibold"><a href="/contact-us" className="text-primary underline hover:text-[#B42222]">Contact us</a></span></li>
+                          <li className="flex justify-between"><span>5500+ sq ft</span><span className="font-semibold"><a href="/contact-us" className="text-primary underline hover:text-[#B42222]">Contact us</a></span></li>
                         </ul>
                       </div>
                       <BookButton href="/book-now" size="lg" className="bg-white text-[#262F3F] border border-[#262F3F] font-mazzard font-semibold hover:bg-[#1C4596] hover:text-white mt-2 w-full">Get Started</BookButton>

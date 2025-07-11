@@ -305,28 +305,12 @@ export default function AerialPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Aerial Photos Add-on */}
-            <Card className="relative">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-serif font-medium mb-2">HDR Photography + Drone Shots</h3>
-                <div className="text-3xl font-serif font-light text-primary mb-4">$189.99</div>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Add-on to any photo package</span></li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Great for highlighting views or lot size</span></li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Transport Canada Certified</span></li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Delivered next day</span></li>
-                </ul>
-                <Button asChild className="w-full">
-                  <Link href="/book-now">Get Started</Link>
-                </Button>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Aerial Photos */}
             <Card className="relative">
               <CardContent className="p-6">
                 <h3 className="text-xl font-serif font-medium mb-2">Aerial Photos</h3>
-                <div className="text-3xl font-serif font-light text-primary mb-4">$159.99</div>
+                <div className="text-3xl font-serif font-light text-primary mb-4">$159</div>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Standalone or added to a shoot</span></li>
                   <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>10–15 aerial shots from multiple angles</span></li>
@@ -342,7 +326,7 @@ export default function AerialPage() {
             <Card className="relative">
               <CardContent className="p-6">
                 <h3 className="text-xl font-serif font-medium mb-2">Aerial Video</h3>
-                <div className="text-3xl font-serif font-light text-primary mb-4">$159.99</div>
+                <div className="text-3xl font-serif font-light text-primary mb-4">$159</div>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>Standalone or added to a shoot</span></li>
                   <li className="flex items-center gap-2 text-sm"><CheckCircle className="w-4 h-4 text-green-600" /><span>30–60 sec cinematic drone video</span></li>

@@ -184,7 +184,7 @@ export default function VirtualToursPage() {
               <iframe width="100%" height="400" src="https://my.matterport.com/show/?m=VBL9LR86Hv5" frameBorder="0" allowFullScreen allow="autoplay; fullscreen; web-share; xr-spatial-tracking;"></iframe>
             </div>
             <div className="relative overflow-hidden rounded-lg shadow-lg bg-black">
-              <iframe width="100%" height="400" src="https://my.matterport.com/show/?m=BBPo2Z39gRq" frameBorder="0" allowFullScreen allow="autoplay; fullscreen; web-share; xr-spatial-tracking;"></iframe>
+              <iframe width="100%" height="400" src="https://my.matterport.com/show/?m=BrDJ76jfsh2" frameBorder="0" allowFullScreen allow="autoplay; fullscreen; web-share; xr-spatial-tracking;"></iframe>
             </div>
           </div>
         </div>
@@ -254,78 +254,93 @@ export default function VirtualToursPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
             <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
-              <CardContent className="p-8 flex flex-col h-full">
-                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">Up to 999 sq ft</h3>
-                <div className="text-3xl font-bold text-primary mb-4 text-center">$199.99</div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Smooth 3D Walkthrough Experience</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Dollhouse View Included</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 24 hrs</span></li>
+              <CardContent className="p-6 flex flex-col h-full">
+                <h3 className="text-xs font-semibold text-gray-500 text-center mb-2">Up to 1,499 sq ft</h3>
+                <div className="text-2xl font-bold text-primary mb-4 text-center">$199.00</div>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Smooth 3D Walkthrough Experience</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Dollhouse View Included</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Delivered in 24 hrs</span></li>
                 </ul>
                 <div className="mt-auto pt-2">
-                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                  <Button asChild className="w-full text-xs"><Link href="/book-now">Choose Tour</Link></Button>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
-              <CardContent className="p-8 flex flex-col h-full">
-                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">1,000–1,999 sq ft</h3>
-                <div className="text-3xl font-bold text-primary mb-4 text-center">$239.99</div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">360° Walkthrough with Room Labels</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Dollhouse + Floor Plan View</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 24–36 hrs</span></li>
+              <CardContent className="p-6 flex flex-col h-full">
+                <h3 className="text-xs font-semibold text-gray-500 text-center mb-2">1,500–2,499 sq ft</h3>
+                <div className="text-2xl font-bold text-primary mb-4 text-center">$239.00</div>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">360° Walkthrough with Room Labels</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Dollhouse + Floor Plan View</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Delivered in 24–36 hrs</span></li>
                 </ul>
                 <div className="mt-auto pt-2">
-                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                  <Button asChild className="w-full text-xs"><Link href="/book-now">Choose Tour</Link></Button>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
-              <CardContent className="p-8 flex flex-col h-full">
-                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">2,000–2,999 sq ft</h3>
-                <div className="text-3xl font-bold text-primary mb-4 text-center">$279.99</div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Interactive 3D Tour with Navigation Tags</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Branded & Unbranded Links</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 24–48 hrs</span></li>
+              <CardContent className="p-6 flex flex-col h-full">
+                <h3 className="text-xs font-semibold text-gray-500 text-center mb-2">2,500–3,499 sq ft</h3>
+                <div className="text-2xl font-bold text-primary mb-4 text-center">$279.00</div>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Interactive 3D Tour with Navigation Tags</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Branded & Unbranded Links</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Delivered in 24–48 hrs</span></li>
                 </ul>
                 <div className="mt-auto pt-2">
-                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                  <Button asChild className="w-full text-xs"><Link href="/book-now">Choose Tour</Link></Button>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
-              <CardContent className="p-8 flex flex-col h-full">
-                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">3,000–3,999 sq ft</h3>
-                <div className="text-3xl font-bold text-primary mb-4 text-center">$319.99</div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Full Property Scan in 4K Detail</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Includes Floor Plan View & Hotspot Navigation</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 48 hrs</span></li>
+              <CardContent className="p-6 flex flex-col h-full">
+                <h3 className="text-xs font-semibold text-gray-500 text-center mb-2">3,500–4,499 sq ft</h3>
+                <div className="text-2xl font-bold text-primary mb-4 text-center">$319.00</div>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Full Property Scan in 4K Detail</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Includes Floor Plan View & Hotspot Navigation</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Delivered in 48 hrs</span></li>
                 </ul>
                 <div className="mt-auto pt-2">
-                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                  <Button asChild className="w-full text-xs"><Link href="/book-now">Choose Tour</Link></Button>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
-              <CardContent className="p-8 flex flex-col h-full">
-                <h3 className="text-sm font-semibold text-gray-500 text-center mb-2">4,000–4,999 sq ft</h3>
-                <div className="text-3xl font-bold text-primary mb-4 text-center">$349.99</div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Advanced Multi-Zone Tour Experience</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Lead Capture + Analytics Enabled</span></li>
-                  <li className="flex items-center"><CheckCircle className="h-5 w-5 text-green-500 mr-3" /><span className="text-sm">Delivered in 48–72 hrs</span></li>
+              <CardContent className="p-6 flex flex-col h-full">
+                <h3 className="text-xs font-semibold text-gray-500 text-center mb-2">4,500–5,499 sq ft</h3>
+                <div className="text-2xl font-bold text-primary mb-4 text-center">$359.00</div>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Advanced Multi-Zone Tour Experience</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Lead Capture + Analytics Enabled</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Delivered in 48–72 hrs</span></li>
                 </ul>
                 <div className="mt-auto pt-2">
-                  <Button asChild className="w-full"><Link href="/book-now">Choose Tour</Link></Button>
+                  <Button asChild className="w-full text-xs"><Link href="/book-now">Choose Tour</Link></Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-gray-200 hover:border-primary/50 transition-colors h-full flex flex-col">
+              <CardContent className="p-6 flex flex-col h-full">
+                <h3 className="text-xs font-semibold text-gray-500 text-center mb-2">5,500+ sq ft</h3>
+                <div className="text-xl font-bold text-primary mb-4 text-center">Contact us</div>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Custom Enterprise Solution</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Premium Features & Support</span></li>
+                  <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" /><span className="text-xs">Flexible Delivery Timeline</span></li>
+                </ul>
+                <div className="mt-auto pt-2">
+                  <Button asChild className="w-full text-xs"><Link href="/contact-us">Get Quote</Link></Button>
                 </div>
               </CardContent>
             </Card>

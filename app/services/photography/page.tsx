@@ -114,8 +114,8 @@ const photographyProcess = [
 const pricingTiers = [
   {
     label: "Condo",
-    price: "$189.99 to $249.99",
-    size: "Up to 1,999 sq ft",
+    price: "$169",
+    size: "Under 1,500 sq ft",
     features: [
       "Full interior + exterior coverage",
       "Professional editing",
@@ -126,8 +126,8 @@ const pricingTiers = [
   },
   {
     label: "Medium Homes",
-    price: "$319.99–$379.99",
-    size: "2,000–3,999 sq ft",
+    price: "$229–$289",
+    size: "1,500–3,500 sq ft",
     features: [
       "Full interior + exterior coverage",
       "Delivered next business day",
@@ -139,8 +139,8 @@ const pricingTiers = [
   },
   {
     label: "Large Homes",
-    price: "$439.99+",
-    size: "4,000–4,999 sq ft",
+    price: "$349+",
+    size: "3,500+ sq ft",
     features: [
       "Full interior + exterior coverage",
       "Custom shot list if needed",
@@ -150,9 +150,9 @@ const pricingTiers = [
     cta: { text: "Book Now", href: "/book-now" },
   },
   {
-    label: "5,000+ sq ft?",
+    label: "Custom Quote?",
     price: "Contact for Quote",
-    size: null,
+    size: "Unique properties",
     features: [
       "We'll build a custom plan based on your layout and needs. Quick turnaround guaranteed.",
     ],
