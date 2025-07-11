@@ -5,7 +5,7 @@ import { GalleryDisplay } from "@/components/home/GalleryDisplay"
 import { CaseStudySection } from "@/components/home/CaseStudySection"
 import { CTASection } from "@/components/home/CTASection"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight, Fullscreen, Minimize, Grid3X3, ChevronUp, ChevronDown } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Fullscreen, Minimize, Grid3X3, ChevronUp, ChevronDown, Download } from "lucide-react"
 
 // Portfolio property type
 type PortfolioProperty = {
@@ -69,6 +69,7 @@ export default function PortfolioPage() {
   const [showSlideshow, setShowSlideshow] = useState(false);
   const [showThumbnails, setShowThumbnails] = useState(false); // Thumbnails hidden by default on mobile
   const [isMobile, setIsMobile] = useState(false); // Track if on mobile device
+  const [isDownloading, setIsDownloading] = useState(false); // Track download state
   const mainImageRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLIFrameElement>(null);
@@ -249,6 +250,56 @@ export default function PortfolioPage() {
     }
   };
 
+  // Handler for downloading the current image
+  const handleDownload = async () => {
+    if (!selectedProperty || isDownloading) return;
+    
+    const currentImage = showSlideshow && currentImageIndex === 0 && selectedProperty.slideshowVideo 
+      ? null // Can't download video
+      : showSlideshow 
+        ? selectedProperty.images[currentImageIndex - 1] 
+        : selectedProperty.images[currentImageIndex];
+    
+    if (!currentImage) return;
+    
+    setIsDownloading(true);
+    
+    try {
+      const response = await fetch(currentImage);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      
+      // Create filename from property address and image index
+      const imageNumber = showSlideshow 
+        ? currentImageIndex 
+        : currentImageIndex + 1;
+      
+      // Extract the file extension from the current image URL
+      const urlParts = currentImage.split('.');
+      const extension = urlParts[urlParts.length - 1].split('?')[0]; // Remove query params if any
+      
+      const filename = `${selectedProperty.address.replace(/\s+/g, '_')}_${selectedProperty.town}_${imageNumber}.${extension}`;
+      
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download failed:', error);
+      // You could add a toast notification here if you have a toast system
+      alert('Download failed. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   // Handler for touch/swipe navigation
   const handleTouchStart = useRef({ x: 0, y: 0 });
   const handleTouchEnd = useRef({ x: 0, y: 0 });
@@ -346,7 +397,7 @@ export default function PortfolioPage() {
                         className="text-primary underline text-sm w-fit hover:text-secondary focus:outline-none"
                         onClick={e => e.stopPropagation()}
                       >
-                        Virtual Tour
+                        View Virtual Tour
                       </a>
                     ) : (
                       <button
@@ -451,14 +502,35 @@ export default function PortfolioPage() {
               />
             )}
 
-            {/* Fullscreen Button - Mobile Optimized */}
-            <button
-              onClick={handleFullscreenClick}
-              className="absolute top-3 right-3 md:top-4 md:right-4 text-white bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
-              title={(isFullscreen || isMobileFullscreen) ? "Exit Fullscreen" : "Fullscreen"}
-            >
-              {(isFullscreen || isMobileFullscreen) ? <Minimize className="h-4 w-4 md:h-5 md:w-5" /> : <Fullscreen className="h-4 w-4 md:h-5 md:w-5" />}
-            </button>
+            {/* Control Buttons - Mobile Optimized */}
+            <div className="absolute top-3 right-3 md:top-4 md:right-4 flex gap-2">
+              {/* Download Button - Only show for images, not videos */}
+              {!(showSlideshow && currentImageIndex === 0 && selectedProperty.slideshowVideo) && (
+                <button
+                  onClick={handleDownload}
+                  disabled={isDownloading}
+                  className={`text-white bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50 ${
+                    isDownloading ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  title={isDownloading ? "Downloading..." : "Download Image"}
+                >
+                  {isDownloading ? (
+                    <div className="h-4 w-4 md:h-5 md:w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Download className="h-4 w-4 md:h-5 md:w-5" />
+                  )}
+                </button>
+              )}
+              
+              {/* Fullscreen Button */}
+              <button
+                onClick={handleFullscreenClick}
+                className="text-white bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+                title={(isFullscreen || isMobileFullscreen) ? "Exit Fullscreen" : "Fullscreen"}
+              >
+                {(isFullscreen || isMobileFullscreen) ? <Minimize className="h-4 w-4 md:h-5 md:w-5" /> : <Fullscreen className="h-4 w-4 md:h-5 md:w-5" />}
+              </button>
+            </div>
 
             {/* Navigation Arrows - Enhanced for Mobile */}
             <button
