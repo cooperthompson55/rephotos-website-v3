@@ -52,11 +52,10 @@ const portfolioProperties: PortfolioProperty[] = [
     address: "1460 Thetford Court",
     town: "Mississauga",
     coverImage: "/images/portfolio/1460%20Thetford%20Court,%20Mississauga/1-gallery.jpg",
-    totalImages: 2,
-    images: [
-      "/images/portfolio/1460%20Thetford%20Court,%20Mississauga/1-gallery.jpg",
-      "/images/portfolio/1460%20Thetford%20Court,%20Mississauga/2-gallery.jpg"
-    ],
+    totalImages: 49,
+    images: Array.from({ length: 49 }, (_, i) => 
+      `/images/portfolio/1460%20Thetford%20Court,%20Mississauga/${i + 1}-gallery.jpg`
+    ),
     virtualTour: "https://my.matterport.com/show/?m=BrDJ76jfsh2"
   }
 ]
