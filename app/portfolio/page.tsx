@@ -71,6 +71,8 @@ export default function PortfolioPage() {
   const [isMobile, setIsMobile] = useState(false); // Track if on mobile device
   const [isDownloading, setIsDownloading] = useState(false); // Track download state
   const [isDownloadingAll, setIsDownloadingAll] = useState(false); // Track download all state
+  const [downloadProgress, setDownloadProgress] = useState(0); // Track download all progress (0-100)
+  const [downloadStatus, setDownloadStatus] = useState<string>(''); // Track download status message
   const mainImageRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLIFrameElement>(null);
@@ -140,6 +142,11 @@ export default function PortfolioPage() {
     if (isMobileFullscreen) {
       setIsMobileFullscreen(false);
     }
+    // Clear download states
+    setIsDownloading(false);
+    setIsDownloadingAll(false);
+    setDownloadProgress(0);
+    setDownloadStatus('');
     setSelectedProperty(null)
     setCurrentImageIndex(0)
   }
@@ -264,6 +271,7 @@ export default function PortfolioPage() {
     if (!currentImage) return;
     
     setIsDownloading(true);
+    setDownloadStatus('Downloading image...');
     
     try {
       const response = await fetch(currentImage);
@@ -271,6 +279,7 @@ export default function PortfolioPage() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
+      setDownloadStatus('Processing image...');
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -292,10 +301,13 @@ export default function PortfolioPage() {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
+      
+      setDownloadStatus('Download complete!');
+      setTimeout(() => setDownloadStatus(''), 2000);
     } catch (error) {
       console.error('Download failed:', error);
-      // You could add a toast notification here if you have a toast system
-      alert('Download failed. Please try again.');
+      setDownloadStatus('Download failed');
+      setTimeout(() => setDownloadStatus(''), 3000);
     } finally {
       setIsDownloading(false);
     }
@@ -306,12 +318,18 @@ export default function PortfolioPage() {
     if (!selectedProperty || isDownloadingAll) return;
     
     setIsDownloadingAll(true);
+    setDownloadProgress(0);
+    setDownloadStatus('Preparing download...');
     
     try {
       const zip = new JSZip();
       const folder = zip.folder(selectedProperty.address.replace(/\s+/g, '_'));
+      const totalImages = selectedProperty.images.length;
+      let completedImages = 0;
       
-      // Download all images in parallel
+      setDownloadStatus(`Downloading ${totalImages} images...`);
+      
+      // Download all images with progress tracking
       const downloadPromises = selectedProperty.images.map(async (imageSrc, index) => {
         try {
           const response = await fetch(imageSrc);
@@ -327,16 +345,37 @@ export default function PortfolioPage() {
           const filename = `${selectedProperty.address.replace(/\s+/g, '_')}_${selectedProperty.town}_${index + 1}.${extension}`;
           
           folder?.file(filename, blob);
+          
+          // Update progress
+          completedImages++;
+          const progress = Math.round((completedImages / totalImages) * 80); // Reserve 20% for zip generation
+          setDownloadProgress(progress);
+          setDownloadStatus(`Downloaded ${completedImages}/${totalImages} images...`);
         } catch (error) {
           console.error(`Failed to download image ${index + 1}:`, error);
+          // Still count as completed to keep progress moving
+          completedImages++;
+          const progress = Math.round((completedImages / totalImages) * 80);
+          setDownloadProgress(progress);
         }
       });
       
       // Wait for all downloads to complete
       await Promise.all(downloadPromises);
       
+      setDownloadStatus('Creating zip file...');
+      setDownloadProgress(85);
+      
       // Generate and download the zip file
-      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      const zipBlob = await zip.generateAsync({ 
+        type: 'blob',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 6 }
+      });
+      
+      setDownloadProgress(95);
+      setDownloadStatus('Finalizing download...');
+      
       const url = window.URL.createObjectURL(zipBlob);
       const link = document.createElement('a');
       link.href = url;
@@ -347,9 +386,20 @@ export default function PortfolioPage() {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
       
+      setDownloadProgress(100);
+      setDownloadStatus('Download complete!');
+      setTimeout(() => {
+        setDownloadStatus('');
+        setDownloadProgress(0);
+      }, 2000);
+      
     } catch (error) {
       console.error('Download all failed:', error);
-      alert('Download all failed. Please try again.');
+      setDownloadStatus('Download failed');
+      setTimeout(() => {
+        setDownloadStatus('');
+        setDownloadProgress(0);
+      }, 3000);
     } finally {
       setIsDownloadingAll(false);
     }
@@ -628,6 +678,63 @@ export default function PortfolioPage() {
             <div className="absolute bottom-16 left-1/2 -translate-x-1/2 text-white bg-black/40 backdrop-blur-sm px-2 py-1 rounded text-xs md:hidden opacity-50">
               Swipe to navigate
             </div>
+
+            {/* Download Progress Overlay */}
+            {(isDownloading || isDownloadingAll || downloadStatus) && (
+              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+                <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 max-w-sm mx-4 border border-white/20">
+                  <div className="flex items-center justify-center mb-4">
+                    {isDownloading ? (
+                      <div className="h-8 w-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    ) : isDownloadingAll ? (
+                      <div className="w-full">
+                        <div className="flex items-center justify-center mb-2">
+                          <FolderDown className="h-6 w-6 text-white mr-2" />
+                          <span className="text-white font-medium">Downloading All Images</span>
+                        </div>
+                        <div className="w-full bg-white/20 rounded-full h-2 mb-2">
+                          <div 
+                            className="bg-white h-2 rounded-full transition-all duration-300 ease-out"
+                            style={{ width: `${downloadProgress}%` }}
+                          />
+                        </div>
+                        <div className="text-white/80 text-sm text-center">
+                          {downloadProgress}%
+                        </div>
+                      </div>
+                                         ) : downloadStatus.includes('complete') ? (
+                       <div className="flex items-center justify-center">
+                         <div className="h-6 w-6 bg-green-500 rounded-full flex items-center justify-center mr-2">
+                           <svg className="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                           </svg>
+                         </div>
+                         <span className="text-white font-medium">Download Complete</span>
+                       </div>
+                     ) : downloadStatus.includes('failed') ? (
+                       <div className="flex items-center justify-center">
+                         <div className="h-6 w-6 bg-red-500 rounded-full flex items-center justify-center mr-2">
+                           <svg className="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                           </svg>
+                         </div>
+                         <span className="text-white font-medium">Download Failed</span>
+                       </div>
+                     ) : (
+                       <div className="flex items-center justify-center">
+                         <Download className="h-6 w-6 text-white mr-2" />
+                         <span className="text-white font-medium">Download</span>
+                       </div>
+                     )}
+                  </div>
+                  {downloadStatus && (
+                    <div className="text-white/90 text-sm text-center">
+                      {downloadStatus}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Thumbnail Section - Collapsible on Mobile, Always Visible on Desktop */}
