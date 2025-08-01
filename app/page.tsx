@@ -7,6 +7,7 @@ import { CaseStudySection } from "@/components/home/CaseStudySection"
 import { CTASection } from "@/components/home/CTASection"
 import { GalleryDisplay } from "@/components/home/GalleryDisplay"
 import { ServiceAreasSection } from "@/components/home/ServiceAreasSection"
+import { ImageCarousel } from "@/components/ImageCarousel"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Video, Instagram, Plane, Images, Volume2, VolumeX } from "lucide-react"
@@ -124,36 +125,66 @@ export default function Home() {
             </div>
             <div className="relative">
               <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-[#f5efe0] opacity-70"></div>
-              <div className="relative grid grid-cols-12 grid-rows-6 gap-3 h-[500px]">
-                <div className="col-span-5 row-span-3 rounded-lg overflow-hidden shadow-md">
-                  <img
-                    src="/images/home/1.webp"
-                    alt="Modern kitchen interior"
-                    className="w-full h-full object-cover"
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:h-[600px]">
+                {/* First row */}
+                <div className="md:col-span-7 h-[300px] md:h-auto rounded-lg overflow-hidden shadow-md">
+                  <ImageCarousel
+                    images={[
+                      {
+                        images: [
+                          "/images/photobank/fs2-gallery.webp",
+                          "/images/photobank/fs2-3-gallery.webp",
+                          "/images/photobank/fs2-2-gallery.webp"
+                        ]
+                      }
+                    ]}
+                    aspectRatio="4/3"
+                    objectPosition="center center"
                   />
                 </div>
-                <div className="col-span-7 row-span-3 rounded-lg overflow-hidden shadow-md">
-                  <img
-                    src="/images/home/4.webp"
-                    alt="Cozy interior space"
-                    className="w-full h-full object-cover"
+                <div className="md:col-span-5 h-[300px] md:h-auto rounded-lg overflow-hidden shadow-md">
+                  <ImageCarousel
+                    images={[
+                      {
+                        images: [
+                          "/images/photobank/fs5-gallery.webp",
+                          "/images/photobank/fs5-2-gallery.webp"
+                        ]
+                      }
+                    ]}
+                    aspectRatio="1/1"
+                    objectPosition="center center"
                   />
                 </div>
-                <div className="col-span-8 row-span-3 rounded-lg overflow-hidden shadow-md relative">
-                  <img
-                    src="/images/home/3.webp"
-                    alt="Modern Woodland Estate"
-                    className="w-full h-full object-cover"
+                {/* Second row */}
+                <div className="md:col-span-5 h-[300px] md:h-auto rounded-lg overflow-hidden shadow-md">
+                  <ImageCarousel
+                    images={[
+                      {
+                        images: [
+                          "/images/photobank/sky-replaced-DSC_8416-HDR-gallery.webp",
+                          "/images/photobank/sky-replaced-DSC_8413-HDR-gallery.webp",
+                          "/images/photobank/sky-replaced-DSC_8425-HDR-gallery.webp"
+                        ]
+                      }
+                    ]}
+                    aspectRatio="1/1"
+                    objectPosition="center center"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-3 text-white">
-                    <p className="font-medium">RePhotos © 2025</p>
-                  </div>
                 </div>
-                <div className="col-span-4 row-span-3 rounded-lg overflow-hidden shadow-md">
-                  <img
-                    src="/images/home/2.webp"
-                    alt="Luxury living room"
-                    className="w-full h-full object-cover"
+                <div className="md:col-span-7 h-[300px] md:h-auto rounded-lg overflow-hidden shadow-md">
+                  <ImageCarousel
+                    images={[
+                      {
+                        images: [
+                          "/images/photobank/fs4-gallery.webp",
+                          "/images/photobank/fs4-2-gallery.webp",
+                          "/images/photobank/fs4-3-gallery.webp"
+                        ]
+                      }
+                    ]}
+                    aspectRatio="16/9"
+                    objectPosition="center center"
                   />
                 </div>
               </div>

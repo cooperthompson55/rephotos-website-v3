@@ -1369,7 +1369,7 @@ export default function PricingPage() {
                       <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>Captures the property and surroundings</li>
                       <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>Smooth motion edits</li>
                       <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>Royalty-free music included</li>
-                      <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>Delivered in multiple formats</li>
+                                                <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>Deliverable in multiple formats</li>
                       <li className="flex items-center gap-2 justify-center"><span className="inline-block w-4 h-4 rounded-full bg-[#262F3F] text-white flex items-center justify-center">✓</span>Next day turnaround</li>
                     </ul>
                   </div>
