@@ -6,7 +6,9 @@
   publish = ".next"
 
 [build.environment]
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  NEXT_USE_NETLIFY_EDGE = "true"
+  NEXT_PRIVATE_TARGET = "server"
+  NODE_VERSION = "18"
   SECRETS_SCAN_ENABLED = "false"
 
 [[plugins]]

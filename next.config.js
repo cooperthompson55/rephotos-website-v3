@@ -11,6 +11,8 @@ const nextConfig = {
     domains: ["images.unsplash.com", "plus.unsplash.com"],
     unoptimized: true,
   },
+  output: 'standalone',
+  trailingSlash: true,
 }
 
 module.exports = nextConfig
