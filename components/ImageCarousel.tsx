@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useCallback, TouchEvent } from 'react'
+import Image from 'next/image'
 
 interface CarouselImage {
   images: string[]
@@ -10,9 +11,10 @@ interface ImageCarouselProps {
   images: CarouselImage[]
   aspectRatio?: string
   objectPosition?: string
+  priority?: boolean
 }
 
-export function ImageCarousel({ images, aspectRatio = '16/9', objectPosition = 'center' }: ImageCarouselProps) {
+export function ImageCarousel({ images, aspectRatio = '16/9', objectPosition = 'center', priority = false }: ImageCarouselProps) {
   const [currentImageSet, setCurrentImageSet] = useState(0)
   const [currentImage, setCurrentImage] = useState(0)
   const [touchStart, setTouchStart] = useState(0)
@@ -64,11 +66,15 @@ export function ImageCarousel({ images, aspectRatio = '16/9', objectPosition = '
           onTouchEnd={handleTouchEnd}
           className="w-full h-full focus:outline-none"
         >
-          <img
+          <Image
             src={currentImages[currentImage]}
             alt={`Carousel image ${currentImageSet + 1}`}
-            className="w-full h-full object-cover rounded-lg transition-opacity duration-300"
+            fill
+            priority={priority}
+            className="object-cover rounded-lg transition-opacity duration-300"
             style={{ objectPosition }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            quality={85}
           />
         </button>
         

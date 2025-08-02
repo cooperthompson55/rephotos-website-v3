@@ -63,25 +63,44 @@ export default function Home() {
 
   // Preload critical videos for better performance
   useEffect(() => {
-    // Only preload on larger screens and with good connection
-    if (typeof window !== 'undefined' && window.innerWidth > 768) {
-      const link1 = document.createElement('link')
-      link1.rel = 'preload'
-      link1.as = 'video'
-      link1.href = '/horizontal.mp4'
-      document.head.appendChild(link1)
+    if (typeof window === 'undefined' || window.innerWidth <= 768) return;
 
-      const link2 = document.createElement('link')
-      link2.rel = 'preload'
-      link2.as = 'video'
-      link2.href = '/vertical.mp4'
-      document.head.appendChild(link2)
-
-      return () => {
-        document.head.removeChild(link1)
-        document.head.removeChild(link2)
+    // Check if the browser supports connection info
+    if ('connection' in navigator) {
+      const conn = (navigator as any).connection;
+      // Don't preload on slow connections
+      if (conn.saveData || conn.effectiveType === '2g' || conn.effectiveType === '3g') {
+        return;
       }
     }
+
+    // Create intersection observer for video elements
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const video = entry.target as HTMLVideoElement;
+            if (!video.dataset.src) return;
+            
+            video.src = video.dataset.src;
+            observer.unobserve(video);
+          }
+        });
+      },
+      {
+        rootMargin: '50px 0px', // Start loading when video is 50px from viewport
+        threshold: 0.1
+      }
+    );
+
+    // Observe all video elements
+    document.querySelectorAll('video[data-src]').forEach(video => {
+      observer.observe(video);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
   }, [])
 
   const toggleMute = () => {
@@ -140,6 +159,7 @@ export default function Home() {
                     ]}
                     aspectRatio="4/3"
                     objectPosition="center center"
+                    priority={true}
                   />
                 </div>
                 <div className="md:col-span-5 h-[300px] md:h-auto rounded-lg overflow-hidden shadow-md">
@@ -287,7 +307,7 @@ export default function Home() {
                   {/* All videos use the same aspect ratio and max height for consistency */}
                   {(index === 0 || index === 1 || index === 2) && (
                     <video
-                      src={
+                      data-src={
                         index === 0
                           ? "/horizontal.mp4"
                           : index === 1
@@ -298,7 +318,7 @@ export default function Home() {
                       loop
                       muted
                       playsInline
-                      preload="metadata"
+                      preload="none"
                       disableRemotePlayback
                       controlsList="nodownload noremoteplayback"
                       poster={
@@ -318,12 +338,12 @@ export default function Home() {
                     <div className="relative">
                       <video
                         ref={slideshowVideoRef}
-                        src="/images/services/videography/824-gazley-slideshow.mp4"
+                        data-src="/images/services/videography/824-gazley-slideshow.mp4"
+                        preload="none"
                         autoPlay
                         loop
                         muted
                         playsInline
-                        preload="metadata"
                         disableRemotePlayback
                         controlsList="nodownload noremoteplayback"
                         className="w-full rounded-lg mb-4 object-cover max-h-56 aspect-video"
