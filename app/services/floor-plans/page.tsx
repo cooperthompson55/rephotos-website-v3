@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Home, Ruler, Layers, Download, Zap, Users, CheckCircle, Star, ArrowRight, Play } from "lucide-react"
 import { CTASection } from "@/components/home/CTASection"
@@ -290,60 +290,88 @@ export default function FloorPlansPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow h-full flex flex-col">
-              <CardContent className="p-8 flex flex-col h-full">
-                <h3 className="text-xl font-semibold text-primary mb-2">2D Floor Plan</h3>
-                <div className="text-3xl font-bold text-primary mb-4">From $119.99</div>
-                <p className="text-gray-600 mb-6">Clean and accurate layouts for MLS and print</p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Room dimensions and labels</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Delivered as PDF + PNG</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Ready in 24–48 hrs</li>
-                </ul>
-                <div className="mt-auto">
-                  <Button asChild className="w-full">
-                    <Link href="/book-now">Get Started</Link>
-                  </Button>
+          {/* Two single-card pricing blocks */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            {/* 2D Floor Plans */}
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold text-center">2D FLOOR PLANS</CardTitle>
+                <div className="text-center">
+                  <span className="text-4xl font-extrabold">$119.00</span>
+                  <p className="text-sm text-muted-foreground">starting up to 1499 sq ft</p>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                    <span className="font-medium">Up to 1499 sq ft</span>
+                    <span className="font-bold">$119.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md">
+                    <span className="font-medium">1500–2499 sq ft</span>
+                    <span className="font-bold">$149.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                    <span className="font-medium">2500–3499 sq ft</span>
+                    <span className="font-bold">$179.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md">
+                    <span className="font-medium">3500–4499 sq ft</span>
+                    <span className="font-bold">$209.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                    <span className="font-medium">4500–5499 sq ft</span>
+                    <span className="font-bold">$239.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md">
+                    <span className="font-medium">5500+ sq ft</span>
+                    <Link href="/contact-us" className="font-bold text-primary hover:underline">Contact us</Link>
+                  </div>
+                </div>
+                <div className="mt-4 text-xs text-muted-foreground text-center p-2 bg-blue-50 border border-blue-200 rounded-md">
+                  ⓘ Choose a complete listing package for exclusive discounted rates.
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow relative h-full flex flex-col">
-              <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-secondary text-white">
-                Most Popular
-              </Badge>
-              <CardContent className="p-8 flex flex-col h-full">
-                <h3 className="text-xl font-semibold text-primary mb-2">3D House Model</h3>
-                <div className="text-3xl font-bold text-primary mb-4">From $189.99</div>
-                <p className="text-gray-600 mb-6">Detailed 3D layout for showcasing space and design</p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Realistic textures and furniture</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Multiple angles</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Perfect for marketing luxury listings</li>
-                </ul>
-                <div className="mt-auto">
-                  <Button asChild className="w-full">
-                    <Link href="/book-now">Get Started</Link>
-                  </Button>
+            {/* 3D House Model */}
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold text-center">3D HOUSE MODEL</CardTitle>
+                <div className="text-center">
+                  <span className="text-4xl font-extrabold">$159.00</span>
+                  <p className="text-sm text-muted-foreground">starting up to 1499 sq ft</p>
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow h-full flex flex-col">
-              <CardContent className="p-8 flex flex-col h-full">
-                <h3 className="text-xl font-semibold text-primary mb-2">360° Interactive Floor Plan</h3>
-                <div className="text-3xl font-bold text-primary mb-4">From $199.99</div>
-                <p className="text-gray-600 mb-6">Virtual tour mapped to the floor plan</p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Buyers can explore room-by-room</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Room dimensions shown in tour</li>
-                  <li className="flex items-center text-sm"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Great for out-of-town buyers</li>
-                </ul>
-                <div className="mt-auto">
-                  <Button asChild className="w-full">
-                    <Link href="/book-now">Get Started</Link>
-                  </Button>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                    <span className="font-medium">Up to 1499 sq ft</span>
+                    <span className="font-bold">$159.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md">
+                    <span className="font-medium">1500–2499 sq ft</span>
+                    <span className="font-bold">$199.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                    <span className="font-medium">2500–3499 sq ft</span>
+                    <span className="font-bold">$239.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md">
+                    <span className="font-medium">3500–4499 sq ft</span>
+                    <span className="font-bold">$279.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md bg-gray-50">
+                    <span className="font-medium">4500–5499 sq ft</span>
+                    <span className="font-bold">$319.00</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 rounded-md">
+                    <span className="font-medium">5500+ sq ft</span>
+                    <Link href="/contact-us" className="font-bold text-primary hover:underline">Contact us</Link>
+                  </div>
+                </div>
+                <div className="mt-4 text-xs text-muted-foreground text-center p-2 bg-blue-50 border border-blue-200 rounded-md">
+                  ⓘ Choose a complete listing package for exclusive discounted rates.
                 </div>
               </CardContent>
             </Card>

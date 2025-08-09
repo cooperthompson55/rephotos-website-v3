@@ -14,7 +14,7 @@ const serviceDropdownItems = [
   { name: "Photography", href: "/services/photography" },
   { name: "Videography", href: "/services/videography" },
   { name: "Aerial Photos & Video", href: "/services/aerial" },
-  { name: "3D Virtual Tours", href: "/services/virtual-tours" },
+  { name: "360 Virtual Tours", href: "/services/virtual-tours" },
   { name: "Floor Plans", href: "/services/floor-plans" },
   { name: "Property Websites", href: "/services/websites" },
   { name: "Virtual Services", href: "/services/virtual-services" },

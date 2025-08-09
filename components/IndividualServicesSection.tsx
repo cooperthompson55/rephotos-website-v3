@@ -5,19 +5,19 @@ import Image from "next/image"
 
 const services = [
   {
-    title: "Premium Photography",
+    title: "HDR Photography",
     description: "Professional HDR photography that makes listings stand out on MLS and social media",
     image: "/images/home/s_1.webp",
     link: "/services/photography",
   },
   {
-    title: "Matterport 3D Virtual Tours",
+    title: "360 Virtual Tour",
     description: "Immersive virtual tours that let buyers explore properties 24/7 from anywhere",
     image: "/images/home/s_5.webp",
     link: "/services/virtual-tours",
   },
   {
-    title: "Slideshow Video Tour",
+    title: "Videography",
     description: "Cinematic slideshow videos set to music that showcase your property's best features",
     image: "/images/home/s_2.webp",
     link: "/services/videography",
@@ -35,7 +35,7 @@ const services = [
     link: "/services/websites",
   },
   {
-    title: "Professional Floor Plans",
+    title: "2D and 3D Floor Plans",
     description: "Accurate 2D and 3D floor plans that help buyers understand space and layout",
     image: "/images/home/s_6.png",
     link: "/services/floor-plans",
