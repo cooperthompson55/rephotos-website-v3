@@ -1,7 +1,35 @@
 "use client"
 import Image from "next/image"
+import { useState, useEffect } from "react"
+
+const backgroundImages = [
+  "/images/photobank/background/fs2-2.jpg",
+  "/images/photobank/background/4.jpg", 
+  "/images/photobank/background/colour-after.jpg",
+  "/images/photobank/background/fs5.jpg"
+]
 
 export function HeroSection() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [nextImageIndex, setNextImageIndex] = useState(1)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsTransitioning(true)
+      
+      // After transition completes, update indices
+      setTimeout(() => {
+        setCurrentImageIndex(nextImageIndex)
+        setNextImageIndex((nextImageIndex + 1) % backgroundImages.length)
+        setIsTransitioning(false)
+      }, 2000) // 2-second transition duration
+      
+    }, 10000) // Change image every 10 seconds (8-13 second range, using 10)
+
+    return () => clearInterval(interval)
+  }, [nextImageIndex])
+
   const scrollToServices = () => {
     const servicesSection = document.getElementById('services')
     if (servicesSection) {
@@ -18,17 +46,35 @@ export function HeroSection() {
 
   return (
     <section className="relative h-screen flex items-center overflow-hidden">
-      {/* Background Image - Dark with car and reflections */}
+      {/* Background Image Slideshow */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/home/cover.jpg"
-          alt="Gallery Cover"
-          fill
-          className="object-cover"
-          priority
-          unoptimized
-          quality={100}
-        />
+        {backgroundImages.map((src, index) => {
+          // Current image should always be visible
+          const isCurrentImage = index === currentImageIndex
+          // Next image should fade in during transition
+          const isNextImage = index === nextImageIndex && isTransitioning
+          // Determine opacity
+          const isVisible = isCurrentImage || isNextImage
+          
+          return (
+            <Image
+              key={src}
+              src={src}
+              alt={`Gallery Background ${index + 1}`}
+              fill
+              className={`object-cover transition-opacity ease-in-out ${
+                isVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{ 
+                zIndex: isNextImage ? 1 : 0, // Next image appears on top during transition
+                transitionDuration: '2000ms'
+              }}
+              priority={index === 0}
+              unoptimized
+              quality={100}
+            />
+          )
+        })}
       </div>
 
       {/* Content */}
