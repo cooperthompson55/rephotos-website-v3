@@ -21,7 +21,8 @@ export function HeroSection() {
       // After transition completes, update indices
       setTimeout(() => {
         setCurrentImageIndex(nextImageIndex)
-        setNextImageIndex((nextImageIndex + 1) % backgroundImages.length)
+        // Use functional update to avoid stale closures and ensure correct wrap-around
+        setNextImageIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length)
         setIsTransitioning(false)
       }, 2000) // 2-second transition duration
       
@@ -65,9 +66,12 @@ export function HeroSection() {
               className={`object-cover transition-opacity ease-in-out ${
                 isVisible ? 'opacity-100' : 'opacity-0'
               }`}
-              style={{ 
-                zIndex: isNextImage ? 1 : 0, // Next image appears on top during transition
-                transitionDuration: '2000ms'
+              style={{
+                // Ensure stacking order: next image on top during transition, then current image above others
+                zIndex: isNextImage ? 2 : isCurrentImage ? 1 : 0,
+                transitionDuration: '2000ms',
+                pointerEvents: 'none',
+                willChange: 'opacity'
               }}
               priority={index === 0}
               unoptimized
